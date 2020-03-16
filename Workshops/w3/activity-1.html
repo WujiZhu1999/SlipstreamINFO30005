@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title> INFO30005 :: JavaScript - Workshop #3 </title>
+    </head> 
+    <body>
+        <p id ='text'> JavascriptDOM :: Changing paragraph style</p> 
+        <div>
+            <script>
+                function js_new_style(){
+                    document.getElementById("text").style.color = "#FF9900";
+                    document.getElementById("style").setAttribute("onclick", "js_old_style()");
+                    document.getElementById("style").innerHTML = "Old style";
+                }
+                function js_old_style(){
+                    document.getElementById("text").style.color = "#000000";
+                    document.getElementById("style").setAttribute("onclick", "js_new_style()");
+                    document.getElementById("style").innerHTML = "New style";
+                }
+            </script>
+            <button id="style" onclick="js_new_style()">New style</button>
+        </div>
+    </body>
+</html>
