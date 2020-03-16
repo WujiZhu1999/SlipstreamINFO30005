@@ -8,6 +8,17 @@
 <p id ='text'> Javascript DOM :: Changing paragraph style</p>
    <div>
     <button id="style" onclick="js_new_style()">New style</button>
+    <script>
+      function js_new_style(){
+        if (document.getElementById("style").innerText == "New style"){
+          document.getElementById("style").innerText="Previous style";
+        }
+
+        else{
+          document.getElementById("style").innerText="New style";
+        }
+      }
+    </script>
   </div>
 </body>
 </html>
