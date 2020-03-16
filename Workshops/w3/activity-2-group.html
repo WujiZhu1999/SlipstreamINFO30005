@@ -5,6 +5,13 @@
 	<title>INFO30005 :: JavaScript - Workshop #3</title>
 </head>
 <body>
+	<script>
+		function getFormValue(){
+			var text1 = document.getElementsByName("firstname")[0].value;
+			var text2 = document.getElementsByName("lastname")[0].value;
+			window.alert(text1.concat(" ", text2));
+		}
+	</script>
 	<form id="formname" onsubmit="getFormValue()">
 		First name: <input type="text" name="firstname" value="Obi-Wan"><br>
 		Last name: <input type="text" name="lastname" value="Kenobi"><br>
