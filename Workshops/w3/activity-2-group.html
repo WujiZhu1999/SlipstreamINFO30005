@@ -12,10 +12,16 @@
 			window.alert(text1.concat(" ", text2));
 		}
 	</script>
-	<form id="formname" onsubmit="getFormValue()">
+	<form id="formname">
+		First name: <input type="text" name="firstname" value="Obi-Wan"><br>
+		Last name: <input type="text" name="lastname" value="Kenobi"><br>
+		<input type="submit" value="Submit" onclick="getFormValue(); return false">
+	<br>
+
+	<form id="formname">
 		First name: <input type="text" name="firstname" value="Chloe"><br>
 		Last name: <input type="text" name="lastname" value="Thai"><br>
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit" onclick='getFormValue(); return false'>
 	</form>
 </body>
 </html>
