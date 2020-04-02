@@ -1,0 +1,22 @@
+{
+  "name": "slipstreaminfo30005",
+  "version": "1.0.0",
+  "description": "hello alice here\r hello hello \r Hello\r Hello",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neatht/SlipstreamINFO30005.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neatht/SlipstreamINFO30005/issues"
+  },
+  "homepage": "https://github.com/neatht/SlipstreamINFO30005#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
