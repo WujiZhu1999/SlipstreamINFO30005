@@ -2,7 +2,7 @@ const express = require("express");
 
 const tipsRouter = express.Router();
 
-const authorController = require("../controllers/tips.js");
+const tipsController = require("../controllers/tips.js");
 
 tipsRouter.get('/', (req, res) => tipsController.getTips(req, res));
 
