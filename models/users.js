@@ -1,20 +1,20 @@
 const users = [
     {
-        name : "Chloe",
-        userName: "hello",
-        password :"food"
+        "name" : "Chloe",
+        "userName": "hello",
+        "password" :"food"
     },
 
     {
-        name : "James",
-        userName: "yoyo",
+        "name" : "James",
+        "userName": "yoyo",
         password :"qwerty"
     },
 
     {
-        name : "Shelly",
-        userName: "food",
-        password :"cookie"
+        "name" : "Shelly",
+        "userName": "food",
+        "password" :"cookie"
     }
 
 ]
