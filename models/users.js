@@ -8,7 +8,7 @@ const users = [
     {
         "name" : "James",
         "userName": "yoyo",
-        password :"qwerty"
+        "password" :"qwerty"
     },
 
     {
