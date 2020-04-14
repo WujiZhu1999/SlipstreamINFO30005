@@ -7,6 +7,9 @@ const tipRouter = require("./routes/tips.js")
 const mapRouter = require("./routes/map.js");
 const usersRouter = require("./routes/users.js");
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 app.use('/', dashboardRouter);
 app.use("/forum", forumRouter);
 app.use("/tips", tipRouter);
