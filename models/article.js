@@ -1,5 +1,5 @@
 //Forum article
-
+//ideally ghave author automatically allocated when created
 const articles = [
     {
         "articleNum" : "1",
