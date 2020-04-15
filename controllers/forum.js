@@ -1,3 +1,5 @@
+//where loopf for to allocate number
+
 var articles = require('../models/article.js');
 
 //Forum Page
