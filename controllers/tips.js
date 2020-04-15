@@ -18,45 +18,42 @@ const getTip = (req, res) => {
 }
 
 const createTip = (req, res) => {
-    if (req.query.number == null || req.query.title == null || req.query.body == null){
+    if (req.body.number == null || req.body.title == null || req.body.body == nulll){
+        res.status(400)
         res.send("There is incomplete data");
         return;
     }
 
-    if (users.find((tip) => tip.tipNum === req.query.number) != null) {
+    if (tips.find((tip) => tip.tipNum === req.body.number) != null) {
+        res.status(400)
         res.send("This tip number already allocated");
         return;
     }
 
-    users.push({
-        "articleNum":req.query.number,
-        "title":req.query.title,
-        "body":req.query.body
+    tips.push({
+        "tipNum":req.body.number,
+        "title":req.body.title,
+        "body":req.body.body,
     });
 
-    res.send(users);
+    res.send();
 }
 
-// Deleting an article
+// Deleting an tip
 const deleteTip = (req, res) => {
-    if (req.query.number == null || req.query.title == null || req.query.body == null){
-        res.send("There is incomplete data");
+    if (tips.find((tip) => tip.tipNum === req.params.tipNum) == null){
+        res.status(400)
+        res.send("this tip does not exist " + req.params.tip);
         return;
     }
 
-    if (tips.find((tip) => tip.tipNum === req.query.number) != null) {
-        tips.delete({
-            "tipNum":req.query.number,
-            "title":req.query.title,
-            "body":req.query.body,
-        });
-    }
-
-    res.send(tips);
+    users.splice(tips.findIndex((tip) => tips.tipNum === req.params.tipNum), 1);
+    res.send();
 }
 
 module.exports = {
     getTips,
     getTip,
-    createTip
+    createTip,
+    deleteTip
 };

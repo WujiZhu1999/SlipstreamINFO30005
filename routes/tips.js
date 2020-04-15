@@ -6,6 +6,6 @@ const tipsController = require("../controllers/tips.js");
 
 tipsRouter.get('/', (req, res) => tipsController.getTips(req, res));
 
-tipsRouter.get("/:tipNum", (req, res) => tipsController.getTip(req, res));
+tipsRouter.post("/:tipNum", (req, res) => tipsController.deleteTip(req, res));
 
 module.exports = tipsRouter;

@@ -15,53 +15,50 @@ const getArticle = (req, res) => {
     }
 
     else{
+        res.status(400);
         res.send("This article does not exist");
     }
 }
 
 //Creates a new acticle
 const createArticle = (req, res) => {
-    if (req.query.number == null || req.query.title == null || req.query.body == null || req.query.author == null){
+    if (req.body.number == null || req.body.title == null || req.body.body == null || req.body.author == null){
+        res.status(400)
         res.send("There is incomplete data");
         return;
     }
 
-    if (articles.find((article) => article.articleNum === req.query.number) != null) {
+    if (articles.find((article) => article.articleNum === req.body.number) != null) {
+        res.status(400)
         res.send("This article number already allocated");
         return;
     }
 
     articles.push({
-        "articleNum":req.query.number,
-        "title":req.query.title,
-        "body":req.query.body,
-        "author":res.query.author
+        "articleNum":req.body.number,
+        "title":req.body.title,
+        "body":req.body.body,
+        "author":res.body.author
     });
 
-    res.send(articles);
+    res.send();
 }
 
 // Deleting an article
 const deleteArticle = (req, res) => {
-    if (req.query.number == null || req.query.title == null || req.query.body == null || req.query.author == null){
-        res.send("There is incomplete data");
+    if (articles.find((article) => article.articleNum === req.params.articleNum) == null){
+        res.status(400)
+        res.send("this article does not exist " + req.params.article);
         return;
     }
 
-    if (articles.find((article) => article.articleNum === req.query.number) != null) {
-        articles.delete({
-            "articleNum":req.query.number,
-            "title":req.query.title,
-            "body":req.query.body,
-            "author":res.query.author
-        });
-    }
-
-    res.send(articles);
+    users.splice(articles.findIndex((article) => articles.articleNum === req.params.articleNum), 1);
+    res.send();
 }
 
 module.exports = {
     getForum,
     getArticle,
-    createArticle
+    createArticle,
+    deleteArticle
 }
