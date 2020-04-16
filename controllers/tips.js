@@ -18,36 +18,44 @@ const getTip = (req, res) => {
 }
 
 const createTip = (req, res) => {
-    if (req.body.number == null || req.body.title == null || req.body.body == nulll){
+    if (req.body.title == null || req.body.body == null){
         res.status(400)
         res.send("There is incomplete data");
         return;
     }
+    var newTipNum = 1;
 
-    if (tips.find((tip) => tip.tipNum === req.body.number) != null) {
-        res.status(400)
-        res.send("This tip number already allocated");
-        return;
+    while(tips.find((tip) => tip.tipNum == newTipNum) != null){
+        newTipNum++;
     }
 
     tips.push({
-        "tipNum":req.body.number,
+        "tipNum":(""+newTipNum),
         "title":req.body.title,
         "body":req.body.body,
     });
 
-    res.send();
+    res.send(tips);
 }
 
 // Deleting an tip
 const deleteTip = (req, res) => {
     if (tips.find((tip) => tip.tipNum === req.params.tipNum) == null){
         res.status(400)
-        res.send("this tip does not exist " + req.params.tip);
+        res.send("tip " + req.params.tipNum + " does not exist");
         return;
     }
 
-    users.splice(tips.findIndex((tip) => tips.tipNum === req.params.tipNum), 1);
+    var tipIndex = tips.findIndex((tip) => tips.tipNum === req.params.tipNum);
+    
+    if (tipIndex = 0){
+        tips.splice(1,);
+    }
+
+    else{
+        tips.splice(tipIndex, 1);
+    }
+
     res.send();
 }
 
