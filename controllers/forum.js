@@ -24,27 +24,30 @@ const getArticle = (req, res) => {
 
 //Creates a new acticle
 const createArticle = (req, res) => {
-    if (req.body.number == null || req.body.title == null || req.body.body == null || req.body.author == null){
+    if (req.body.title == null || req.body.body == null || req.body.author == null){
         res.status(400)
         res.send("There is incomplete data");
         return;
     }
 
-    if (articles.find((article) => article.articleNum === req.body.number) != null) {
-        res.status(400)
-        res.send("This article number already allocated");
-        return;
+    var newArticleNum = 1;
+
+    while(articles.find((article) => article.articleNum == newArticleNum) != null){
+        newArticleNum++;
     }
 
+    //need a function to automatically allocator author
+
     articles.push({
-        "articleNum":req.body.number,
+        "articleNum":(""+newArticleNum),
         "title":req.body.title,
         "body":req.body.body,
-        "author":res.body.author
+        "author":req.body.author
     });
 
-    res.send();
+    res.send(articles);
 }
+
 
 // Deleting an article
 const deleteArticle = (req, res) => {
@@ -54,8 +57,17 @@ const deleteArticle = (req, res) => {
         return;
     }
 
-    users.splice(articles.findIndex((article) => articles.articleNum === req.params.articleNum), 1);
-    res.send();
+    var articleIndex = articles.findIndex((article) => article.articleNum === req.params.articleNum);
+    
+    if (articleIndex = 0){
+        articles.splice(1,);
+    }
+
+    else{
+        articles.splice(articleIndex,1);
+    }
+
+    res.send(articles);
 }
 
 module.exports = {
