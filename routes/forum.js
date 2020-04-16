@@ -14,4 +14,6 @@ forumRouter.post('/', (req, res) => forumController.createArticle(req, res));
 
 forumRouter.delete('/:articleNum', (req, res) => forumController.deleteArticle(req,res));
 
+forumRouter.post('/:articleNum', (req, res) => forumController.changeArticle(req,res));
+
 module.exports = forumRouter;

@@ -1,7 +1,21 @@
 var tips = require('../models/tips.js');
 
+//get's a tip page
 const getTips = (req, res) => {
-    res.send("<h1>tips</h1>");
+    var output = "<h1> Tips </h1>";
+
+    var largestArticleNum = 1;
+
+    tip = tips.find((tip) => tip.tipNum ==  largestArticleNum)
+
+    while(tip!=null){
+        newTitle = "<br>" + tip.title
+        output += newTitle;
+        largestArticleNum++;
+        tip = tips.find((tip) => tip.tipNum ==  largestArticleNum)
+    }
+
+    res.send(output);
 }
 
 const getTip = (req, res) => {
@@ -30,7 +44,7 @@ const createTip = (req, res) => {
     }
 
     tips.push({
-        "tipNum":(""+newTipNum),
+        "tipNum":(newTipNum),
         "title":req.body.title,
         "body":req.body.body,
     });
@@ -39,24 +53,65 @@ const createTip = (req, res) => {
 }
 
 // Deleting an tip
+// Deleting an tip
 const deleteTip = (req, res) => {
-    if (tips.find((tip) => tip.tipNum === req.params.tipNum) == null){
+    var enteredNumber = parseInt(req.params.tipNum, 10);;
+
+    //check's if the tip requested to be deleted exsists
+    if (tips.find((tip) => tip.tipNum === enteredNumber) == null){
         res.status(400)
-        res.send("tip " + req.params.tipNum + " does not exist");
+        res.send("this tip does not exist ");
         return;
     }
 
-    var tipIndex = tips.findIndex((tip) => tips.tipNum === req.params.tipNum);
+    //finds the tip's index
+    var tipIndex = tips.findIndex((tip) => tip.tipNum === enteredNumber);
     
-    if (tipIndex = 0){
-        tips.splice(1,);
+    var largestArticleNum = 1;
+
+    //allocates the lowest tip number availiable (larger then 0)
+    while(tips.find((tip) => tip.tipNum ==  largestArticleNum) != null){
+        largestArticleNum++;
     }
+    
+    //slipices according to index
+    if (tipIndex == 0){
+        tips.splice(0,1);
+
+    
+        //changes all numbers afterwards
+        if (largestArticleNum!=1){
+        
+            for(n=2; n < largestArticleNum; n++){
+                var tip = tips.find((tip) => tip.tipNum === n);
+                tip["tipNum"] = tip.tipNum - 1;
+            }
+        }
+
+        res.send(tips );
+        return;
+    }
+
+   
 
     else{
-        tips.splice(tipIndex, 1);
+        tips.splice(tipIndex,1);
+
+        var numberAfterArticle = enteredNumber + 1
+
+        if(largestArticleNum >= numberAfterArticle){
+            
+            //changes all numbers afterwards
+            for(n = numberAfterArticle; n < largestArticleNum; n++){
+                var tip = tips.find((tip) => tip.tipNum === n);
+                tip["tipNum"] = tip.tipNum - 1;
+            }
+            
+        }
+
     }
 
-    res.send();
+    res.send(tips);
 }
 
 module.exports = {
