@@ -18,6 +18,7 @@ const getTips = (req, res) => {
     res.send(output);
 }
 
+//get a particular tip based off of the tipNumber
 const getTip = (req, res) => {
     const id = parseInt(req.params.tipNum, 10);
     const tip = tips.find((a) => a.tipNum === id);
@@ -31,6 +32,7 @@ const getTip = (req, res) => {
     }
 }
 
+//Create a  tip
 const createTip = (req, res) => {
     if (req.body.title == null || req.body.body == null){
         res.status(400)
@@ -39,10 +41,12 @@ const createTip = (req, res) => {
     }
     var newTipNum = 1;
 
+    //find the lowest tipNumber availiable 
     while(tips.find((tip) => tip.tipNum == newTipNum) != null){
         newTipNum++;
     }
 
+    //create new data
     tips.push({
         "tipNum":(newTipNum),
         "title":req.body.title,
@@ -52,7 +56,6 @@ const createTip = (req, res) => {
     res.send(tips);
 }
 
-// Deleting an tip
 // Deleting an tip
 const deleteTip = (req, res) => {
     var enteredNumber = parseInt(req.params.tipNum, 10);;
