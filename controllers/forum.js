@@ -9,6 +9,7 @@ const getForum = (req, res) => {
 
     article = articles.find((article) => article.articleNum ==  largestArticleNum)
 
+    //display the title all the articles
     while(article!=null){
         newTitle = "<br>" + article.title
         output += newTitle;
