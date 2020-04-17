@@ -21,7 +21,8 @@ const getForum = (req, res) => {
 
 //Gets a new article according to the article number 
 const getArticle = (req, res) => {
-    const number = req.params.articleNum;
+
+    const number = parseInt(req.params.articleNum, 10);
     const article = articles.find((a) => a.articleNum === number);
     
     if(article){

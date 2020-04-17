@@ -19,7 +19,7 @@ const getTips = (req, res) => {
 }
 
 const getTip = (req, res) => {
-    const id = req.params.tipNum;
+    const id = parseInt(req.params.tipNum, 10);
     const tip = tips.find((a) => a.tipNum === id);
     
     if(tip){
