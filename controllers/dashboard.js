@@ -1,3 +1,5 @@
+//Author： Lijun Wang
+//StudentID：904796
 const dashboard = require("../models/dashboard"); 
 function getdata(displaynum){    
     var x=1;
