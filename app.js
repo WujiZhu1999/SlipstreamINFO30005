@@ -24,3 +24,9 @@ app.use("/login", loginRouter);
 app.listen(3000, () => {
   console.log('listening on port 3000');
 });
+
+/* TODO
+ * fake facebook API
+ * additional dashboard features
+ * put the login middleware on all relevant pages
+*/
