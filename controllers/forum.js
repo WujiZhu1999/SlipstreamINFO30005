@@ -1,3 +1,6 @@
+//All the controlers relating to forums
+//Author: Chloe Thai
+//Student Numbe : 995204
 var articles = require('../models/article.js');
 
 //Forum Page

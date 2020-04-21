@@ -1,3 +1,7 @@
+//All the controlers relating to tips
+//Author: Chloe Thai
+//Student Numbe : 995204
+
 var tips = require('../models/tips.js');
 
 //get's a tip page
@@ -32,7 +36,7 @@ const getTip = (req, res) => {
     }
 }
 
-//Create a  tip
+//create a  tip
 const createTip = (req, res) => {
     if (req.body.title == null || req.body.body == null){
         res.status(400)
