@@ -1,4 +1,6 @@
 var users = require("../models/users.js");
+//add loginController.isLoggedIn, to the start of all nescesary routes 
+
 
 const isLoggedIn = (req, res, next) => {
     if (req.session.user != null){
@@ -19,6 +21,7 @@ const logIn = (req, res) => {
     if (req.body.userName == null || req.body.password == null){
         res.status(400);
         res.send("missing information");
+        return;
     }
 
     if (users.find((user) => user.userName === req.body.userName) == null){
@@ -33,17 +36,23 @@ const logIn = (req, res) => {
         return;
     }
 
-    req.session.user = user;
+    req.session.user = user["userName"];
 
     if (req.body.from != null){
-        res.redirect(from)
+        res.redirect(from);
     } else {
-        res.redirect('/')
+        res.redirect('/');
     }
 
+}
+
+const logOut = (req, res) => {
+    req.session.user = null;
+    res.send();
 }
 module.exports = {
     isLoggedIn,
     getLogin,
-    logIn
+    logIn,
+    logOut
 }

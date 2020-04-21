@@ -1,3 +1,5 @@
+//We'll hash the passwords, we're not goint to be saving them as plain text
+
 const users = [
     {
         "name" : "Chloe",

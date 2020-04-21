@@ -9,12 +9,12 @@ const loginController = require("../controllers/login.js");
 usersRouter.post('/', (req, res) => usersController.createUser(req, res));
 
 //Deletes a user specifed by the user's username
-usersRouter.delete('/:userName', (req, res) => usersController.deleteUser(req, res));
+usersRouter.delete("/:userName", (req, res) => usersController.deleteUser(req, res));
 
 //Gets the user specified by it's username
-usersRouter.get('/:userName', loginController.isLoggedIn, (req, res) => usersController.getUser(req, res));
+usersRouter.get("/:userName", (req, res) => usersController.getUser(req, res));
 
 //Changes a users information using a post request
-usersRouter.post('/:userName', (req, res) => usersController.changeUser(req, res));
+usersRouter.post("/:userName", (req, res) => usersController.changeUser(req, res));
 
 module.exports = usersRouter;
