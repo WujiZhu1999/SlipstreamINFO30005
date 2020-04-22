@@ -1,4 +1,5 @@
 var API = require("../models/mapAPI.js"); // need to change for to use
+var users = require("../models/users.js");
 
 /*const getMap = (req, res) => {
     res.send("<h1>map</h1>");
@@ -102,9 +103,27 @@ const changeMap = (req, res) => {
     res.send(user);
 }
 
+//finish a route
+const finishRoute = (req, res) =>{
+    if(req.body.user || users.find((user) => user.userName == req.body.user)){
+        var _user = users.find((user) => user.userName == req.body.user);
+        if(req.body.distance){
+            _user.data.totalDistance += req.body.distance;
+            _user.data.energySaved += 1000*req.body.distance;
+            _user.data.carbonSaved += 0.21*req.body.distance/1000;
+        }
+        return res.send(_user);
+    }
+    else{
+        res.status(400);
+        return res.send("Error");
+    }
+}
+
 module.exports = {
     //getMap,
     getMapRoute,
     createMap,
-    deleteMap
+    deleteMap,
+    finishRoute
 }

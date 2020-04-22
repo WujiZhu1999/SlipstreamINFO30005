@@ -64,7 +64,7 @@ const createArticle = (req, res) => {
         "author":req.body.author
     });
 
-    res.send();
+    res.send(articles.find((article) => article.articleNum == newArticleNum));
 }
 
 
