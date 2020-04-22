@@ -57,7 +57,7 @@ const createTip = (req, res) => {
         "body":req.body.body,
     });
 
-    res.send(tips);
+    res.send();
 }
 
 // Deleting an tip
@@ -95,7 +95,7 @@ const deleteTip = (req, res) => {
             }
         }
 
-        res.send(tips );
+        res.send();
         return;
     }
 
@@ -118,7 +118,7 @@ const deleteTip = (req, res) => {
 
     }
 
-    res.send(tips);
+    res.send();
 }
 
 module.exports = {
