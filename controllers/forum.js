@@ -64,7 +64,7 @@ const createArticle = (req, res) => {
         "author":req.body.author
     });
 
-    res.send(articles);
+    res.send();
 }
 
 
@@ -103,7 +103,7 @@ const deleteArticle = (req, res) => {
             }
         }
 
-        res.send(articles );
+        res.send();
         return;
     }
 
@@ -159,7 +159,7 @@ const changeArticle = (req, res) => {
         article["body"] = req.body.body;
     }
 
-    res.send(article);
+    res.send();
 }
 
 module.exports = {
