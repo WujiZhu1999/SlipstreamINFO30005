@@ -58,7 +58,27 @@ const sendFriendRequest = (req, res) => {
     }
 }
 
+//find all friends of user userName
+function getFriends(userName){
+    if (users.find(user => user["userName"] === userName) == null){
+        return [];
+    }
+
+    var friendList = []
+
+    for (user of users){
+        if (friends.find(friend => friend["sender"] === userName && friend["reciever"] === user["userName"] && friend["accepted"] == true) != null){
+            friendList.push(user["userName"]);
+        } else if (friends.find(friend => friend["sender"] === user["userName"] && friend["reciever"] === userName && friend["accepted"] == true) != null){
+            friendList.push(user["userName"]);
+        }
+    }
+
+    return friendList;
+}
+
 module.exports = {
     getFriendRequests,
-    sendFriendRequest
+    sendFriendRequest,
+    getFriends
 }
