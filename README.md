@@ -3,6 +3,7 @@
 Functionality: A dashboard to show summarised users details regarding bike rides (energySaved,carbonSaved and streaks)
 
 Functionality: A forum (where users can post articles) and tips (provided by the administrator) functionality
+    
     Forum
     URL: /forum
     For the Forum we have implemented the functions to:
