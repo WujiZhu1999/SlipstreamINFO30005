@@ -5,7 +5,7 @@ const route = [
     "destination": "School",
     "distance": 2,
     "duration": 60,
-    "completed": 1
+    "completed": ["12/4/2020"]
 
   },
   {
@@ -14,7 +14,7 @@ const route = [
     "destination": "Home",
     "distance": 2,
     "duration": 60,
-    "completed": 0
+    "completed": []
 
   }
 ]
