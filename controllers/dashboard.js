@@ -19,10 +19,10 @@ function getdata(displaynum){
 }
 
 const home = (req, res) => {
-    if (true){//logged in 
+    if (req.session.user != null){//logged in 
         res.send(getdata(dashboard.length));  
     } else {
-        res.send("<h1> logged out homepage\nWelcome to Slipstream</h1>");
+        res.send("<h1> logged out homepage<br>Welcome to Slipstream</h1>");
     }
 }
 
