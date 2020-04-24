@@ -1,53 +1,24 @@
-var API = require("../models/mapAPI.js"); // need to change for to use
+var route = require("../models/route.js"); // need to change for to use
 
 /*const getMap = (req, res) => {
     res.send("<h1>map</h1>");
 }*/
 
-//to, toID, from, fromID, route
-
-//posh method
-const createMap = (req, res) => {
-    //if missing parameters
-    if (req.body.to == null || req.body.from == null){
-        res.status(400)
-        res.send("incomplete data, missing origin or destination point");
-        return;
-    }
-
-    //if route found -> print out info
-    //http://host/:userid/path?origin="a"&&destination="b"
-    if (mapAPI.find((API) => API.to === req.body.to) != null 
-           && mapAPI.find((API) => API.from === req.body.from) != null){
-        res.send("<h1>route from " + API.from + " to " + API.to + "</h1>");
-        res.send("<h1>route: " + API.route + "</h1>");
-        //do i have to recursively call route??????
-        return;
-    }
-
-    //if not found -> adding (create a route)
-    mapAPI.push({
-        "to": req.body.to,
-        "from":req.bodu.from,
-        "toID": req.body.toID,
-        "fromID": req.body.fromID,
-        "route": req.body.route
-    });
-    res.send()
-}
-
 //delete
-const deleteMap = (req, res) => {
-    if (mapAPI.find((API) => API.to === req.body.to) == null 
-           && mapAPI.find((API) => API.from === req.body.from) == null){
+const deleteRoute = (req, res) => {
+    if (route.find((route) => route.user === req.session.user) == null 
+            && route.find((route) => route.destination === req.body.destination) == null 
+            && route.find((route) => route.origin === req.body.origin) == null){
         res.status(400)
         res.send("this route not exist");
         return;
     }
-    let index = mapAPI.findIndex(
-        API => API.to === req.body.to && API.from === req.body.from
+    let index = route.findIndex(
+        route => route.origin === req.session.origin 
+                && route.origin === req.body.origin 
+                && route.destination === req.body.destination
     );
-    mapAPI.splice(index, 1);
+    route.splice(index, 1);
     res.send();
 }
 
@@ -60,44 +31,51 @@ const getMapRoute = (req, res) => {
         return;
     }
     //not found to get
-    if (mapAPI.find((API) => API.to === req.body.to) == null 
-           && mapAPI.find((API) => API.from === req.body.from) == null){
+    if (route.find((route) => route.user === req.session.user) == null 
+            && route.find((route) => route.destination === req.body.destination) == null 
+            && route.find((route) => route.origin === req.body.origin) == null){
         res.status(400)
         res.send("this route not exist for this users ");
         return;
     }
     //print out route found
-    res.send("<h1>route from " + req.query.to + " to " + req.query.from + "</h1>");
-    res.send();
+    res.send("<h1>route from " + req.body.origin + " to " + req.body.destination + "</h1>");
+    res.send(route.find((route) => route.origin === req.session.origin 
+        && route.origin === req.body.origin 
+        && route.destination === req.body.destination))
+    //res.send();
 }
 
 //post method
-const changeMap = (req, res) => {
+const changeRoute = (req, res) => {
     //no info given to change
-    if (req.body.to == null && req.body.from == null){
+    if (req.body.origin == null && req.body.destination == null){
         res.status(400);
         res.send("no info of changes");
     }
 
     //does not found that route
-    if (mapAPI.find((API) => API.to === req.body.to) == null 
-           && mapAPI.find((API) => API.from === req.body.from) == null){
+    if (route.find((route) => route.user === req.session.user) == null 
+            && route.find((route) => route.destination === req.body.destination) == null 
+            && route.find((route) => route.origin === req.body.origin) == null){
         res.status(400);
         res.send("route does not exist");
         return;
     }
 
-    var route = mapAPI.find((API) => API.to === req.body.to && API.from === req.body.from);
-    if (req.body.toID != null){
-        user["toID"] = req.body.toID;
+    var route = mapAPI.find((API) => route.origin === req.session.origin 
+                                    && route.origin === req.body.origin 
+                                    && route.destination === req.body.destination);
+    if (req.body.distance != null){
+        user["distance"] = req.body.distance;
     }
 
-    if (req.body.fromID != null){
-        user["fromID"] = req.body.fromID;
+    if (req.body.duration != null){
+        user["duration"] = req.body.duration;
     }
 
-    if (req.body.route != null){
-        user["route"] = req.body.route;
+    if (req.body.completed != null){
+        user["completed"] = req.body.completed;
     }
     res.send(user);
 }
@@ -105,6 +83,7 @@ const changeMap = (req, res) => {
 module.exports = {
     //getMap,
     getMapRoute,
-    createMap,
-    deleteMap
-}
+    //createMap,
+    changeRoute,
+    deleteRoute
+};
