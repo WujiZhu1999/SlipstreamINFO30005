@@ -16,7 +16,13 @@ const createUser = (req, res) => {
     users.push({
         "name":req.body.name,
         "userName":req.body.userName,
-        "passsword":req.body.password
+        "passsword":req.body.password,
+        "data":{
+            "totalDistance": 0,
+            "energySaved": 0, //in KJ
+            "carbonSaved": 0, //in KG
+            "streak": 0 // days
+        }
     });
     res.send()
 }
