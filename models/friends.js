@@ -1,13 +1,25 @@
 const friends = [
     {
-        "sender":"exampleUserID1",
-        "reciever":"exampleUserID2",
+        "sender":"hello",
+        "reciever":"yoyo",
         "accepted":true
     },
     {
-        "sender":"exampleUserID3",
-        "reciever":"exampleUserID2",
-        "accepted":false
+        "seçnder":"food",
+        "reciever":"yoyo",
+        "accepted":true
+    },
+
+    {
+        "sender":"food",
+        "reciever":"hello",
+        "accepted":true
+    },
+
+    {
+        "sender":"sun",
+        "reciever":"hello",
+        "accepted":true
     }
 ]
 module.exports = friends;
