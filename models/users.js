@@ -4,19 +4,49 @@ const users = [
     {
         "name" : "Chloe",
         "userName": "hello",
-        "password" :"food"
+        "password" :"food",
+        "data":{
+            "totalDistance": 2,
+            "energySaved": 12, //in KJ
+            "carbonSaved": 2.1, //in KG
+            "streak": 10 // days
+        }
     },
 
     {
         "name" : "James",
         "userName": "yoyo",
-        "password" :"qwerty"
+        "password" :"qwerty",
+        "data":{
+            "totalDistance": 2,
+            "energySaved": 12, //in KJ
+            "carbonSaved": 2.1, //in KG
+            "streak": 10 // days
+        }
     },
 
     {
         "name" : "Shelly",
         "userName": "food",
-        "password" :"cookie"
+        "password" :"cookie",
+        "data":{
+            "totalDistance": 2,
+            "energySaved": 12, //in KJ
+            "carbonSaved": 2.1, //in KG
+            "streak": 10 // days
+        }
+    },
+
+    {
+        "name" : "Peter",
+        "userName": "sun",
+        "password" :"moon",
+        "data":{
+            "totalDistance": 5,
+            "energySaved": 12, //in KJ
+            "carbonSaved": 2.1, //in KG
+            "streak": 10 // days
+        },
     }
 
 ]

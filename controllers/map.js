@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 var route = require("../models/route.js"); // need to change for to use
 var fakeAPI = require("../models/mapAPI.js")
 var routeTo;
 var routeFrom;
 var toID;
 var fromID;
+=======
+var API = require("../models/mapAPI.js"); // need to change for to use
+var users = require("../models/users.js");
+>>>>>>> c755a255da386467828af40f08be9647c9d0e2cd
 
 //get API info - check
 const getMap = (req, res) => {
@@ -77,10 +82,36 @@ const changeRoute = (req, res) => {
     res.send(temp);
 }
 
+//finish a route
+const finishRoute = (req, res) =>{
+    if(req.body.user || users.find((user) => user.userName == req.body.user)){
+        var _user = users.find((user) => user.userName == req.body.user);
+        if(req.body.distance){
+            _user.data.totalDistance += req.body.distance;
+            _user.data.energySaved += 1000*req.body.distance;
+            _user.data.carbonSaved += 0.21*req.body.distance/1000;
+        }
+        return res.send(_user);
+    }
+    else{
+        res.status(400);
+        return res.send("Error");
+    }
+}
+
 module.exports = {
+<<<<<<< HEAD
     getMap,
     getRoute,
     //createMap,
     changeRoute,
     deleteRoute
 };
+=======
+    //getMap,
+    getMapRoute,
+    createMap,
+    deleteMap,
+    finishRoute
+}
+>>>>>>> c755a255da386467828af40f08be9647c9d0e2cd
