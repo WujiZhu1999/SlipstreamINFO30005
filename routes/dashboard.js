@@ -8,4 +8,6 @@ const dashboardController = require("../controllers/dashboard.js");
 
 dashboardRouter.get('/', (req, res) => dashboardController.home(req, res));
 
+dashboardRouter.get('/:userName', (req, res) => dashboardController.getLeaderboard(req, res));
+
 module.exports = dashboardRouter;

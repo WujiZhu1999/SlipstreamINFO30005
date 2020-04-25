@@ -26,6 +26,40 @@ const home = (req, res) => {
     }
 }
 
+//Ranks a user's friends and themselves on the totalDistance cycled
+const getLeaderboard = (req,res) => {
+    //title for the leaderbaord
+    var output = "<h1>Leaderboard</h1>";
+
+    //gets a list of usernames that should be ranked
+    const userName = req.params.userName;
+    const user = users.find((user) => user.userName === userName);
+    var userList = friendsController.getFriends(userName);
+    userList.push(user["userName"]);
+    const lengthFriendsList = userList.size;
+
+    //an array of distances for the users ranked
+    var totalDistanceArray = [];
+    
+    for(n in userList){
+        const user = users.find((user) => user.userName === userList[n]);
+        totalDistanceArray.push(user["data"]["totalDistance"]);
+    }
+
+    sortedDistance = totalDistanceArray.sort();
+    sortedDistance = sortedDistance.reverse();
+
+   for(n in sortedDistance){
+        const user = users.find((user) => user.data.totalDistance === sortedDistance[n]);
+        const ranking = 1 + parseInt(n,10);
+        const newUserName = "<br>" + ranking + ". " + user.userName + " DISTANCE: " + user.data.totalDistance;
+        output += newUserName;
+    }
+
+    res.send(output);
+}
+
 module.exports = {
     home,
+    getLeaderboard
 };
