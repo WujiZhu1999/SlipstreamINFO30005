@@ -105,13 +105,14 @@ module.exports = {
     getRoute,
     //createMap,
     changeRoute,
-    deleteRoute
+    deleteRoute,
+    finishRoute
 };
-=======
+/*=======
     //getMap,
     getMapRoute,
     createMap,
     deleteMap,
     finishRoute
-}
+}*/
 >>>>>>> c755a255da386467828af40f08be9647c9d0e2cd
