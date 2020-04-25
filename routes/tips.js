@@ -18,6 +18,6 @@ tipsRouter.get("/:tipNum", (req, res) => tipsController.getTip(req, res));
 tipsRouter.post("/", (req, res) => tipsController.createTip(req, res));
 
 //Deletes a tip specifed by a tip number 
-tipsRouter.delete('/:tipNum', (req, res) => tipsController.deleteTip(req,res));
+tipsRouter.delete("/:tipNum", (req, res) => tipsController.deleteTip(req,res));
 
 module.exports = tipsRouter;

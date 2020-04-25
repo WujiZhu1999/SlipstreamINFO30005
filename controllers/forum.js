@@ -43,7 +43,7 @@ const getArticle = (req, res) => {
 const createArticle = (req, res) => {
 
     //checks whether all the paramters needed to create an article is present
-    if (req.body.title == null || req.body.body == null || req.body.author == null){
+    if (req.body.title == null || req.body.body == null){
         res.status(400);
         res.send("There is incomplete data");
         return;
@@ -61,7 +61,7 @@ const createArticle = (req, res) => {
         "articleNum":newArticleNum,
         "title":req.body.title,
         "body":req.body.body,
-        "author":req.body.author
+        "author":req.session.user
     });
 
     res.send(articles.find((article) => article.articleNum == newArticleNum));

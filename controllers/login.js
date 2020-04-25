@@ -14,7 +14,7 @@ const isLoggedIn = (req, res, next) => {
 const getLogin = (req, res) => {
     //if theyre already logged in, redirect them to the home pages
     if (req.session.user != null){
-        res.redirect('/');
+        res.redirect("/");
     }
     res.send("<h1>login screen</h1>");
 }
@@ -51,7 +51,7 @@ const logIn = (req, res) => {
     if (req.body.from != null){
         res.redirect(from);
     } else {
-        res.redirect('/');
+        res.redirect("/");
     }
 
 }
