@@ -37,8 +37,12 @@ mapRouter.get('/', (req, res) => mapController.getMap(req, res));  //jut a blank
 
 
 //LUC
-//finish and update
-mapRouter.post('/finish', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) =>mapController.finishRoute(req,res));
+//finish the route and update personal record.
+//mapRouter.post('/finish', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) =>mapController.finishRoute(req,res));
+
+//For this parse we won't check to login everywhere. So we will skip check login
+mapRouter.post('/finish', (req, res) =>mapController.finishRoute(req,res));
+
 //deletes the route
 mapRouter.delete("route", (req, res) => mapController.deleteRoute(req, res));
 //mapRouter.post("/:origin/:destination", (req, res) => mapController.changeMap(req, res));
