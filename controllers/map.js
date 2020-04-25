@@ -118,10 +118,3 @@ module.exports = {
     deleteRoute,
     finishRoute
 };
-/*=======
-    //getMap,
-    getMapRoute,
-    createMap,
-    deleteMap,
-    finishRoute
-}*/

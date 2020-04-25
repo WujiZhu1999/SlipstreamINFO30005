@@ -21,11 +21,11 @@ var loginChecker = require("../controllers/login.js");
 
 //Author: Thy Le
 //Student Numbe : 980822
-//method change a route specificied with user, to and from
-mapRouter.get("/", (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.getMap(req, res));
-mapRouter.post("/route", (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.createRoute(req, res));
-mapRouter.get("/route", (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.getRoute(req, res));
-mapRouter.delete("/route", (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.deleteRoute(req, res));
+mapRouter.get('/', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.getMap(req, res));
+mapRouter.post('/', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.createRoute(req, res));
+
+mapRouter.get('/route', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.getRoute(req, res));
+mapRouter.delete("/route",  (req, res, next) =>loginChecker.isLoggedIn(req, res, next),  (req, res) => mapController.deleteRoute(req, res));
 mapRouter.post("/route", (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.changeRoute(req, res));
 
 
