@@ -1,52 +1,52 @@
 var route = require("../models/route.js"); // need to change for to use
+var fakeAPI = require("../models/mapAPI.js")
+var routeTo;
+var routeFrom;
+var toID;
+var fromID;
 
-/*const getMap = (req, res) => {
-    res.send("<h1>map</h1>");
-}*/
+const getMap = (req, res) => {
+    routeTo = fakeAPI[0].to;
+    routeFrom = fakeAPI[0].from;
+    toID = fakeAPI[0].toID;
+    fromID = fakeAPI[0].fromID;
+    res.send("API to:" + routeTo + ", ID: " + toID + ", from:" + routeFrom + ", ID: " + fromID);
+}
 
-//delete
+//delete - check
 const deleteRoute = (req, res) => {
-    if (route.find((route) => route.user === req.session.user) == null 
-            && route.find((route) => route.destination === req.body.destination) == null 
-            && route.find((route) => route.origin === req.body.origin) == null){
+    if (route.find((route) => route.user === req.session.user && route.destination === req.query.destination && route.origin === req.query.origin) == null){
         res.status(400)
         res.send("this route not exist");
         return;
     }
     let index = route.findIndex(
-        route => route.origin === req.session.origin 
-                && route.origin === req.body.origin 
+        route => route.origin === req.body.origin 
                 && route.destination === req.body.destination
     );
     route.splice(index, 1);
-    res.send();
+    res.send()
 }
 
-//get method
-const getMapRoute = (req, res) => {
+//get method - check
+const getRoute = (req, res) => {
     //missing params
-    if (req.body.to == null || req.body.from == null){
+    if (req.query.origin == null || req.query.destination == null){
         res.status(400)
         res.send("incomplete data, missing origin or destination point");
         return;
     }
     //not found to get
-    if (route.find((route) => route.user === req.session.user) == null 
-            && route.find((route) => route.destination === req.body.destination) == null 
-            && route.find((route) => route.origin === req.body.origin) == null){
+    if (route.find((route) => route.user === req.session.user && route.destination === req.query.destination && route.origin === req.query.origin) == null){
         res.status(400)
-        res.send("this route not exist for this users ");
+        res.send("this route not exist for this users");
         return;
     }
     //print out route found
-    res.send("<h1>route from " + req.body.origin + " to " + req.body.destination + "</h1>");
-    res.send(route.find((route) => route.origin === req.session.origin 
-        && route.origin === req.body.origin 
-        && route.destination === req.body.destination))
-    //res.send();
+    res.send(route.find((route) => route.origin === req.query.origin && route.destination === req.query.destination));
 }
 
-//post method
+//post method - check
 const changeRoute = (req, res) => {
     //no info given to change
     if (req.body.origin == null && req.body.destination == null){
@@ -55,34 +55,30 @@ const changeRoute = (req, res) => {
     }
 
     //does not found that route
-    if (route.find((route) => route.user === req.session.user) == null 
-            && route.find((route) => route.destination === req.body.destination) == null 
-            && route.find((route) => route.origin === req.body.origin) == null){
+    if (route.find((route) => route.user === req.session.user && route.destination === req.query.destination && route.origin === req.query.origin) == null){
         res.status(400);
         res.send("route does not exist");
         return;
     }
 
-    var route = mapAPI.find((API) => route.origin === req.session.origin 
-                                    && route.origin === req.body.origin 
-                                    && route.destination === req.body.destination);
+    var temp = route.find((route) => route.origin === req.body.origin && route.destination === req.body.destination);
     if (req.body.distance != null){
-        user["distance"] = req.body.distance;
+        temp["distance"] = parseInt(req.body.distance);
     }
 
     if (req.body.duration != null){
-        user["duration"] = req.body.duration;
+        temp["duration"] = parseInt(req.body.duration);
     }
 
     if (req.body.completed != null){
-        user["completed"] = req.body.completed;
+        temp["completed"] = parseInt(req.body.completed);
     }
-    res.send(user);
+    res.send(temp);
 }
 
 module.exports = {
-    //getMap,
-    getMapRoute,
+    getMap,
+    getRoute,
     //createMap,
     changeRoute,
     deleteRoute

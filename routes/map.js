@@ -5,9 +5,9 @@ const mapRouter = express.Router();
 
 const mapController = require("../controllers/map.js");
 
-mapRouter.post('/:user/:origin/:destination', (req, res) => mapController.createMap(req, res));
-mapRouter.get('/:user/:origin/:destination', (req, res) => mapController.getMapRoute(req, res));
-mapRouter.delete("/:user/:origin/:destination", (req, res) => mapController.deleteRoute(req, res));
-mapRouter.post("/:ser/:origin/:destination", (req, res) => mapController.changeMap(req, res));
-
+mapRouter.get('/info', (req, res) => mapController.getMap(req, res));
+mapRouter.get('/', (req, res) => mapController.getRoute(req, res));
+mapRouter.delete("/", (req, res) => mapController.deleteRoute(req, res));
+mapRouter.post("/", (req, res) => mapController.changeRoute(req, res));
+///route?origin={origin}&destination={destination}
 module.exports = mapRouter;
