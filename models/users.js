@@ -35,6 +35,18 @@ const users = [
             "carbonSaved": 2.1, //in KG
             "streak": 10 // days
         }
+    },
+
+    {
+        "name" : "Peter",
+        "userName": "sun",
+        "password" :"moon",
+        "data":{
+            "totalDistance": 5,
+            "energySaved": 12, //in KJ
+            "carbonSaved": 2.1, //in KG
+            "streak": 10 // days
+        },
     }
 
 ]

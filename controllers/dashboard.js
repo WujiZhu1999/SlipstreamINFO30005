@@ -47,6 +47,8 @@ const getLeaderboard = (req,res) => {
     userList.push(user["userName"]);
     const lengthFriendsList = userList.size;
 
+    const userListFirst = userList;
+
     //an array of distances for the users ranked
     var totalDistanceArray = [];
     
@@ -69,7 +71,7 @@ const getLeaderboard = (req,res) => {
             if (distance = user.data.totalDistance){
 
                     ranking += 1;
-                    const addUser = "<br>" + ranking + ". " + user.userName + " DISTANCE: " + user.data.totalDistance;
+                    const addUser = "<br>" + ranking + ". " + user.name + " DISTANCE: " + user.data.totalDistance;
                     output += addUser;
 
                     userList.splice((userIndex), 1); 
@@ -78,6 +80,7 @@ const getLeaderboard = (req,res) => {
             }
 
             else{
+
                 userIndex += 1;
             }
                 

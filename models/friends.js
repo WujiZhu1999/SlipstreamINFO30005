@@ -13,7 +13,13 @@ const friends = [
     {
         "sender":"food",
         "reciever":"hello",
-        "accepted":false
+        "accepted":true
+    },
+
+    {
+        "sender":"sun",
+        "reciever":"hello",
+        "accepted":true
     }
 ]
 module.exports = friends;
