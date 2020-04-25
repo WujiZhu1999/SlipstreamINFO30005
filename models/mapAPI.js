@@ -3,7 +3,9 @@ const fakeAPI = [
     "toID":2,
     "fromID":3,
     "from":"melbourne",
-    "route":"go here then go there then go to destination"
+    "route":"go here then go there then go to destination",
+    "duration":10,
+    "distance":10
     },
 ];
 
