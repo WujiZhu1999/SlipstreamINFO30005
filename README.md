@@ -1,6 +1,26 @@
 # INFO30005Bike Slipstream 
 
 Functionality: A dashboard to show summarised users details regarding bike rides (energySaved,carbonSaved and streaks)
+        Users
+        URL: /users
+        We have implemented:
+                deleting a new user (DELETE /users/:userName)
+                fetching information about the user (GET /users/:userName) (We'll sort out what information we send later, it wont just be the whole thing)
+                edit a user, changing something about them (POST /users/:userName)
+
+        Login
+        URL /login
+        We have implemented:
+                get the login page (GET /login)
+                log in (POST /login)
+                get the register page (GET /login/register)
+                register a new account (POST /login/register)
+                logout (POST /login/logout)
+
+        Friends
+        URL /friends
+        
+
 
 Functionality: A forum (where users can post articles) and tips (provided by the administrator) functionality
     
@@ -26,3 +46,4 @@ Functionality: A forum (where users can post articles) and tips (provided by the
 Functionality: A map functionality where a route can be created linking to a MAP API 
 
 Alongside all this functionality users have been implement to compliment them
+        
