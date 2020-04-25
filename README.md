@@ -45,7 +45,22 @@ Functionality: A forum (where users can post articles) and tips (provided by the
     
     
 
-Functionality: A map functionality where a route can be created linking to a MAP API 
+Functionality: A map functionality where a route can be created linking to a MAP API
+    URL: /map
+        We have implemented:
+                fetching a map (now is juts a text "Map") (GET /map/)
+                get initial info of route from API (POST /map/)
+
+
+        URL: /map/route
+        We have implemented:
+                deleting a route (DELETE /map/route)
+                fetching information of a route (GET /map/route) 
+                edit info of a route (POST map/route)
+        
+        URL: /map/finish
+        We have implemented:
+                finish a route (POST map/finish)
 Expected way to communicate with google map API. We are going to use Google Map API/Direction through following steps.
 
     1.	In index.js contain these for cross domain: 
