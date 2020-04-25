@@ -1,12 +1,18 @@
 const friends = [
     {
-        "sender":"exampleUserID1",
-        "reciever":"exampleUserID2",
+        "sender":"hello",
+        "reciever":"yoyo",
         "accepted":true
     },
     {
-        "sender":"exampleUserID3",
-        "reciever":"exampleUserID2",
+        "sender":"food",
+        "reciever":"yoyo",
+        "accepted":true
+    },
+
+    {
+        "sender":"food",
+        "reciever":"hello",
         "accepted":false
     }
 ]
