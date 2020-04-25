@@ -35,7 +35,7 @@ const getLeaderboard = (req,res) => {
     var output = "<h1>Leaderboard</h1>";
 
     //gets a list of usernames that should be ranked
-    const userName = req.params.userName;
+    const userName = req.session.user;
     if( users.find((user) => user.userName === userName) == false){
         res.send("not valid user")
         return;

@@ -2,9 +2,9 @@
 //Author: Chloe Thai
 //Student Numbe : 995204
 
-var tips = require('../models/tips.js');
+var tips = require("../models/tips.js");
 
-//get's a tip page
+//get"s a tip page
 const getTips = (req, res) => {
     var output = "<h1> Tips </h1>";
 
