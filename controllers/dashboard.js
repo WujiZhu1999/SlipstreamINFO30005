@@ -61,6 +61,8 @@ const getLeaderboard = (req,res) => {
     sortedDistance = sortedDistance.reverse();
 
    var ranking = 0
+
+   // Creating the output for the leaderboard based on sortedDistance rankings 
     for(distance in sortedDistance){
         var userIndex = 0;
 
