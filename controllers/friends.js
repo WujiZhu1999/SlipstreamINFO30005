@@ -1,6 +1,7 @@
 var friends = require("../models/friends.js");
 var users = require("../models/users.js");
 
+//get all pending friendrequests
 const getFriendRequests = (req, res) => {
     if (req.session.user == null){
         res.status(400);
@@ -12,6 +13,7 @@ const getFriendRequests = (req, res) => {
     res.send(friendRequests);
 }
 
+//send a new friend request
 const sendFriendRequest = (req, res) => {
     if (req.session.user == null){
         res.status(400);
@@ -25,10 +27,11 @@ const sendFriendRequest = (req, res) => {
         return;
     }
 
-
+    //find all if there is already a friend request with the new friend
     var senderFriend = friends.find(friend => friend["sender"] === req.session.user && friend["reciever"] === req.params.userName);
     var recieverFriend = friends.find(friend => friend["reciever"] === req.session.user && friend["sender"] === req.params.userName);
 
+    //if there is already a friend request you have recieved from them
     if (recieverFriend != null){
         if (recieverFriend["accepted"] == true){
             res.status(400);
@@ -38,6 +41,8 @@ const sendFriendRequest = (req, res) => {
 
         recieverFriend["accepted"] = true
         res.send("request accepted");
+
+    //if you have already send them a friend request
     } else if (senderFriend != null){
         if (senderFriend["accepted"] == true){
             res.status(400);
@@ -48,6 +53,7 @@ const sendFriendRequest = (req, res) => {
             res.send("already sent a friend request");
             return;
         }
+    //there is no existing friend request between you and them, send them a request
     } else {
         friends.push({
             "sender":req.session.user,

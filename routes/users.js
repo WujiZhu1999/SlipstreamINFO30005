@@ -4,9 +4,6 @@ const usersRouter = express.Router();
 
 const usersController = require("../controllers/users.js");
 
-//Creates a user using a post request
-//usersRouter.post('/', (req, res) => usersController.createUser(req, res));
-
 //Deletes a user specifed by the user's username
 usersRouter.delete("/:userName", (req, res) => usersController.deleteUser(req, res));
 
