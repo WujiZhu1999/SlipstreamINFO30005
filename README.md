@@ -46,6 +46,7 @@ Functionality: A forum (where users can post articles) and tips (provided by the
     
 
 Functionality: A map functionality where a route can be created linking to a MAP API
+
     URL: /map
         We have implemented:
                 fetching a map (now is juts a text "Map") (GET /map/)
