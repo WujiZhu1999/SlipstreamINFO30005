@@ -10,7 +10,7 @@ const getTips = (req, res) => {
 
     var largestArticleNum = 1;
 
-    tip = tips.find((tip) => tip.tipNum ==  largestArticleNum)
+    tip = tips.find((tip) => tip.tipNum ==  largestArticleNum);
 
     while(tip!=null){
         newTitle = "<br>" + tip.title
