@@ -19,6 +19,9 @@ Functionality: A dashboard to show summarised users details regarding bike rides
 
         Friends
         URL /friends
+        We have implemented:
+                get a list of pending friend requests (GET /friends)
+                send a friend request, or accept a friend request (POST /friends/:userName)
         
 
 
