@@ -17,7 +17,7 @@ function getdata(displaynum){
         
     }
     var page = '<style> .divcss5{width:300px;height:300px;border:2px solid #000} dt{border-top:2px solid #000}</style><div class="divcss5"><h1 align="center">Leaderboard</h1><dl id="Leaderboard"></dl></div>\
-    <script>document.getElementById("Leaderboard").innerHTML="'+ content +'";</script>'
+    <script>document.getElementById("Leaderboard").innerHTML="'+ content +'";</script>';
     return page;  
 }
 
