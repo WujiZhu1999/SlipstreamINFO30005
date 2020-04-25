@@ -10,14 +10,14 @@ const getForum = (req, res) => {
 
     var largestArticleNum = 1;
 
-    article = articles.find((article) => article.articleNum ==  largestArticleNum)
+    article = articles.find((article) => article.articleNum ==  largestArticleNum);
 
     //display the title all the articles
     while(article!=null){
-        newTitle = "<br>" + article.title
+        newTitle = "<br>" + article.title;
         output += newTitle;
         largestArticleNum++;
-        article = articles.find((article) => article.articleNum ==  largestArticleNum)
+        article = articles.find((article) => article.articleNum ==  largestArticleNum);
     }
 
     res.send(output);
@@ -44,7 +44,7 @@ const createArticle = (req, res) => {
 
     //checks whether all the paramters needed to create an article is present
     if (req.body.title == null || req.body.body == null || req.body.author == null){
-        res.status(400)
+        res.status(400);
         res.send("There is incomplete data");
         return;
     }
@@ -70,11 +70,11 @@ const createArticle = (req, res) => {
 
 // Deleting an article
 const deleteArticle = (req, res) => {
-    var enteredNumber = parseInt(req.params.articleNum, 10);;
+    var enteredNumber = parseInt(req.params.articleNum, 10);
 
     //check's if the article requested to be deleted exsists
     if (articles.find((article) => article.articleNum === enteredNumber) == null){
-        res.status(400)
+        res.status(400);
         res.send("this article does not exist ");
         return;
     }
@@ -112,7 +112,7 @@ const deleteArticle = (req, res) => {
     else{
         articles.splice(articleIndex,1);
 
-        var numberAfterArticle = enteredNumber + 1
+        var numberAfterArticle = enteredNumber + 1;
 
         if(largestArticleNum >= numberAfterArticle){
             
