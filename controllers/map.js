@@ -5,6 +5,7 @@ var routeFrom;
 var toID;
 var fromID;
 
+//get API info - check
 const getMap = (req, res) => {
     routeTo = fakeAPI[0].to;
     routeFrom = fakeAPI[0].from;
