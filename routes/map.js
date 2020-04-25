@@ -5,12 +5,10 @@ const mapRouter = express.Router();
 
 const mapController = require("../controllers/map.js");
 
-<<<<<<< HEAD
 mapRouter.get('/info', (req, res) => mapController.getMap(req, res));
 mapRouter.get('/', (req, res) => mapController.getRoute(req, res));
 mapRouter.delete("/", (req, res) => mapController.deleteRoute(req, res));
 mapRouter.post("/", (req, res) => mapController.changeRoute(req, res));
-=======
 var loginChecker = require("../controllers/login.js");
 
 
@@ -43,5 +41,4 @@ mapRouter.post('/finish', (req, res, next) =>loginChecker.isLoggedIn(req, res, n
 mapRouter.delete("route", (req, res) => mapController.deleteRoute(req, res));
 //mapRouter.post("/:origin/:destination", (req, res) => mapController.changeMap(req, res));
 
->>>>>>> c755a255da386467828af40f08be9647c9d0e2cd
 module.exports = mapRouter;
