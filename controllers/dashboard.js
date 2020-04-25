@@ -1,6 +1,9 @@
 //Author： Lijun Wang
 //StudentID：904796
 const dashboard = require("../models/dashboard"); 
+const users = require("../models/users.js");
+const friendsController = require("../controllers/friends.js");
+
 function getdata(displaynum){    
     var x=1;
     var content="";
@@ -33,7 +36,13 @@ const getLeaderboard = (req,res) => {
 
     //gets a list of usernames that should be ranked
     const userName = req.params.userName;
+    if( users.find((user) => user.userName === userName) == false){
+        res.send("not valid user")
+        return;
+    }
+
     const user = users.find((user) => user.userName === userName);
+    
     var userList = friendsController.getFriends(userName);
     userList.push(user["userName"]);
     const lengthFriendsList = userList.size;
@@ -49,13 +58,31 @@ const getLeaderboard = (req,res) => {
     sortedDistance = totalDistanceArray.sort();
     sortedDistance = sortedDistance.reverse();
 
-   for(n in sortedDistance){
-        const user = users.find((user) => user.data.totalDistance === sortedDistance[n]);
-        const ranking = 1 + parseInt(n,10);
-        const newUserName = "<br>" + ranking + ". " + user.userName + " DISTANCE: " + user.data.totalDistance;
-        output += newUserName;
-    }
+   var ranking = 0
+    for(distance in sortedDistance){
+        var userIndex = 0;
 
+        for(userNum in userList){
+
+            const user = users.find((user) => user.userName === userList[userNum]);
+
+            if (distance = user.data.totalDistance){
+
+                    ranking += 1;
+                    const addUser = "<br>" + ranking + ". " + user.userName + " DISTANCE: " + user.data.totalDistance;
+                    output += addUser;
+
+                    userList.splice((userIndex), 1); 
+                    break;
+                    
+            }
+
+            else{
+                userIndex += 1;
+            }
+                
+        }
+    }
     res.send(output);
 }
 
