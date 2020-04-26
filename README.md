@@ -80,7 +80,7 @@ Expected way to communicate with google map API. We are going to use Google Map 
                 1.Source
                 2.Destination
                 3.Key (our unique after we pay for the api)
-        4.Region (Australia in this case since we are dealing with Melbourne bike path)
+                4.Region (Australia in this case since we are dealing with Melbourne bike path)
         Code:
         >>      const axios = require('axios') //for cross domain
         >>      const { data } = await axios({ url: `https://maps.googleapis.com/maps/api/directions/json?                                       >>          origin=${req.query.origin}&destination=${req.query.destination}&key=${req.query.key}&region=${req.query.region}`})
