@@ -83,7 +83,8 @@ Expected way to communicate with google map API. We are going to use Google Map 
                 4.Region (Australia in this case since we are dealing with Melbourne bike path)
         Code:
         >>      const axios = require('axios') //for cross domain
-        >>      const { data } = await axios({ url: `https://maps.googleapis.com/maps/api/directions/json?                                       >>          origin=${req.query.origin}&destination=${req.query.destination}&key=${req.query.key}&region=${req.query.region}`})
+        >>      const { data } = await axios({ url: `https://maps.googleapis.com/maps/api/directions/json?                                       
+        >>          origin=${req.query.origin}&destination=${req.query.destination}&key=${req.query.key}&region=${req.query.region}`})
         >>      //for example outcome(response): see https://developers.google.com/maps/documentation/directions/start
         Then we can put the map(actual active map) through front end and update:
                 1. personal info by calculating distance
