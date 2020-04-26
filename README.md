@@ -67,24 +67,30 @@ Functionality: A map functionality where a route can be created linking to a MAP
                 finish a route (POST map/finish)
 Expected way to communicate with google map API. We are going to use Google Map API/Direction through following steps.
 
-    1.	In index.js contain these for cross domain: 
-    a)	app.all('*', function(req, res, next) {
-    b)	  res.header('Access-Control-Allow-Origin', '*')
-    c)	  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
-    d)	  res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
-    e)	  res.header('X-Powered-By', ' 3.2.1')
-    f)	  res.header('Content-Type', 'application/json;charset=utf-8')
-    g)	  next()
-    h)	})
-    2.	In MapController.js
-    a)	const axios = require('axios') for cross domain
-    b)	const { data } = await axios({ url: `https://maps.googleapis.com/maps/api/directions/json?origin=${req.query.origin}&destination=${req.query.destination}&key=${req.query.key}&region=${req.query.region}`})
-    // then we will get the data back for route with sample response like this
-    c)	https://developers.google.com/maps/documentation/directions/start
-    // then we can do the counting about route information which could present to users about route information and update personal records.
-
-    For front-end presenting data, won’t considering that in this phase.
-
+    1.	In app.js(entry point) contain these for cross domain: 
+        >>	app.all('*', function(req, res, next) {
+        >>	    res.header('Access-Control-Allow-Origin', '*')
+        >>          res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+        >>          res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
+        >>          res.header('X-Powered-By', ' 3.2.1')
+        >>          res.header('Content-Type', 'application/json;charset=utf-8')
+        >>          next()
+        >>      })
+    2.	In MapController.js we call google map api through passed in:
+                1.Source
+                2.Destination
+                3.Key (our unique after we pay for the api)
+        4.Region (Australia in this case since we are dealing with Melbourne bike path)
+        Code:
+        >>      const axios = require('axios') //for cross domain
+        >>      const { data } = await axios({ url: `https://maps.googleapis.com/maps/api/directions/json?                                       >>          origin=${req.query.origin}&destination=${req.query.destination}&key=${req.query.key}&region=${req.query.region}`})
+        >>      //for example outcome(response): see https://developers.google.com/maps/documentation/directions/start
+        Then we can put the map(actual active map) through front end and update:
+                1. personal info by calculating distance
+                2. route info by response
+        In this phase we mock up the API by array with just info about road and distance for which are enough for server side
+        
+    In this phase we won't actually implement then but just put
 
 Alongside all this functionality users have been implement to compliment them
         
