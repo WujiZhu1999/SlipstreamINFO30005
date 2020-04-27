@@ -13,16 +13,16 @@ var loginChecker = require("../controllers/login.js");
 
 //Author: Thy Le
 //Student Numbe : 980822
-mapRouter.get('/', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.getMap(req, res));
-mapRouter.post('/', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.createRoute(req, res));
+mapRouter.get('/', (req, res) => mapController.getMap(req, res));
+mapRouter.post('/', (req, res) => mapController.createRoute(req, res));
 
-mapRouter.get('/route', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.getRoute(req, res));
-mapRouter.delete("/route",  (req, res, next) =>loginChecker.isLoggedIn(req, res, next),  (req, res) => mapController.deleteRoute(req, res));
-mapRouter.post("/route", (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) => mapController.changeRoute(req, res));
+mapRouter.get('/route', (req, res) => mapController.getRoute(req, res));
+mapRouter.delete("/route",  (req, res) => mapController.deleteRoute(req, res));
+mapRouter.post("/route", (req, res) => mapController.changeRoute(req, res));
 
 
 //LUC
 //finish and update
-mapRouter.post('/finish', (req, res, next) =>loginChecker.isLoggedIn(req, res, next), (req, res) =>mapController.finishRoute(req,res));
+mapRouter.post('/finish', (req, res) =>mapController.finishRoute(req,res));
 
 module.exports = mapRouter;

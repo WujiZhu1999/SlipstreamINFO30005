@@ -1,26 +1,25 @@
 //Author： Lijun Wang
 //StudentID：904796
-const dashboard = require("../models/dashboard"); 
 const users = require("../models/users.js");
 const friendsController = require("../controllers/friends.js");
 const displaynum = 2 //display number
 
 const home = (req, res) => {
     if (req.session.user != null){//logged in 
-        res.send("");  
+        getLeaderboard();
     } else {
         res.send("<h1> logged out homepage<br>Welcome to Slipstream</h1>");
     }
 }
 
 //Ranks a user's friends and themselves on the totalDistance cycled
-const getLeaderboard = (req,res) => {
+function getLeaderboard() {
     //title for the leaderbaord
     var output = "<h1 align='center'>Leaderboard</h1>";
 
     //gets a list of usernames that should be ranked
-    // const userName = req.session.user;
-    const userName = "hello"
+    const userName = req.session.user;
+    //const userName = "hello"
     if( users.find((user) => user.userName === userName) == false){
         res.send("not valid user")
         return;
@@ -84,6 +83,5 @@ const getLeaderboard = (req,res) => {
 }
 
 module.exports = {
-    home,
-    getLeaderboard
+    home
 };
