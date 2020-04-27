@@ -6,7 +6,7 @@ const users = [
         "userName": "hello",
         "password" :"food",
         "data":{
-            "totalDistance": 2,
+            "totalDistance": 11,
             "energySaved": 12, //in KJ
             "carbonSaved": 2.1, //in KG
             "streak": 10 // days

@@ -42,8 +42,8 @@ const getLeaderboard = (req,res) => {
         totalDistanceArray.push(user["data"]["totalDistance"]);
     }
 
-    sortedDistance = totalDistanceArray.sort();
-    sortedDistance = sortedDistance.reverse();
+    sortedDistance = totalDistanceArray.sort(function(a, b){return b-a});
+    //sortedDistance = sortedDistance.reverse();
 
    var ranking = 0
 
