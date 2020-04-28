@@ -6,11 +6,32 @@ const displaynum = 2 //display number
 
 const home = (req, res) => {
     if (req.session.user != null){//logged in 
+        output = getStats(req, res);
+        res.send(output);
+
         getLeaderboard();
     } else {
         res.send("<h1> logged out homepage<br>Welcome to Slipstream</h1>");
     }
 }
+
+function getStats(req, res) {
+    // req.session.user = "hello";
+    const userName = req.session.user;
+    // check if the userName is valid
+    if( users.find((user) => user.userName === userName) == false){
+        res.send("not valid user")
+        return;
+    }
+
+    // find the data of the user in the database
+    const user = users.find((user) => user.userName === userName);
+    
+    // construct the output html string
+    output = "<dt>Your stats</dt> <dd>"+ user.name +"</dd><dd> DISTANCE: "+ user.data.totalDistance +"</dd><dd>"+user.data.energySaved+" KJ energy Saved </dd>"
+                    + "<dd>"+ user.data.carbonSaved + " KG carbon Saved </dd>" + "<dd>"+ user.data.streak + " days Streak </dd>"
+    return output;
+};
 
 //Ranks a user's friends and themselves on the totalDistance cycled
 function getLeaderboard() {
