@@ -1,5 +1,3 @@
-//Author： Lijun Wang
-//StudentID：904796
 const users = require("../models/users.js");
 const friendsController = require("../controllers/friends.js");
 const displaynum = 2 //display number
