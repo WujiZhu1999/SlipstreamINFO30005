@@ -146,9 +146,16 @@ const changeArticle = (req, res) => {
     if (req.body.title == null && req.body.body == null){
         res.status(400);
         res.send("cannot make no change");
+        return;
     }
 
-    //TO-DO: add a function to check if author is consistant
+    // checks if the user has permission to edit a particular article
+
+    if (req.session.user != article.author){
+        res.status(400);
+        res.send("you are not authorised to change this article");
+        return;
+    }
 
     //changes corresponding to what is requested
     if (req.body.title != null){
