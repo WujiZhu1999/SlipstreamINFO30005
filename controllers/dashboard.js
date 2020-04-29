@@ -4,23 +4,21 @@ const displaynum = 2 //display number
 
 const home = (req, res) => {
     if (req.session.user != null){//logged in 
-        output = getStats(req, res);
+        output = getStats(req);
+        output += "<br><br>"
+        output += getLeaderboard(req);
         res.send(output);
 
-        getLeaderboard();
+        
     } else {
         res.send("<h1> logged out homepage<br>Welcome to Slipstream</h1>");
     }
 }
 
-function getStats(req, res) {
+function getStats(req) {
     // req.session.user = "hello";
     const userName = req.session.user;
     // check if the userName is valid
-    if( users.find((user) => user.userName === userName) == false){
-        res.send("not valid user")
-        return;
-    }
 
     // find the data of the user in the database
     const user = users.find((user) => user.userName === userName);
@@ -32,17 +30,13 @@ function getStats(req, res) {
 };
 
 //Ranks a user's friends and themselves on the totalDistance cycled
-function getLeaderboard() {
+function getLeaderboard(req) {
     //title for the leaderbaord
     var output = "<h1 align='center'>Leaderboard</h1>";
 
     //gets a list of usernames that should be ranked
     const userName = req.session.user;
     //const userName = "hello"
-    if( users.find((user) => user.userName === userName) == false){
-        res.send("not valid user")
-        return;
-    }
 
     const user = users.find((user) => user.userName === userName);
     
@@ -98,7 +92,7 @@ function getLeaderboard() {
     }
     output = '<style> .divcss5{width:300px;height:600px;border:2px solid #000} dt{border-top:2px solid #000}</style><div class="divcss5"><dl id="Leaderboard"></dl></div>\
     <script>document.getElementById("Leaderboard").innerHTML="'+ output +'";</script>'
-    res.send(output);
+    return output
 }
 
 module.exports = {

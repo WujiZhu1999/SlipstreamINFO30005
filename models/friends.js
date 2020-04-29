@@ -5,7 +5,7 @@ const friends = [
         "accepted":true
     },
     {
-        "seçnder":"food",
+        "sender":"food",
         "reciever":"yoyo",
         "accepted":true
     },
