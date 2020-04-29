@@ -56,6 +56,11 @@ const logIn = (req, res) => {
 
 }
 
+
+const registration = (req, res) => {
+    res.send("Register Page")
+}
+
 //log a user out of the website
 const logOut = (req, res) => {
     req.session.user = null;
@@ -65,5 +70,6 @@ module.exports = {
     isLoggedIn,
     getLogin,
     logIn,
-    logOut
+    logOut,
+    registration
 }

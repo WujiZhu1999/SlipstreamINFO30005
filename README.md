@@ -1,5 +1,18 @@
 # INFO30005Bike Slipstream 
 
+
+TO LOG IN:
+we havnt added a form to the webpage yet, so to log in do the following:
+        use insomnia to send a post request to /login
+                -have the form set to form url encoded
+                -have parameters userName and password set to a username and password
+                -an example username and password is:
+                        userName: yoyo
+                        password: qwerty
+        
+        we have a route for register user (POST /login/register), but because it users the user controller, and we dont have a real database set up for now, it uses a separate instance of the users.js json model, 
+        and so you wont be able to log in with users you create through this. This will not be the case for the next deliverable, as they will all access the same database
+
 Functionality: A dashboard to show summarised users details regarding bike rides (energySaved,carbonSaved and streaks)
         Users
         URL: /users
@@ -22,6 +35,9 @@ Functionality: A dashboard to show summarised users details regarding bike rides
         We have implemented:
                 get a list of pending friend requests (GET /friends)
                 send a friend request, or accept a friend request (POST /friends/:userName)
+
+
+        
         
 
 
