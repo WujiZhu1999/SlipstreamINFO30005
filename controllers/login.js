@@ -57,7 +57,7 @@ const logIn = (req, res) => {
 }
 
 
-const registration = (req, res) => {
+const getRegistration = (req, res) => {
     res.send("Register Page")
 }
 
@@ -71,5 +71,5 @@ module.exports = {
     getLogin,
     logIn,
     logOut,
-    registration
+    getRegistration
 }

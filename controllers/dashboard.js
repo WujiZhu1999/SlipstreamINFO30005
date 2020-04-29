@@ -2,7 +2,7 @@ const users = require("../models/users.js");
 const friendsController = require("../controllers/friends.js");
 const displaynum = 2 //display number
 
-const home = (req, res) => {
+const getHomepage = (req, res) => {
     if (req.session.user != null){//logged in 
         output = getStats(req);
         output += "<br><br>"
@@ -42,9 +42,6 @@ function getLeaderboard(req) {
     
     var userList = friendsController.getFriends(userName);
     userList.push(user["userName"]);
-    const lengthFriendsList = userList.size;
-
-    const userListFirst = userList;
 
     //an array of distances for the users ranked
     var totalDistanceArray = [];
@@ -96,5 +93,5 @@ function getLeaderboard(req) {
 }
 
 module.exports = {
-    home
+    getHomepage
 };
