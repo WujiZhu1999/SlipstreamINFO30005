@@ -72,10 +72,19 @@ const createArticle = (req, res) => {
 const deleteArticle = (req, res) => {
     var enteredNumber = parseInt(req.params.articleNum, 10);
 
+ 
+
     //check's if the article requested to be deleted exsists
     if (articles.find((article) => article.articleNum === enteredNumber) == null){
         res.status(400);
         res.send("this article does not exist ");
+        return;
+    }
+
+    //checks if the user is authorised to remove the article
+    if (req.session.user != (articles.find((article) => article.articleNum === enteredNumber)).author){
+        res.status(400);
+        res.send("you are not authorised to delete this article");
         return;
     }
 
@@ -88,7 +97,7 @@ const deleteArticle = (req, res) => {
     while(articles.find((article) => article.articleNum ==  largestArticleNum) != null){
         largestArticleNum++;
     }
-    
+
     //slipices according to index
     if (articleIndex == 0){
         articles.splice(0,1);
