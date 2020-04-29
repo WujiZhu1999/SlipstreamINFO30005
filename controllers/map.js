@@ -22,7 +22,7 @@ const createRoute = (req, res) => {
         "destination":fakeAPI[0].to,
         "distance": Math.random(),
         "duration": Math.random(),
-        "completed": 0
+        "completed": []
     });
     return res.send(route.find((route) => route.origin === fakeAPI[0].from && route.destination === fakeAPI[0].to));
 }
@@ -31,16 +31,14 @@ const createRoute = (req, res) => {
 //Student Numbe : 980822
 //method a delete route that specificied with user, to and from
 const deleteRoute = (req, res) => {
-    if (route.find((route) => route.user === req.body.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
+    if (route.find((route) => route.user === req.session.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
         res.status(400)
         res.send("this route not exist");
         return;
     }
-    let index = route.findIndex(route => route.user === req.body.user && route.origin === req.body.origin && route.destination === req.body.destination);
+    let index = route.findIndex(route => route.user === req.session.user && route.origin === req.body.origin && route.destination === req.body.destination);
     route.splice(index, 1);
-    console.log(route);
     return;
-    //res.send()
 }
 
 //Author: Thy Le
@@ -74,13 +72,13 @@ const changeRoute = (req, res) => {
     }
 
     //does not found that route
-    else if (route.find((route) => route.user === req.body.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
+    else if (route.find((route) => route.user === req.session.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
         res.status(400);
         res.send("route does not exist");
         return;
     }
 
-    var temp = route.find((route) => route.user === req.body.user && route.origin === req.body.origin && route.destination === req.body.destination);
+    var temp = route.find((route) => route.user === req.session.user && route.origin === req.body.origin && route.destination === req.body.destination);
     if (req.body.distance != null){
         temp["distance"] = parseInt(req.body.distance);
     }
@@ -90,7 +88,7 @@ const changeRoute = (req, res) => {
     }
 
     if (req.body.completed != null){
-        temp["completed"] = req.body.completed;
+        temp["completed"].push(req.body.completed);
     }
     return res.send(temp);
 }
