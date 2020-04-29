@@ -9,7 +9,7 @@ var users = require("../models/users.js");
 //Student Numbe : 980822
 //method return the API general info
 const getMap = (req, res) => {
-    res.send("Map");
+    return res.send("Map");
 }
 
 //Author: Thy Le
@@ -18,27 +18,29 @@ const getMap = (req, res) => {
 const createRoute = (req, res) => {
     //if not found -> adding (create a route)
     route.push({
-        "origin": fakeAPI[0].to,
-        "destination":fakeAPI[0].from,
+        "origin": fakeAPI[0].from,
+        "destination":fakeAPI[0].to,
         "distance": Math.random(),
         "duration": Math.random(),
         "completed": 0
     });
-    res.send()
+    return res.send(route.find((route) => route.origin === fakeAPI[0].from && route.destination === fakeAPI[0].to));
 }
 
 //Author: Thy Le
 //Student Numbe : 980822
 //method a delete route that specificied with user, to and from
 const deleteRoute = (req, res) => {
-    if (route.find((route) => route.user === req.session.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
+    if (route.find((route) => route.user === req.body.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
         res.status(400)
         res.send("this route not exist");
         return;
     }
-    let index = route.findIndex(route => route.user === req.session.user && route.origin === req.body.origin && route.destination === req.body.destination);
+    let index = route.findIndex(route => route.user === req.body.user && route.origin === req.body.origin && route.destination === req.body.destination);
     route.splice(index, 1);
-    res.send()
+    console.log(route);
+    return;
+    //res.send()
 }
 
 //Author: Thy Le
@@ -52,13 +54,13 @@ const getRoute = (req, res) => {
         return;
     }
     //not found to get
-    if (route.find((route) => route.user === req.session.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
+    else if (route.find((route) => route.user === req.session.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
         res.status(400)
         res.send("this route not exist for this users");
         return;
     }
-    //print out route found
-    res.send(route.find((route) => route.user === req.session.user && route.origin === req.body.origin && route.destination === req.body.destination));
+    //return route found
+    return res.send(route.find((route) => route.user === req.session.user && route.origin === req.body.origin && route.destination === req.body.destination));
 }
 
 //Author: Thy Le
@@ -72,13 +74,13 @@ const changeRoute = (req, res) => {
     }
 
     //does not found that route
-    if (route.find((route) => route.user === req.session.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
+    else if (route.find((route) => route.user === req.body.user && route.destination === req.body.destination && route.origin === req.body.origin) == null){
         res.status(400);
         res.send("route does not exist");
         return;
     }
 
-    var temp = route.find((route) => route.user === req.session.user && route.origin === req.body.origin && route.destination === req.body.destination);
+    var temp = route.find((route) => route.user === req.body.user && route.origin === req.body.origin && route.destination === req.body.destination);
     if (req.body.distance != null){
         temp["distance"] = parseInt(req.body.distance);
     }
@@ -88,9 +90,9 @@ const changeRoute = (req, res) => {
     }
 
     if (req.body.completed != null){
-        temp["completed"] = parseInt(req.body.completed);
+        temp["completed"] = req.body.completed;
     }
-    res.send(temp);
+    return res.send(temp);
 }
 
 //finish a route
@@ -113,7 +115,7 @@ const finishRoute = (req, res) =>{
 module.exports = {
     getMap,
     getRoute,
-    //createMap,
+    createRoute,
     changeRoute,
     deleteRoute,
     finishRoute
