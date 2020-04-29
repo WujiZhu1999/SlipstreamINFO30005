@@ -155,7 +155,6 @@ const changeArticle = (req, res) => {
         res.send("you are not authorised to change this article");
     }
 
-
     //changes corresponding to what is requested
     if (req.body.title != null){
         article["title"] = req.body.title;
