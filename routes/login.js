@@ -12,10 +12,10 @@ loginRouter.get("/", (req, res) => loginController.getLogin(req, res));
 loginRouter.post("/", (req, res) => loginController.logIn(req, res));
 
 //get the register page, where you make a new account
-loginRouter.get("/register", (req, res) => loginController.register(res, req));
+loginRouter.get("/register", (req, res) => loginController.registration(req, res));
 
 //create a new account
-loginRouter.post("/register", (req, res) => userController.createUser(res, req));
+loginRouter.post("/register", (req, res) => userController.createUser(req, res));
 
 //send a log out request
 loginRouter.post("/logout", (req, res) => loginController.logOut(req, res));
