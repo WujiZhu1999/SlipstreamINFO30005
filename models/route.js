@@ -23,7 +23,7 @@ const route = [
     "destination": "Bye",
     "distance": 2,
     "duration": 60,
-    "completed": 0
+    "completed": []
 
   }
 ]
