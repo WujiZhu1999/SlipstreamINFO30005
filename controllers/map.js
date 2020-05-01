@@ -95,9 +95,12 @@ const changeRoute = (req, res) => {
 
 //finish a route
 const finishRoute = (req, res) =>{
-    if(req.body.user || users.find((user) => user.userName == req.body.user)){
+    if(req.body.user){
         var _user = users.find((user) => user.userName == req.body.user);
-        if(req.body.distance){
+        if (_user == null){
+            return res.send("No user match.");
+        }
+        else if(req.body.distance){
             _user.data.totalDistance += req.body.distance;
             _user.data.energySaved += 1000*req.body.distance;
             _user.data.carbonSaved += 0.21*req.body.distance/1000;
