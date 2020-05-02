@@ -30,7 +30,14 @@ const getArticle = (req, res) => {
     const article = articles.find((a) => a.articleNum === number);
     
     if(article){
-        res.send("<h1> Article: " + article.title + "</h1>" +  "<body>" + article.body + "</body>");
+        var output = "<h1> Article: " + article.title + "</h1>" +  "<body>" + article.body + "</body>" + "<br>" + "<br>"+ "COMMENTS";
+
+        //sends all the corresponding comments
+        for (i in article.comments) {
+            output += "<br>" +  article.comments[i].commentAuthor + " said:"+ "<br>"  + article.comments[i].commentBody + "<br>" ;
+        }
+
+        res.send(output);
     }
 
     else{
