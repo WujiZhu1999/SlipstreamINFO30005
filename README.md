@@ -14,7 +14,7 @@ Functionality: A dashboard to show summarised users details regarding bike rides
         URL: /users
         We have implemented:
                 deleting a new user (DELETE /users/:userName)
-                fetching information about the user (GET /users/:userName) (We'll sort out what information we send later, it wont just be the whole thing)
+                fetching information about the user/ settings page (GET /users/:userName) (We'll sort out what information we send later, it wont just be the whole thing)
                 edit a user, changing something about them (POST /users/:userName)
 
         Login
@@ -42,22 +42,22 @@ Functionality: A forum (where users can post articles) and tips (provided by the
     Forum
     URL: /forum
     For the Forum we have implemented the functions to:
-            get a forum page that displays all the titles of the current articles (/forum)
-            get a particlar article based on the number & corresponding comments(forum/:articleNum)
-            delete an article (forum/:articleNum)
-            editing a particlar article using a post request (forum/:articleNum/edit) 
-            create an article using a post request (/forum) 
-            create a new comment on a particular article (/forum:/:articleNum)
-            delete a comment (/forum:/:articleNum/:commentNum)
-            edit a comment (/forum/:articleNum/:commentNum/edit)
+            get a forum page that displays all the titles of the current articles (GET /forum)
+            get a particlar article based on the number & corresponding comments(GET forum/:articleNum)
+            delete an article (DELETE forum/:articleNum)
+            editing a particlar article using a post request (POST forum/:articleNum/edit) 
+            create an article using a post request (POST /forum) 
+            create a new comment on a particular article (POST /forum:/:articleNum)
+            delete a comment (DELETE /forum:/:articleNum/:commentNum)
+            edit a comment (POST /forum/:articleNum/:commentNum/edit)
 
     Tips
     URL: /tips
     For tips we have implemented the functions to: 
-        get a tip page that diplays all the titles of the current tips (/tips/)
-        get a particular tip using a tipNumber (/tips/:tipNum)
-        create a new tip using a post request (/tips/)
-        delete a tip pasted on a tipNumber (tips/:tipNum) 
+        get a tip page that diplays all the titles of the current tips (GET /tips/)
+        get a particular tip using a tipNumber (GET /tips/:tipNum)
+        create a new tip using a post request (POST /tips/)
+        delete a tip pasted on a tipNumber (DELETE tips/:tipNum) 
 
         (we did not to a editing since we an assume this can be done manually)
     
