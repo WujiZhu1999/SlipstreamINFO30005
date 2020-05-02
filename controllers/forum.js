@@ -68,7 +68,8 @@ const createArticle = (req, res) => {
         "articleNum":newArticleNum,
         "title":req.body.title,
         "body":req.body.body,
-        "author":req.session.user
+        "author":req.session.user,
+        "comments": []
     });
 
     res.send(articles.find((article) => article.articleNum == newArticleNum));
@@ -204,7 +205,6 @@ const createComment = (req, res) => {
     }
 
     else {
-         ;
          var author = "anonymous";
     }
 

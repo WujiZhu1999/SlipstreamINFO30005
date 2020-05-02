@@ -47,10 +47,13 @@ Functionality: A forum (where users can post articles) and tips (provided by the
     URL: /forum
     For the Forum we have implemented the functions to:
             get a forum page that displays all the titles of the current articles (forum)
-            get a particlar article based on the number (forum/articleNum)
-            deleteing an article (forum/articleNum)
+            get a particlar article based on the number & corresponding comments(forum/articleNum)
+            delete an article (forum/articleNum)
             editing a particlar article (forum/articleNum) using a post request
             create an article using a post request 
+            create a new comment on a particular article
+            delete a comment
+            edit a comment 
 
     Tips
     URL: /tips
