@@ -189,14 +189,14 @@ const changeArticle = (req, res) => {
 //Creates a new comment
 const createComment = (req, res) => {
 
+    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
+
     // checks if the article exists
     if (article == null){
         res.status(400);
         res.send("article does not exist");
         return;
     }
-
-    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
 
     //checks whether all the paramters needed to create an comment is present
     if (req.body.commentBody == null){
