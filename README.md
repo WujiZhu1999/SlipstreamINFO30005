@@ -1,6 +1,16 @@
 # INFO30005Bike Slipstream 
 # https://slipstream1.herokuapp.com/
 
+Group Members:
+        Nathan Harvey 997261
+        Chloe Thai 995204
+        Thy Le 980822
+        LIJUN WANG 904796
+        Wuji Zhu 956195
+
+
+
+
 TO LOG IN:
         -an example username and password is:
                 userName: yoyo
