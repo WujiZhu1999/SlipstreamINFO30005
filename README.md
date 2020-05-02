@@ -80,6 +80,8 @@ Functionality: A map functionality where a route can be created linking to a MAP
         URL: /map/finish
         We have implemented:
                 finish a route and update personal record from that(POST map/finish)
+
+                
 Expected way to communicate with google map API. We are going to use Google Map API/Direction through following steps.
 
     1.	In app.js(entry point) contain these for cross domain: 
