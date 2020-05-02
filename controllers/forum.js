@@ -178,10 +178,176 @@ const changeArticle = (req, res) => {
     res.send();
 }
 
+//Creates a new comment
+const createComment = (req, res) => {
+
+    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
+
+    //checks whether all the paramters needed to create an comment is present
+    if (req.body.commentBody == null){
+        res.status(400);
+        res.send("There is incomplete data");
+        return;
+    }
+
+
+    //allocates an author to the comment
+    if (req.session.user != null){
+        var author = req.session.user
+    }
+
+    else {
+         ;
+         var author = "anonymous";
+    }
+
+    var newCommentNum = 1;
+
+    //allocates the lowest comment number availiable (larger then 0)
+    for (i in article.comments) {
+        newCommentNum++;
+    }
+
+
+    //pushes the comment into the article comment list
+    article.comments.push({
+        "commentNumber": newCommentNum,
+        "commentBody":req.body.commentBody,
+        "commentAuthor": author
+    });
+
+    res.send();
+}
+
+const deleteComment = (req, res) => {
+    var enteredNumber = parseInt(req.params.commentNum, 10);
+    var articleNumber = parseInt(req.params.articleNum, 10);
+    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
+
+    //check's if the article requested to be deleted exsists
+    
+    var commentStatus = 0;
+
+    for (i in article.comments) {
+        if (enteredNumber == article.comments[i].commentNumber){
+            commentStatus = 1;
+            var comment = article.comments[i];
+            var commentIndex = enteredNumber - 1;
+        }
+    }
+
+    if (commentStatus == 0){
+        res.status(400);
+        res.send("this comment does not exist");
+        return;
+    }
+
+    //checks if the user is authorised to remove the comment
+    if ((req.session.user == null) || (req.session.user != article.comments[commentIndex].commentAuthor)){
+        res.status(400);
+        res.send("you are not authorised to delete this comment");
+        return;
+    }
+
+    var largestCommentNumber = 1;
+
+    //allocates the lowest article number availiable (larger then 0)
+    for (i in article.comments) {
+        largestCommentNumber++;
+    }
+    
+    //slipices according to index
+    if (commentIndex == 0){
+        article.comments.splice(0,1);
+    
+        //changes all numbers afterwards
+        if (largestCommentNumber!=1){
+            for(n=1; n < largestCommentNumber - 1; n++){
+                article.comments[n]["commentNumber"] = article.comments[n].commentNumber - 1;
+            }
+        }
+
+        res.send();
+        return;
+    }
+
+   
+
+    else{
+        article.comments.splice(commentIndex,1);
+
+        var numberAfterComment = enteredNumber + 1;
+
+        if(largestCommentNumber >= numberAfterComment){
+            
+            //changes all numbers afterwards
+            for(n = numberAfterComment - 1 ; n < largestCommentNumber - 1; n++){
+                article.comments[n]["commentNumber"] = article.comments[n].commentNumber - 1;
+            }
+            
+        }
+
+    }
+    
+    res.send();
+
+}
+
+const changeComment= (req, res) => {
+    var enteredNumber = parseInt(req.params.commentNum, 10);
+    var articleNumber = parseInt(req.params.articleNum, 10);
+    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
+
+    //checks if the comment exists
+
+    var commentStatus = 0;
+
+    for (i in article.comments) {
+        if (enteredNumber == article.comments[i].commentNumber){
+            commentStatus = 1;
+            var comment = article.comments[i];
+            var commentIndex = enteredNumber - 1;
+        }
+    }
+
+    if (commentStatus == 0){
+        res.status(400);
+        res.send("this comment does not exist");
+        return;
+    }
+
+    //checks if the user is authorised to edit the comment
+    if ((req.session.user == null) || (req.session.user != article.comments[commentIndex].commentAuthor)){
+        res.status(400);
+        res.send("you are not authorised to edit this comment");
+        return;
+    }
+
+    //checks that a change is acutally being made
+    if (req.body.commentBody == null){
+        res.status(400);
+        res.send("no changes to make to comment");
+        return;
+    }
+
+    
+    
+     //changes corresponding to what is requested
+    if (req.body.commentBody != null){
+        article.comments[commentIndex]["commentBody"]  = req.body.commentBody;
+    }
+    
+
+   res.send();
+}
+
 module.exports = {
     getForum,
     getArticle,
     createArticle,
     deleteArticle,
-    changeArticle
+    changeArticle,
+    createComment,
+    deleteComment,
+    changeComment
 }

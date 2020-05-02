@@ -18,9 +18,18 @@ forumRouter.get("/:articleNum", (req, res) => forumController.getArticle(req, re
 forumRouter.post("/", (req, res) => forumController.createArticle(req, res));
 
 //delete and article based off of the article number number
-forumRouter.delete("/:articleNum", (req, res) => forumController.deleteArticle(req,res));
+forumRouter.delete("/:articleNum/", (req, res) => forumController.deleteArticle(req,res));
 
 //changes an article using a post request and specifies the article with an rticle number
-forumRouter.post("/:articleNum", (req, res) => forumController.changeArticle(req,res));
+forumRouter.post("/:articleNum/edit", (req, res) => forumController.changeArticle(req,res));
+
+//creates a new comment
+forumRouter.post("/:articleNum",(req, res) => forumController.createComment(req,res))
+
+//deletes a comment
+forumRouter.delete("/:articleNum/:commentNum", (req, res) => forumController.deleteComment(req,res));
+
+//edits a comment
+forumRouter.post("/:articleNum/:commentNum/edit", (req, res) => forumController.changeComment(req,res));
 
 module.exports = forumRouter;
