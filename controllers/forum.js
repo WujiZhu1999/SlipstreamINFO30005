@@ -189,6 +189,13 @@ const changeArticle = (req, res) => {
 //Creates a new comment
 const createComment = (req, res) => {
 
+    // checks if the article exists
+    if (article == null){
+        res.status(400);
+        res.send("article does not exist");
+        return;
+    }
+
     var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
 
     //checks whether all the paramters needed to create an comment is present
@@ -229,7 +236,14 @@ const createComment = (req, res) => {
 const deleteComment = (req, res) => {
     var enteredNumber = parseInt(req.params.commentNum, 10);
     var articleNumber = parseInt(req.params.articleNum, 10);
-    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
+    var article = articles.find((article) => article.articleNum === articleNumber);
+
+    // checks if the article exists
+    if (article == null){
+        res.status(400);
+        res.send("article does not exist");
+        return;
+    }
 
     //check's if the article requested to be deleted exsists
     
@@ -303,7 +317,14 @@ const deleteComment = (req, res) => {
 const changeComment= (req, res) => {
     var enteredNumber = parseInt(req.params.commentNum, 10);
     var articleNumber = parseInt(req.params.articleNum, 10);
-    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
+    var article = articles.find((article) => article.articleNum === articleNumber);
+
+    // checks if the article exists
+    if (article == null){
+        res.status(400);
+        res.send("article does not exist");
+        return;
+    }
 
     //checks if the comment exists
 
