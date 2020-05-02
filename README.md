@@ -14,7 +14,7 @@ Functionality: A dashboard to show summarised users details regarding bike rides
         URL: /users
         We have implemented:
                 deleting a new user (DELETE /users/:userName)
-                fetching information about the user (GET /users/:userName) (We'll sort out what information we send later, it wont just be the whole thing)
+                fetching information about the user / settings panel (GET /users/:userName) (We'll sort out what information we send later, it wont just be the whole thing)
                 edit a user, changing something about them (POST /users/:userName)
 
         Login
@@ -81,7 +81,7 @@ Functionality: A map functionality where a route can be created linking to a MAP
         We have implemented:
                 finish a route and update personal record from that(POST map/finish)
 
-                
+
 Expected way to communicate with google map API. We are going to use Google Map API/Direction through following steps.
 
     1.	In app.js(entry point) contain these for cross domain: 
