@@ -3,8 +3,8 @@ var session = require("express-session");
 var app = express();
 
 const dashboardRouter = require("./routes/dashboard.js");
-const forumRouter = require("./routes/forum.js")
-const tipRouter = require("./routes/tips.js")
+const forumRouter = require("./routes/forum.js");
+const tipRouter = require("./routes/tips.js");
 const mapRouter = require("./routes/map.js");
 const usersRouter = require("./routes/users.js");
 const loginRouter = require("./routes/login.js");
