@@ -4,6 +4,7 @@ const displaynum = 2 //display number
 
 const getHomepage = (req, res) => {
     if (req.session.user != null){//logged in 
+        
         output = getStats(req);
         output += "<br><br>"
         output += getLeaderboard(req);
@@ -11,17 +12,9 @@ const getHomepage = (req, res) => {
 
         
     } else {
-        res.send(`
-        <h1> logged out homepage<br>Welcome to Slipstream</h1>
-        <form action="/login" method="POST">
-            Username<br>
-            <input type="text" name="userName"><br>
-            Password<br>
-            <input type="password" name="password"><br>
-            <input type="submit" value="Login">
-        </form>
-        
-        `);
+        res.render("login",{
+            title: "Login"
+        });
     }
 }
 

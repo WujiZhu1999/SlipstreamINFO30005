@@ -1,0 +1,15 @@
+extends default
+
+block content
+    h1
+        div logged out homepage
+        div Welcome to Slipstream
+
+    form(action="/login" method="POST")
+        div Username
+        input(type="text" name="userName")
+        br
+        div Password
+        input(type="password" name="password")
+        br
+        input(type="submit" value="Login")

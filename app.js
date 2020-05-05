@@ -2,6 +2,10 @@ var express = require("express");
 var session = require("express-session");
 var app = express();
 
+app.set("view engine", "pug");
+
+app.use(express.static(__dirname + '/public'));
+
 const dashboardRouter = require("./routes/dashboard.js");
 const forumRouter = require("./routes/forum.js")
 const tipRouter = require("./routes/tips.js")
