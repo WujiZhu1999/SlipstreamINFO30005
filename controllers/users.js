@@ -1,97 +1,100 @@
 var users = require("../models/users.js");
+const mongoose = require("mongoose");
+const User = mongoose.model("users");
 
 //register a new user
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
     //if the form is incomplete, send an error
-    if (req.body.name == null || req.body.userName == null || req.body.password == null){
-        res.status(400)
-        res.send("incomplete data");
-        return;
-    }
-
-    //if the user already exists, senda na error
-    if (users.find((user) => user.userName === req.body.userName) != null) {
-        res.status(400)
-        res.send("user already exists");
-        return;
-    }
-
-    //add the user to the database
-    users.push({
-        "name":req.body.name,
-        "userName":req.body.userName,
-        "passsword":req.body.password,
-        "data":{
-            "totalDistance": 0, //in km
-            "energySaved": 0, //in kj
-            "carbonSaved": 0, //in kg
-            "streak": 0 // days
+    try{
+        if (req.body.name && req.body.userName && req.body.password){
+            const _had = await User.findOne({"userName":req.body.userName});
+            if(_had){
+                res.status(400);
+                return res.send("User already exists.");
+            }
+            else{
+                const _new  = await User.create({
+                    "name":req.body.name,
+                    "userName":req.body.userName,
+                    "password":req.body.password,
+                    "data":{
+                        "totalDistance": 0,
+                        "energySaved": 0,
+                        "carbonSaved": 0,
+                        "streak": 0
+                    }
+                });
+                return res.send(_new);
+            }
         }
-    });
-    res.send()
+        else{
+            res.status(400);
+            return res.send("Incomlete Data.");
+        }
+    }catch(err){
+        res.status(400);
+        return res.send("Database failed. Create User Failed");
+    }
 }
 
 //delete a user of the chosen name
-const deleteUser = (req, res) => {
-    //if the user doesnt exist, send an error
-    if (users.find((user) => user.userName === req.params.userName) == null){
-        res.status(400)
-        res.send("user does not exist " + req.params.userName);
-        return;
+const deleteUser = async (req, res) => {
+    if(req.body.userName!=req.session.user){
+        res.status(403);
+        return res.send("Not authorized.");
     }
-
-    users.splice(users.findIndex((user) => user.userName === req.params.userName), 1);
-    res.send()
+    try{
+        if(!req.params.userName){
+            res.status(400);
+            return res.send("userNameNotGiven");
+        }
+        else{
+            await User.remove({"userName":req.params.userName});
+            return res.send("Removed: "+req.params.userName);
+        }
+    }catch(err){
+        res.status(400);
+        return res.send("Database query failed. Delete User Failed");
+    }
 }
 
 //fetch a users information, but not all the information (ie not password)
-const getUser = (req, res) => {
-    if (users.find((user) => user.userName === req.params.userName) == null){
-        res.status(400)
-        res.send("user does not exist " + req.body.userName);
-        return;
+const getUser = async (req, res) => {
+    try{ 
+        const user = await User.findOne({"userName":req.params.userName});
+        if(user){
+            return res.send(user);
+        }
+        else{
+            res.status(404);
+            return res.send("No such user found.");
+        }
+    }catch(err){
+        res.status(500);
+        return res.send("Database query failed. Find User Failed");
     }
-
-    res.send(users.find((user) => user.userName === req.params.userName))
 }
 
 //edit a user, if they change their information
-const changeUser = (req, res) => {
-    //if the user doesnt exist, send an error
-    if (users.find((user) => user.userName === req.params.userName) == null){
-        res.status(400);
-        res.send("user does not exist " + req.body.userName);
-        return;
-    }
-
-    //if there is no change, send an error
-    if (req.body.name == null && req.body.password == null && req.body.userName == null){
-        res.status(400);
-        res.send("cannot make no change");
-    }
-
-    //the user to be changed
-    var user = users.find((user) => user.userName === req.params.userName);
-
-    if (req.body.name != null){
-        user["name"] = req.body.name;
-    }
-
-    if (req.body.password != null){
-        user["password"] = req.body.password;
-    }
-
-    if (req.body.userName != null){
-        //if there already exists a user with the userName, send an error
-        if (users.find((user) => user.userName === req.body.userName) != null){
+const changeUser = async (req, res) => {
+    try{
+        if(!req.body.userName){res.status(400);return res.send("UserNameNotGiven");}
+        if(req.body.userName!=req.session.user){res.status(403);return res.send("Not authorized.");}
+        const user = await User.findOne({"userName":req.body.userName});
+        if(!user){
             res.status(400);
-            res.send("can't change username, user already exists");
-            return;
+            return res.send("user does not exist " + req.body.userName);
         }
-        user["userName"] = req.body.userName;
-    }
 
-    res.send(user);
+        var _new = {};
+        if(req.body.name){_new["name"] = req.body.name};
+        if(req.body.password){_new["password"] = req.body.password};
+        const update = await User.findOneAndUpdate({"userName":req.body.userName},_new);
+        return res.send(update); 
+    }catch(err){
+        res.status(500);
+        return res.send("Database query failed. Change User Failed");
+    }
 }
 
 module.exports = {

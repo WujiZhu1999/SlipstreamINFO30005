@@ -6,10 +6,10 @@ const forumController = require("../controllers/forum.js");
 const loginController = require("../controllers/login.js");
 
 //gets the forum (titles of all the acticles)
-forumRouter.get("/", async (req, res) => forumController.getForum(req, res));
+forumRouter.get("/", (req, res, next) => loginController.isLoggedIn(req, res, next), async (req, res) => forumController.getForum(req, res));
 
 //gets an article according tot he number
-forumRouter.get("/:articleNum", async (req, res) => forumController.getArticle(req, res));
+forumRouter.get("/:articleNum", (req, res, next) => loginController.isLoggedIn(req, res, next), async (req, res) => forumController.getArticle(req, res));
 
 //creates an article with a post request
 forumRouter.post("/", (req, res, next) => loginController.isLoggedIn(req, res, next), async (req, res) => forumController.createArticle(req, res));
@@ -19,7 +19,6 @@ forumRouter.delete("/:articleNum", (req, res, next) => loginController.isLoggedI
 
 //changes an article using a post request and specifies the article with an rticle number
 forumRouter.post("/edit", (req, res, next) => loginController.isLoggedIn(req, res, next), async (req, res) => forumController.changeArticle(req,res));
-
 //creates a new comment
 forumRouter.post("/comment",(req, res, next) => loginController.isLoggedIn(req, res, next), async (req, res) => forumController.createComment(req,res));
 

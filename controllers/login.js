@@ -14,62 +14,56 @@ const isLoggedIn = (req, res, next) => {
 const getLogin = (req, res) => {
     //if theyre already logged in, redirect them to the home pages
     if (req.session.user != null){
-        res.redirect("/");
-    }
-    res.send("<h1>login screen</h1>");
+        return res.redirect("/");
+    } 
+
+    return res.render("login",{
+        title: "Login"
+    });
+
 }
 
 //log into the website
-const logIn = (req, res) => {
+const postLogIn = async (req, res) => {
+    if(req.session.user){
+        req.session.user = null;
+    }
     //if the required information is missing, send an error
     if (req.body.userName == null || req.body.password == null){
         res.status(400);
         res.send("missing information");
         return;
     }
-
-    //if the user doesnt exist, send an error
-    if (users.find((user) => user.userName === req.body.userName) == null){
-        res.status(400)
-        res.send("login failed, make sure your username and password are spelled right");
-        return;
+    try{
+        const _new = await User.findOne({"userName":req.body.userName,"password":req.body.password});
+        if(_new){
+            req.session.user = req.body.userName;
+            return res.redirect("/");
+        }else{
+            return res.send("Make sure your account and password are both correct.");
+        }
+        return res.send(_new);
+    }catch(err){
+        res.status(400);
+        return res.send("Database failed. Login Failed");
     }
-
-    var user = users.find((user) => user.userName === req.body.userName)
-
-    //if the password is wrong, send an error
-    if (user["password"] != req.body.password){
-        res.status(400)
-        res.send("login failed, make sure your username and password are spelled right");
-        return;
-    }
-
-    //set the user to the logged in user
-    req.session.user = user["userName"];
-
-    //if they came from a page in the website, send them their, otherwise send them to the home screen
-    if (req.body.from != null){
-        res.redirect(from);
-    } else {
-        res.redirect("/");
-    }
-
 }
+
 
 
 const getRegistration = (req, res) => {
-    res.send("Register Page")
+    return res.send("Register Page")
 }
 
 //log a user out of the website
-const logOut = (req, res) => {
+const postLogout = (req, res) => {
     req.session.user = null;
-    res.send();
+    return res.redirect("/login");
 }
 module.exports = {
     isLoggedIn,
     getLogin,
-    logIn,
-    logOut,
+    postLogIn,
+    postLogout,
     getRegistration
 }

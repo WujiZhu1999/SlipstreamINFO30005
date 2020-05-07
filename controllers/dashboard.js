@@ -1,41 +1,82 @@
 const users = require("../models/users.js");
-const friendsController = require("../controllers/friends.js");
-const displaynum = 2 //display number
+var friends = require("../models/friends.js");
+const mongoose = require("mongoose");
+const User = mongoose.model("users");
+const Friend = mongoose.model("friends");
 
-const getHomepage = (req, res) => {
-    if (req.session.user != null){//logged in 
-        
-        output = getStats(req);
-        output += "<br><br>"
-        output += getLeaderboard(req);
-        //res.send(output);
+
+const getHomepage = async (req, res) => {
+
+    try{
+        var userData = await getStats(req, res);
+
+        var leaderboardData = await getLeaderboard(req, res)
 
         res.render("dashboard", {
-            title:"Dashboard",
-            active: "Home"
-        })
+        title:"Dashboard",
+        active: "Home",
+        leaderbaord: leaderboardData,
+        user: userData
+    })
 
-        
-    } else {
-        res.render("login",{
-            title: "Login"
-        });
+    }catch(err){
+        res.status(400);
+        return res.send("Failed when dealing personal information.");
     }
 }
 
-function getStats(req) {
-    // req.session.user = "hello";
-    const userName = req.session.user;
-    // check if the userName is valid
+async function getStats(req, res) {
+    try{
+        const user = await User.findOne({"userName":req.session.user});
 
-    // find the data of the user in the database
-    const user = users.find((user) => user.userName === userName);
-    
-    // construct the output html string
-    output = "<dt>Your stats</dt> <dd>"+ user.name +"</dd><dd> DISTANCE: "+ user.data.totalDistance +"</dd><dd>"+user.data.energySaved+" KJ energy Saved </dd>"
-                    + "<dd>"+ user.data.carbonSaved + " KG carbon Saved </dd>" + "<dd>"+ user.data.streak + " days Streak </dd>"
-    return output;
+        return user
+
+    }catch(err){
+        res.status(400);
+        return "Failure when fetching personal information for main page(dashboard)";
+    }
 };
+
+
+async function getLeaderboard(req, res){
+    try{
+        var _friends = await Friend.find({
+            "sender": req.session.user,
+            "status": "ACCEPTED"
+        });
+
+        _friends += await Friend.find({
+            "reciever": req.session.user,
+            "status": "ACCEPTED"
+        });
+
+
+
+        var _list = [];
+        for(user of _friends){
+            if (user["sender"] == req.session.user){
+                _list.push(user["reciever"]);
+            } else {
+                _list.push(user["sender"]);
+            }
+        }
+
+        _list.push(req.session.user)
+
+        const _detail = await User.find({
+            "userName":{ $in: _list}
+        });
+        
+        
+        return _detail;
+
+    }catch(err){
+        res.status(400);
+        return "Failure when getLeaderboard for friends.";
+    }
+}
+
+/*
 
 //Ranks a user's friends and themselves on the totalDistance cycled
 function getLeaderboard(req) {
@@ -98,7 +139,7 @@ function getLeaderboard(req) {
     output = '<style> .divcss5{width:300px;height:600px;border:2px solid #000} dt{border-top:2px solid #000}</style><div class="divcss5"><dl id="Leaderboard"></dl></div>\
     <script>document.getElementById("Leaderboard").innerHTML="'+ output +'";</script>'
     return output
-}
+} */
 
 module.exports = {
     getHomepage

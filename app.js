@@ -2,6 +2,8 @@ var express = require("express");
 var session = require("express-session");
 var app = express();
 
+require("./models");
+
 app.set("view engine", "pug");
 
 app.use(express.static(__dirname + '/public'));
@@ -28,7 +30,7 @@ app.use("/login", loginRouter);
 
 app.use("/friends", friendsRouter);
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('listening on port ' + (process.env.port || 3001));
 });
 

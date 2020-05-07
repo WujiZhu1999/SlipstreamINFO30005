@@ -7,19 +7,18 @@ var articles = require('../models/article.js');
 const getForum = async (req, res) => {
 
     try {
-        //const all_articles = await articles.find();
-        
-        res.render('forum.pug', {
+        const _articles = await Article.find();
+        return res.render('forum.pug', {
             title:'Forum',
             active:"Forum",
-            current_articles: articles
+            current_articles: _articles
         });
-    
-      } catch (err) {
+
+    }catch(err){
         res.status(400);
-        return res.send("Database query failed");
-      }
-    
+        return res.send("Database failed when finding all articles(create forums)");
+    }
+}    
 
     /*
     //display the title all the articles
@@ -34,28 +33,25 @@ const getForum = async (req, res) => {
         article = articles.find((article) => article.articleNum ==  largestArticleNum);
     }
 
-    */
+    */  
 
-    
-}
 
 //Gets a new article according to the article number 
 const getArticle = async (req, res) => {
-    
-
     try{
         const number = parseInt(req.params.articleNum, 10);
-        const article = articles.find((a) => a.articleNum === number);
-
-        res.render('article.pug', {
-            title: article.title,
-            article: article
-        });
-    }
-    
-    catch{
+        const _article = await Article.findOne({"articleNum":number});
+        if(_article){
+            return res.render('article.pug', {
+                title: article.title,
+                article: article
+            });
+        }else{
+            return res.send("No corresponding article")
+        }
+    }catch(err){
         res.status(400);
-        return res.send("This article does not exist");
+        res.send("Database failed when getting 1 article");
     }
     
 
@@ -88,23 +84,24 @@ const createArticle = async (req, res) => {
         return;
     }
 
-    var newArticleNum = 1;
-
-    //allocates the lowest article number availiable (larger then 0)
-    while(articles.find((article) => article.articleNum == newArticleNum) != null){
-        newArticleNum++;
+    try{
+        const lastArticle = await Article.find().sort({_id:-1}).limit(1);
+        var num = 1;
+        if(lastArticle[0]){
+            num = lastArticle[0].articleNum + 1;
+        }
+        const _new = await Article.create({
+            "articleNum": num,
+            "title":req.body.title,
+            "body":req.body.body,
+            "author":req.session.user,
+            "comments": []
+        });
+        return res.send(_new);
+    }catch(err){
+        res.status(400);
+        res.send("Failed when creating articles");
     }
-
-    //creates the new article
-    articles.push({
-        "articleNum":newArticleNum,
-        "title":req.body.title,
-        "body":req.body.body,
-        "author":req.session.user,
-        "comments": []
-    });
-
-    res.send(articles.find((article) => article.articleNum == newArticleNum));
 }
 
 
@@ -112,294 +109,187 @@ const createArticle = async (req, res) => {
 const deleteArticle = async (req, res) => {
     var enteredNumber = parseInt(req.params.articleNum, 10);
 
- 
-
-    //check's if the article requested to be deleted exsists
-    if (articles.find((article) => article.articleNum === enteredNumber) == null){
-        res.status(400);
-        res.send("this article does not exist ");
-        return;
-    }
-
-    //checks if the user is authorised to remove the article
-    if (req.session.user != (articles.find((article) => article.articleNum === enteredNumber)).author){
-        res.status(400);
-        res.send("you are not authorised to delete this article");
-        return;
-    }
-
-    //finds the article's index
-    var articleIndex = articles.findIndex((article) => article.articleNum === enteredNumber);
-    
-    var largestArticleNum = 1;
-
-    //allocates the lowest article number availiable (larger then 0)
-    while(articles.find((article) => article.articleNum ==  largestArticleNum) != null){
-        largestArticleNum++;
-    }
-
-    //slipices according to index
-    if (articleIndex == 0){
-        articles.splice(0,1);
-
-    
-        //changes all numbers afterwards
-        if (largestArticleNum!=1){
-        
-            for(n=2; n < largestArticleNum; n++){
-                var article = articles.find((article) => article.articleNum === n);
-                article["articleNum"] = article.articleNum - 1;
+    try{
+        const intended = await Article.findOne({"articleNum":enteredNumber});
+        if(intended){
+            if(intended.author !== req.session.user){
+                res.status(403)
+                return res.send("You are not authorised to delete this article");
+            }else{
+                await Article.deleteOne({"articleNum":enteredNumber});
+                return res.send("Article delete successful" + enteredNumber);
             }
+        }else{
+            res.status(400)
+            return res.send("This article does not exist");
         }
-
-        res.send();
-        return;
+    }catch(err){
+        res.status(400);
+        return res.send("Database failed when deleting article.");
     }
-
-   
-
-    else{
-        articles.splice(articleIndex,1);
-
-        var numberAfterArticle = enteredNumber + 1;
-
-        if(largestArticleNum >= numberAfterArticle){
-            
-            //changes all numbers afterwards
-            for(n = numberAfterArticle; n < largestArticleNum; n++){
-                var article = articles.find((article) => article.articleNum === n);
-                article["articleNum"] = article.articleNum - 1;
-            }
-            
-        }
-
-    }
-
-    res.send(articles);
 }
 
+
 //changes an article's contents using the articleNum as a point of reference
-const changeArticle = (req, res) => {
-
-    // finds the article 
-    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
-
-    // checks if the article exists
-    if (article == null){
-        res.status(400);
-        res.send("article does not exist");
-        return;
+const changeArticle = async (req, res) => {
+    if(!req.params.articleNum){
+        res.status(400)
+        return res.send("Ariticle num not provided");
+    }else{
+        try{
+            var _article = await Article.findOne({"articleNum":req.params.articleNum});
+            
+            if(!_article){
+                res.status(404)
+                return res.send("Article does not exist");
+            }
+            if(_article.author !== req.session.user){
+                res.status(403)
+                return res.send("You are not authorised to change this article");
+            }
+            var _new = {};
+            if(req.body.title){
+                _new["title"] = req.body.title;
+            }
+            if(req.body.body){
+                _new["body"] = req.body.body;
+            }
+            const update = await Article.findOneAndUpdate({"articleNum":req.params.articleNum},_new);
+            return res.send(update);
+            
+        }catch(err){
+            res.status(400);
+            return res.send("Database Failed when trying to modify article.");
+        }
     }
-
-    // checks if the article change is valid (acutally specifed changes)
-    if (req.body.title == null && req.body.body == null){
-        res.status(400);
-        res.send("cannot make no change");
-        return;
-    }
-
-    // checks if the user has permission to edit a particular article
-
-    if (req.session.user != article.author){
-        res.status(400);
-        res.send("you are not authorised to change this article");
-        return;
-    }
-
-    //changes corresponding to what is requested
-    if (req.body.title != null){
-        article["title"] = req.body.title;
-    }
-
-    if (req.body.body != null){
-        article["body"] = req.body.body;
-    }
-
-    res.send();
 }
 
 //Creates a new comment
-const createComment = (req, res) => {
-
-    var article = articles.find((article) => article.articleNum === parseInt(req.params.articleNum, 10));
-
-    // checks if the article exists
-    if (article == null){
+const createComment = async (req, res) => {
+    if(!req.params.articleNum){
+        return res.send("Article num not provided when creating comment");
+    }
+    if(!req.body.commentBody){
         res.status(400);
-        res.send("article does not exist");
-        return;
+        return res.send("Can't make empty comment");
     }
+    try{
+        const _article = await Article.findOne({"articleNum":req.params.articleNum});
+        if(!_article){
+            res.status(404)
+            return res.send("No such article.");
+        }else{
+            var comments = _article.comments.slice();
+            var _new = {}
+            if(req.body.author){
+                _new["commentAuthor"] = req.body.author;
+            }else{
+                _new["commentAuthor"] = "anonymous";
+            }
+            _new["commentBody"] = req.body.commentBody;
+            _new["commentNumber"] = comments.length + 1;
+            comments.push(_new);
 
-    //checks whether all the paramters needed to create an comment is present
-    if (req.body.commentBody == null){
+            const _update = await Article.findOneAndUpdate({"articleNum":req.params.articleNum},{"comments":comments});
+            return res.send(_update);
+
+        }
+    }catch(err){
         res.status(400);
-        res.send("There is incomplete data");
-        return;
+        return res.send("Database failed when create comments.");
     }
-
-
-    //allocates an author to the comment
-    if (req.session.user != null){
-        var author = req.session.user
-    }
-
-    else {
-         var author = "anonymous";
-    }
-
-    var newCommentNum = 1;
-
-    //allocates the lowest comment number availiable (larger then 0)
-    for (i in article.comments) {
-        newCommentNum++;
-    }
-
-
-    //pushes the comment into the article comment list
-    article.comments.push({
-        "commentNumber": newCommentNum,
-        "commentBody":req.body.commentBody,
-        "commentAuthor": author
-    });
-
-    res.send();
 }
 
-const deleteComment = (req, res) => {
+
+const deleteComment = async (req, res) => {
     var enteredNumber = parseInt(req.params.commentNum, 10);
     var articleNumber = parseInt(req.params.articleNum, 10);
-    var article = articles.find((article) => article.articleNum === articleNumber);
 
-    // checks if the article exists
-    if (article == null){
-        res.status(400);
-        res.send("article does not exist");
-        return;
-    }
-
-    //check's if the article requested to be deleted exsists
-    
-    var commentStatus = 0;
-
-    for (i in article.comments) {
-        if (enteredNumber == article.comments[i].commentNumber){
-            commentStatus = 1;
-            var comment = article.comments[i];
-            var commentIndex = enteredNumber - 1;
+    try{
+        const article = await Article.findOne({"articleNum":articleNumber});
+        
+        
+        if(!article){
+            res.status(404)
+            return res.send("No such article found.");
         }
-    }
-
-    if (commentStatus == 0){
-        res.status(400);
-        res.send("this comment does not exist");
-        return;
-    }
-
-    //checks if the user is authorised to remove the comment
-    if ((req.session.user == null) || (req.session.user != article.comments[commentIndex].commentAuthor)){
-        res.status(400);
-        res.send("you are not authorised to delete this comment");
-        return;
-    }
-
-    var largestCommentNumber = 1;
-
-    //allocates the lowest article number availiable (larger then 0)
-    for (i in article.comments) {
-        largestCommentNumber++;
-    }
-    
-    //slipices according to index
-    if (commentIndex == 0){
-        article.comments.splice(0,1);
-    
-        //changes all numbers afterwards
-        if (largestCommentNumber!=1){
-            for(n=1; n < largestCommentNumber - 1; n++){
-                article.comments[n]["commentNumber"] = article.comments[n].commentNumber - 1;
-            }
+        var comments = article.comments.slice();
+        var flag = 0;
+        
+        for(i in comments){
+            if(enteredNumber === (parseInt(i)+1)){
+                if(comments[i].commentAuthor === req.session.user || article.author === req.session.user){
+                    comments.splice(i);
+                    flag = 1;
+                    break;
+                }
+                else{
+                    res.status(403)
+                    return res.send("Not authorized to delete the comment");
+                }
+            }   
         }
-
-        res.send();
-        return;
-    }
-
-   
-
-    else{
-        article.comments.splice(commentIndex,1);
-
-        var numberAfterComment = enteredNumber + 1;
-
-        if(largestCommentNumber >= numberAfterComment){
-            
-            //changes all numbers afterwards
-            for(n = numberAfterComment - 1 ; n < largestCommentNumber - 1; n++){
-                article.comments[n]["commentNumber"] = article.comments[n].commentNumber - 1;
-            }
-            
+        if(!flag){
+            res.status(404)
+            return res.send("No such comment.");
+        }else{
+            const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":comments});
+            return res.send(_update);
         }
-
+        
+    }catch(err){
+        res.status(400);
+        return res.send("Database failed when deleteComment");
     }
-    
-    res.send();
-
 }
 
-const changeComment= (req, res) => {
-    var enteredNumber = parseInt(req.params.commentNum, 10);
-    var articleNumber = parseInt(req.params.articleNum, 10);
-    var article = articles.find((article) => article.articleNum === articleNumber);
-
-    // checks if the article exists
-    if (article == null){
-        res.status(400);
-        res.send("article does not exist");
-        return;
+const changeComment= async (req, res) => {
+    if(!req.params.commentNum || !req.params.articleNum){
+        return res.send("No sufficient information provided");
     }
+    var enteredNumber = req.params.commentNum;
+    var articleNumber = req.params.articleNum;
 
-    //checks if the comment exists
-
-    var commentStatus = 0;
-
-    for (i in article.comments) {
-        if (enteredNumber == article.comments[i].commentNumber){
-            commentStatus = 1;
-            var comment = article.comments[i];
-            var commentIndex = enteredNumber - 1;
+    try{
+        const article = await Article.findOne({"articleNum":articleNumber});
+        
+        
+        if(!article){
+            res.status(404)
+            return res.send("No such article found.");
         }
-    }
-
-    if (commentStatus == 0){
+        var comments = article.comments.slice();
+        var flag = 0;
+        
+        for(i in comments){
+            if(enteredNumber === (parseInt(i)+1)){
+                if(comments[i].commentAuthor === req.session.user){
+                    if(req.body.newComment){
+                        comments[i].commentBody = req.body.newComment;
+                    }
+                    flag = 1;
+                    break;
+                }
+                else{
+                    res.status(403)
+                    return res.send("Not authorized to change the comment");
+                }
+            }   
+        }
+        if(!flag){
+            res.status(404)
+            return res.send("No such comment.");
+        }else{
+            const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":comments});
+            return res.send(_update);
+        }
+        
+    }catch(err){
         res.status(400);
-        res.send("this comment does not exist");
-        return;
+        return res.send("Database failed when deleteComment");
     }
-
-    //checks if the user is authorised to edit the comment
-    if ((req.session.user == null) || (req.session.user != article.comments[commentIndex].commentAuthor)){
-        res.status(400);
-        res.send("you are not authorised to edit this comment");
-        return;
-    }
-
-    //checks that a change is acutally being made
-    if (req.body.commentBody == null){
-        res.status(400);
-        res.send("no changes to make to comment");
-        return;
-    }
-
-    
-    
-     //changes corresponding to what is requested
-    if (req.body.commentBody != null){
-        article.comments[commentIndex]["commentBody"]  = req.body.commentBody;
-    }
-    
-
-   res.send();
 }
+
 
 module.exports = {
     getForum,

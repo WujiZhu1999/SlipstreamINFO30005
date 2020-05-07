@@ -1,25 +1,14 @@
-const friends = [
-    {
-        "sender":"hello",
-        "reciever":"yoyo",
-        "accepted":true
-    },
-    {
-        "sender":"food",
-        "reciever":"yoyo",
-        "accepted":true
-    },
-
-    {
-        "sender":"food",
-        "reciever":"hello",
-        "accepted":true
-    },
-
-    {
-        "sender":"sun",
-        "reciever":"hello",
-        "accepted":true
+const mongoose = require("mongoose");
+const friendSchema = new mongoose.Schema({
+    sender : String,
+    receiver: String,
+    status: {
+        type: String,
+        enum: ['PENDING','ACCEPTED','REJECTED','DELETED'],
+        default: 'PENDING'
     }
-]
-module.exports = friends;
+
+},{ versionKey: false });
+
+const Friends = mongoose.model("friends", friendSchema, "friends");
+module.exports = Friends;

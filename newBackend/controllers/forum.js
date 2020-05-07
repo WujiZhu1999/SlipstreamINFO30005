@@ -8,7 +8,7 @@ const getForum = async (req, res) => {
         const _articles = await Article.find();
         return res.send(_articles);
     }catch(err){
-        res.status(400);
+        res.status(400);W
         return res.send("Database failed when finding all articles(create forums)");
     }
 }
@@ -86,15 +86,18 @@ const deleteArticle = async (req, res) => {
 //changes an article's contents using the articleNum as a point of reference
 const changeArticle = async (req, res) => {
     if(!req.body.articleNum){
+        res.status(400)
         return res.send("Ariticle num not provided");
     }else{
         try{
             var _article = await Article.findOne({"articleNum":req.body.articleNum});
             
             if(!_article){
+                res.status(400)
                 return res.send("Article does not exist");
             }
             if(_article.author !== req.session.user){
+                res.status(403)
                 return res.send("You are not authorised to change this article");
             }
             var _new = {};

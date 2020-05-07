@@ -1,39 +1,17 @@
-const route = [
-  {
-    "user": "food",
-    "origin": "Home",
-    "destination": "School",
-    "distance": 2,
-    "duration": 60,
-    "completed": ["12/4/2020"]
+const mongoose = require("mongoose");
+const routeSchema = new mongoose.Schema({
 
-  },
-  {
-    "user": "food",
-    "origin": "School",
-    "destination": "Home",
-    "distance": 2,
-    "duration": 60,
-    "completed": []
+    user:String,
+    origin:String,
+    destination:String,
+    distance:Number,
+    duration:Number,
+    turns:Number,
+    response:Object,
+    completed:Array,
+    status:Array,
+    totalTrial:Number
+},{ versionKey: false });
 
-  },
-  {
-    "user": "tester",
-    "origin": "Hi",
-    "destination": "Bye",
-    "distance": 2,
-    "duration": 60,
-    "completed": []
-
-  },
-  {
-    "user": "yoyo",
-    "origin": "Home",
-    "destination": "School",
-    "distance": 2,
-    "duration": 60,
-    "completed": ["12/4/2020"]
-
-  }
-]
-module.exports = route; 
+const Route = mongoose.model("route", routeSchema, "route");
+module.exports = Route;

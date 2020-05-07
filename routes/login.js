@@ -8,8 +8,11 @@ const userController = require("../controllers/users.js");
 //get the login page
 loginRouter.get("/", (req, res) => loginController.getLogin(req, res));
 
+//loginRouter.delete("/", (req, res) => loginController.getLogin(req, res));
+//loginRouter.post("/", (req, res) => loginController.getLogin(req, res));
+
 //send a log in request
-loginRouter.post("/", (req, res) => loginController.logIn(req, res));
+loginRouter.post("/", async (req, res) => loginController.postLogIn(req, res));
 
 //get the register page, where you make a new account
 loginRouter.get("/register", (req, res) => loginController.getRegistration(req, res));
@@ -18,6 +21,6 @@ loginRouter.get("/register", (req, res) => loginController.getRegistration(req, 
 loginRouter.post("/register", (req, res) => userController.createUser(req, res));
 
 //send a log out request
-loginRouter.post("/logout", (req, res) => loginController.logOut(req, res));
+loginRouter.post("/logout", (req, res) => loginController.postLogout(req, res));
 
 module.exports = loginRouter;
