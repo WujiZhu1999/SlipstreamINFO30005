@@ -1,4 +1,6 @@
 var users = require("../models/users.js");
+const mongoose = require("mongoose");
+const User = mongoose.model("users");
 //add loginController.isLoggedIn, to the start of all nescesary routes 
 
 //the middleware that will be put on pages that require logging in
@@ -45,7 +47,7 @@ const postLogIn = async (req, res) => {
         return res.send(_new);
     }catch(err){
         res.status(400);
-        return res.send("Database failed. Login Failed");
+        return res.send("Database failed. Login Failed. " + err);
     }
 }
 
