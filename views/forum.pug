@@ -1,0 +1,10 @@
+extends default
+
+block content
+
+     div.main
+        each article in current_articles
+            ul
+                li
+                    a(href = '/forum/' + article.articleNum) #{article.title}
+        

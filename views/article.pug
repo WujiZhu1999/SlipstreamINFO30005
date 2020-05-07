@@ -1,0 +1,11 @@
+extends default
+
+block content
+     div.main
+        par #{article.body}
+        h2 Comments
+        par
+            each comment in article.comments
+                ul
+                    li
+                        a(href = '/forum/' + article.articleNum + comment.commentNum) #{comment.commentBody}

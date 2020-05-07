@@ -4,15 +4,28 @@
 var articles = require('../models/article.js');
 
 //Forum Page
-const getForum = (req, res) => {
+const getForum = async (req, res) => {
 
-    var output = "<h1> Forum </h1>";
+    try {
+        //const all_articles = await articles.find();
+        
+        res.render('forum.pug', {
+            title:'Forum',
+            current_articles: articles
+        });
+    
+      } catch (err) {
+        res.status(400);
+        return res.send("Database query failed");
+      }
+    
 
+    /*
+    //display the title all the articles
     var largestArticleNum = 1;
 
     article = articles.find((article) => article.articleNum ==  largestArticleNum);
 
-    //display the title all the articles
     while(article!=null){
         newTitle = "<br>" + article.title;
         output += newTitle;
@@ -20,15 +33,32 @@ const getForum = (req, res) => {
         article = articles.find((article) => article.articleNum ==  largestArticleNum);
     }
 
-    res.send(output);
+    */
+
+    
 }
 
 //Gets a new article according to the article number 
-const getArticle = (req, res) => {
-
-    const number = parseInt(req.params.articleNum, 10);
-    const article = articles.find((a) => a.articleNum === number);
+const getArticle = async (req, res) => {
     
+
+    try{
+        const number = parseInt(req.params.articleNum, 10);
+        const article = articles.find((a) => a.articleNum === number);
+
+        res.render('article.pug', {
+            title: article.title,
+            article: article
+        });
+    }
+    
+    catch{
+        res.status(400);
+        return res.send("This article does not exist");
+    }
+    
+
+    /*
     if(article){
         var output = "<h1> Article: " + article.title + "</h1>" +  "<body>" + article.body + "</body>" + "<br>" + "<br>"+ "COMMENTS";
 
@@ -44,10 +74,11 @@ const getArticle = (req, res) => {
         res.status(400);
         res.send("This article does not exist");
     }
+    */
 }
 
 //Creates a new article
-const createArticle = (req, res) => {
+const createArticle = async (req, res) => {
 
     //checks whether all the paramters needed to create an article is present
     if (req.body.title == null || req.body.body == null){
@@ -77,7 +108,7 @@ const createArticle = (req, res) => {
 
 
 // Deleting an article
-const deleteArticle = (req, res) => {
+const deleteArticle = async (req, res) => {
     var enteredNumber = parseInt(req.params.articleNum, 10);
 
  
