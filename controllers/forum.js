@@ -1,7 +1,5 @@
-//All the controlers relating to forums
-//Author: Chloe Thai
-//Student Numbe : 995204
-var articles = require('../models/article.js');
+const mongoose = require("mongoose");
+const Article = mongoose.model("article");
 
 //Forum Page
 const getForum = async (req, res) => {

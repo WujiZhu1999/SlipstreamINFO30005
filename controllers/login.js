@@ -1,4 +1,3 @@
-var users = require("../models/users.js");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 //add loginController.isLoggedIn, to the start of all nescesary routes 

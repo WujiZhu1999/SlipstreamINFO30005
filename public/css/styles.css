@@ -40,6 +40,5 @@ nav li a:hover {
 }
 
 img {
-    padding: 0;
-    margin: 0;
+    vertical-align: middle;
 }

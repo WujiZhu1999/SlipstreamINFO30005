@@ -1,5 +1,3 @@
-const users = require("../models/users.js");
-var friends = require("../models/friends.js");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Friend = mongoose.model("friends");

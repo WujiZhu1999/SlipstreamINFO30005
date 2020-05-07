@@ -1,5 +1,3 @@
-var route = require("../models/route.js");
-var users = require("../models/users.js");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Route = mongoose.model("route");

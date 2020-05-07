@@ -1,4 +1,3 @@
-var tips = require("../models/tips.js");
 const mongoose = require("mongoose");
 const Tips = mongoose.model("tips");
 
