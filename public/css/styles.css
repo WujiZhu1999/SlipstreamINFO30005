@@ -1,3 +1,45 @@
 h1 {
     color: red;
 }
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #444;
+}
+
+nav li {
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+nav li a {
+    display: block;
+    padding: 14px;
+    color: white;
+    text-decoration: none;
+}
+
+nav li a.active {
+    background-color: green;
+}
+
+nav li a:hover {
+    color: black;
+    background-color: red;
+}
+
+nav ul li img {
+    padding: 0;
+    margin: 0;
+}

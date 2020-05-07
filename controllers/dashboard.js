@@ -8,7 +8,12 @@ const getHomepage = (req, res) => {
         output = getStats(req);
         output += "<br><br>"
         output += getLeaderboard(req);
-        res.send(output);
+        //res.send(output);
+
+        res.render("dashboard", {
+            title:"Dashboard",
+            active: "Home"
+        })
 
         
     } else {

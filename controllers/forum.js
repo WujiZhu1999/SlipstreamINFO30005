@@ -11,6 +11,7 @@ const getForum = async (req, res) => {
         
         res.render('forum.pug', {
             title:'Forum',
+            active:"Forum",
             current_articles: articles
         });
     
