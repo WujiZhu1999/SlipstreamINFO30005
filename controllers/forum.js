@@ -11,7 +11,6 @@ const getForum = async (req, res) => {
             title:'Forum',
             active:"Forum",
             current_articles: _articles,
-            active:"Forum",
             userName: req.session.user
         });
 
@@ -80,7 +79,7 @@ const getArticle = async (req, res) => {
 const createArticle = async (req, res) => {
 
     //checks whether all the paramters needed to create an article is present
-    if (req.body.title == null || req.body.body == null){
+    if (req.body.title == null || req.body.title == ""  || req.body.body == null || req.body.body == ""){
         res.status(400);
         res.send("There is incomplete data");
         return;

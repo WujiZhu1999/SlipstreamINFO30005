@@ -3,19 +3,24 @@ extends ../navbar
 block content
 
      div.main
-        p Create a new article!
+        
         form(action="/forum" method="POST" class="createArticle")
-                div Title
-                input(type="text" name="title")
-                br
-                div Body
-                input(type="text" name="body")
-                br
-                input(type="submit" value="post")
+            p Create a new article!
+            div Title
+            input(type="text" name="title" required)
+            br
+            div Body
+            textarea(name="body")
+            br
+            input(type="submit" value="Post")
+        
         div.table
             h2 List of Articles
             each article in current_articles
                     ul
                         li
-                            a(href = '/Forum/' + article.articleNum) #{article.title}
-        
+                            a(href = '/Forum/' + article.articleNum)
+                                div.title #{article.title}
+                                
+                                div.author Author: #{article.author}
+                                div.author Comments: #{article.comments.length}
