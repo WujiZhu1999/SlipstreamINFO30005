@@ -7,7 +7,7 @@ const getForum = async (req, res) => {
     try {
         const _articles = await Article.find();
 
-        return res.render('forum.pug', {
+        return res.render('forum/forum.pug', {
             title:'Forum',
             active:"Forum",
             current_articles: _articles,
@@ -44,7 +44,7 @@ const getArticle = async (req, res) => {
         const _article = await Article.findOne({"articleNum":number});
         
         if(_article){
-            return res.render('article.pug', {
+            return res.render("forum/article.pug", {
                 title: _article.title,
                 article: _article
             });
@@ -137,7 +137,7 @@ const getEditArticle = async (req,res) => {
     try {
         const _article = await Article.findOne({"articleNum":enteredNumber});
 
-        return res.render('change_article.pug', {
+        return res.render("forum/'change_article.pug", {
             title:'Change Article', 
             articleNum : _article.articleNum
         });
