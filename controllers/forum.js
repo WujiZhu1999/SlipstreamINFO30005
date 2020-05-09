@@ -97,8 +97,7 @@ const createArticle = async (req, res) => {
             "author":req.session.user,
             "comments": []
         });
-
-        return res.redirect("/forum");
+        return res.redirect("/Forum/" + num);
 
     }catch(err){
         res.status(400);
