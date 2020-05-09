@@ -45,7 +45,9 @@ const getArticle = async (req, res) => {
         if(_article){
             return res.render("forum/article.pug", {
                 title: _article.title,
-                article: _article
+                article: _article,
+                active:"Forum",
+                userName: req.session.user
             });
         }else{
             return res.send("No corresponding article")
@@ -134,11 +136,16 @@ const deleteArticle = async (req, res) => {
 
 const getEditArticle = async (req,res) => {
     try {
-        const _article = await Article.findOne({"articleNum":enteredNumber});
 
-        return res.render("forum/'change_article.pug", {
+        var articleNumber = parseInt(req.params.articleNum, 10);
+
+        const _article = await Article.findOne({"articleNum":articleNumber});
+
+        return res.render("forum/change_article.pug", {
             title:'Change Article', 
-            articleNum : _article.articleNum
+            currentArticle: _article,
+            active:"Forum",
+            userName: req.session.user
         });
 
     }catch(err){
@@ -160,10 +167,12 @@ const changeArticle = async (req, res) => {
                 res.status(404)
                 return res.send("Article does not exist");
             }
+            
             if(_article.author !== req.session.user){
                 res.status(403)
                 return res.send("You are not authorised to change this article");
             }
+
             var _new = {};
             if(req.body.title){
                 _new["title"] = req.body.title;
@@ -260,6 +269,33 @@ const deleteComment = async (req, res) => {
     }
 }
 
+const getEditComment= async (req, res) => {
+    try {
+
+        var enteredNumber = req.params.commentNum;
+        var articleNumber = req.params.articleNum;
+
+        const _article = await Article.findOne({"articleNum":articleNumber});
+
+
+        if(!_article){
+            res.status(404)
+            return res.send("No such article found.");
+        }
+
+        return res.render("forum/change_article.pug", {
+            title:'Change Comment', 
+            currentArticle: _article,
+            active:"Forum",
+            userName: req.session.user
+        });
+
+    }catch(err){
+        res.status(400);
+        return res.send("could not find article");
+    }
+}
+
 const changeComment= async (req, res) => {
     if(!req.params.commentNum || !req.params.articleNum){
         return res.send("No sufficient information provided");
@@ -270,6 +306,7 @@ const changeComment= async (req, res) => {
     try{
         const article = await Article.findOne({"articleNum":articleNumber});
         
+        const comment = article.comments[enteredNumber]
         
         if(!article){
             res.status(404)
@@ -279,7 +316,7 @@ const changeComment= async (req, res) => {
         var flag = 0;
         
         for(i in comments){
-            if(enteredNumber === (parseInt(i)+1)){
+            if(enteredNumber === comments[i]["commentNumber"]){
                 if(comments[i].commentAuthor === req.session.user){
                     if(req.body.newComment){
                         comments[i].commentBody = req.body.newComment;

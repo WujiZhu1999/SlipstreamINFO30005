@@ -12,8 +12,4 @@ block content
         
         par
         if article.author == userName
-            form(action=("/forum/" + article.articleNum + "/edit") method="GET")
-                input(type="submit" value="Change Article")
-
-         
-        
+            a(class='button', href=("/forum/" + article.articleNum + "/edit")) Edit Article
