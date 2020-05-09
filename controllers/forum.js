@@ -316,7 +316,7 @@ const changeComment= async (req, res) => {
         var flag = 0;
         
         for(i in comments){
-            if(enteredNumber === (parseInt(i)+1)){
+            if(enteredNumber === comments[i]["commentNumber"]){
                 if(comments[i].commentAuthor === req.session.user){
                     if(req.body.newComment){
                         comments[i].commentBody = req.body.newComment;
