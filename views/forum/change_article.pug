@@ -2,11 +2,11 @@ extends ../navbar
 
 block content
 
-    form(action="/login" method="POST")
-        div Username
-        input(type="text" name="userName")
+    form(action= ("/forum/" + currentArticle.articleNum + "/edit") method="POST")
+        div Title
+        input(type="text" name="title")
         br
-        div Password
-        input(type="password" name="password")
+        div Body
+        input(type="text" name="body")
         br
-        input(type="submit" value="Login")
+        input(type="submit" value="Change")
