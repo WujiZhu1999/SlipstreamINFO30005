@@ -10,7 +10,7 @@ const getHomepage = async (req, res) => {
 
         var leaderboardData = await getLeaderboard(req, res)
         console.log(leaderboardData)
-        res.render("dashboard", {
+        res.render("main/dashboard", {
         title:"Dashboard",
         active: "Home",
         leaderboard: leaderboardData,
