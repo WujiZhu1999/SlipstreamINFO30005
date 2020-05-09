@@ -3,8 +3,19 @@ extends navbar
 block content
 
      div.main
-        each article in current_articles
-            ul
-                li
-                    a(href = '/forum/' + article.articleNum) #{article.title}
+        p Create a new article!
+        form(action="/forum" method="POST")
+                div Title
+                input(type="text" name="title")
+                br
+                div Body
+                input(type="text" name="body")
+                br
+                input(type="submit" value="post")
+        div
+            h2 List of Articles
+            each article in current_articles
+                    ul
+                        li
+                            a(href = '/forum/' + article.articleNum) #{article.title}
         

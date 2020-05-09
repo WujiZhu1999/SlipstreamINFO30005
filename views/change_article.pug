@@ -1,0 +1,12 @@
+extends default
+
+block content
+
+    form(action="/login" method="POST")
+        div Username
+        input(type="text" name="userName")
+        br
+        div Password
+        input(type="password" name="password")
+        br
+        input(type="submit" value="Login")

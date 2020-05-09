@@ -9,3 +9,11 @@ block content
                 ul
                     li
                         a(href = '/forum/' + article.articleNum + comment.commentNum) #{comment.commentBody}
+        
+        par
+
+        form(action=("/forum/" + article.articleNum + "/edit") method="GET")
+            input(type="submit" value="Change Article")
+
+         
+        
