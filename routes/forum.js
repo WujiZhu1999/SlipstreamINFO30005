@@ -21,6 +21,9 @@ forumRouter.post("/", (req, res, next) => loginController.isLoggedIn(req, res, n
 //delete and article based off of the article number number
 forumRouter.delete("/:articleNum/", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteArticle(req,res));
 
+//get article to edit
+forumRouter.get("/:articleNum/edit", (req, res,next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getEditArticle(req, res));
+
 //changes an article using a post request and specifies the article with an rticle number
 forumRouter.post("/:articleNum/edit", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.changeArticle(req,res));
 

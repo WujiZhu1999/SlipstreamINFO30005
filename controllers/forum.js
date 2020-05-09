@@ -6,6 +6,7 @@ const getForum = async (req, res) => {
 
     try {
         const _articles = await Article.find();
+
         return res.render('forum.pug', {
             title:'Forum',
             active:"Forum",
@@ -39,10 +40,11 @@ const getArticle = async (req, res) => {
     try{
         const number = parseInt(req.params.articleNum, 10);
         const _article = await Article.findOne({"articleNum":number});
+        
         if(_article){
             return res.render('article.pug', {
-                title: article.title,
-                article: article
+                title: _article.title,
+                article: _article
             });
         }else{
             return res.send("No corresponding article")
@@ -95,7 +97,9 @@ const createArticle = async (req, res) => {
             "author":req.session.user,
             "comments": []
         });
-        return res.send(_new);
+
+        return res.redirect("/forum");
+
     }catch(err){
         res.status(400);
         res.send("Failed when creating articles");
@@ -123,10 +127,25 @@ const deleteArticle = async (req, res) => {
         }
     }catch(err){
         res.status(400);
+        
         return res.send("Database failed when deleting article.");
     }
 }
 
+const getEditArticle = async (req,res) => {
+    try {
+        const _article = await Article.findOne({"articleNum":enteredNumber});
+
+        return res.render('change_article.pug', {
+            title:'Change Article', 
+            articleNum : _article.articleNum
+        });
+
+    }catch(err){
+        res.status(400);
+        return res.send("could not find article");
+    }
+}
 
 //changes an article's contents using the articleNum as a point of reference
 const changeArticle = async (req, res) => {
@@ -294,6 +313,7 @@ module.exports = {
     getArticle,
     createArticle,
     deleteArticle,
+    getEditArticle,
     changeArticle,
     createComment,
     deleteComment,
