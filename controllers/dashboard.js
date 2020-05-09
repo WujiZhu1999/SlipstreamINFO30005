@@ -12,10 +12,13 @@ const getHomepage = async (req, res) => {
         console.log(leaderboardData)
         res.render("main/dashboard", {
         title:"Dashboard",
+        
+        //always specify these!
         active: "Home",
+        userName: req.session.user,
+
         leaderboard: leaderboardData,
-        user: userData,
-        userName: req.session.user
+        user: userData
     })
 
     }catch(err){

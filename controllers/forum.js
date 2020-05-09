@@ -10,7 +10,9 @@ const getForum = async (req, res) => {
         return res.render('forum.pug', {
             title:'Forum',
             active:"Forum",
-            current_articles: _articles
+            current_articles: _articles,
+            active:"Forum",
+            userName: req.session.user
         });
 
     }catch(err){

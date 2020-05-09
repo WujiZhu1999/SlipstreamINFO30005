@@ -4,7 +4,7 @@ block content
 
      div.main
         p Create a new article!
-        form(action="/forum" method="POST")
+        form(action="/forum" method="POST" class="createArticle")
                 div Title
                 input(type="text" name="title")
                 br
@@ -12,10 +12,10 @@ block content
                 input(type="text" name="body")
                 br
                 input(type="submit" value="post")
-        div
+        div.table
             h2 List of Articles
             each article in current_articles
                     ul
                         li
-                            a(href = '/forum/' + article.articleNum) #{article.title}
+                            a(href = '/Forum/' + article.articleNum) #{article.title}
         
