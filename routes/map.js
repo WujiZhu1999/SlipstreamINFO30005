@@ -1,7 +1,7 @@
 const express = require('express');
 const mapRouter = express.Router();
 const mapController = require("../controllers/map.js");
-const loginController = require("../controllers/login.js")
+const loginController = require("../controllers/login.js");
 
 mapRouter.get('/', (req, res) => mapController.getMap(req, res));
 

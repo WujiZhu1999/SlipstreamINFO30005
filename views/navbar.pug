@@ -1,14 +1,13 @@
 extends default
-
-
-
 block navbar
-    - var links = ["/", "/Forum", "/Tips"]
-    - var pageNames = ["Home", "Forum", "Tips"]
+    - var links = ["/", "/Forum", "/Tips", "/Map"]
+    - var pageNames = ["Home", "Forum", "Tips", "Map"]
     nav
         ul
             li
-                img(src="/logo.png" width="200" height="46")
+                img(src="/logo.png")
+            li
+                div(style="margin:30px;")
 
             - var num = 0
             while num < links.length
@@ -18,5 +17,12 @@ block navbar
                     else
                         a(href=links[num])= pageNames[num]  
                 - num++
+            li(style="float:right;")
+                div(style="margin:5px;")
+            li(style="float:right;" class="dropDown")
+                a(class="dropDownButton")= userName
+                div(class="dropDownContent")
+                    a(href=`/Users/${userName}`) settings
+            
 
-    div(style="margin:60px")
+    div(style="margin:70px;")

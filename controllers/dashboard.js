@@ -9,12 +9,13 @@ const getHomepage = async (req, res) => {
         var userData = await getStats(req, res);
 
         var leaderboardData = await getLeaderboard(req, res)
-
+        console.log(leaderboardData)
         res.render("dashboard", {
         title:"Dashboard",
         active: "Home",
-        leaderbaord: leaderboardData,
-        user: userData
+        leaderboard: leaderboardData,
+        user: userData,
+        userName: req.session.user
     })
 
     }catch(err){

@@ -1,2 +1,7 @@
 extends navbar
 
+block content
+    table
+        each user in leaderboard
+            tr
+                dth= user["name"]
