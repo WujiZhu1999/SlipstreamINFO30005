@@ -2,14 +2,24 @@ extends ../navbar
 
 block content
      div.main
+        h1 #{article.title}
         par #{article.body}
-        h2 Comments
-        par
-            each comment in article.comments
-                ul
-                    li
-                        a(href = '/forum/' + article.articleNum + comment.commentNum) #{comment.commentBody}
         
+        form(action=("/forum/" + article.articleNum) method="POST" class="createArticle")
+            h2 Comments
+            input(type="text" name="commentBody" required)
+            input(type="submit" value="Post")
+       
+        div.table
+                each comment in article.comments
+                    ul
+                        li
+                            a(href = '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit") 
+                                div.comment #{comment.commentBody}
+                                div.comment_author From: #{comment.commentAuthor}
+            
         par
         if article.author == userName
-            a(class='button', href=("/forum/" + article.articleNum + "/edit")) Edit Article
+            a(href= "/forum/" + article.articleNum + "/edit") <button type="button">Edit Article</button></a>
+         
+        

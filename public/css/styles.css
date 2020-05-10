@@ -129,6 +129,15 @@ div.table div.author{
     color: grey;
 }
 
+div.table div.comment{
+    color: black;
+}
+
+div.table div.comment_author{
+    font-size: 10px;
+    color: grey;
+}
+
 form.createArticle{
     padding: 10px;
 }

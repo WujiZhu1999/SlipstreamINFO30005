@@ -22,16 +22,18 @@ const getTips = async (req, res) => {
 //get a particular tip based off of the tipNumber
 const getTip = async (req, res) => {
     const id = parseInt(req.params.tipNum, 10);
+    
     try{
         const _tip = await Tips.findOne({"tipNum":id});
+
         if(_tip){
 
-            return res.render('tips/tips.pug', {
+            return res.render('tips/tip.pug', {
                 title:"Tips",
                 active:"Tips",
-                current_tips : _tips,
+                current_tip : _tip,
                 userName: req.session.user
-            }
+            });
         }
 
         else{
@@ -39,13 +41,15 @@ const getTip = async (req, res) => {
             return res.send("This tip does not exists");
         }
     }
+
     catch(err){
         res.status(400);
         res.send("Database failed, find one tip");
     }
 }
 
+
 module.exports = {
     getTips,
     getTip,
-};
+}

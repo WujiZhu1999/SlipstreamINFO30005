@@ -1,8 +1,8 @@
 extends ../navbar
 
 block content
-
-    form(action= ("/forum/" + currentArticle.articleNum + "/edit") method="POST")
+    div.main
+    form(action= ("/forum/" + articleNum + "/edit") method="POST")
         div Title
         input(type="text" name="title")
         br

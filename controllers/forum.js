@@ -19,23 +19,7 @@ const getForum = async (req, res) => {
         return res.send("Database failed when finding all articles(create forums)");
     }
 }    
-
-    /*
-    //display the title all the articles
-    var largestArticleNum = 1;
-
-    article = articles.find((article) => article.articleNum ==  largestArticleNum);
-
-    while(article!=null){
-        newTitle = "<br>" + article.title;
-        output += newTitle;
-        largestArticleNum++;
-        article = articles.find((article) => article.articleNum ==  largestArticleNum);
-    }
-
-    */  
-
-
+ 
 //Gets a new article according to the article number 
 const getArticle = async (req, res) => {
     try{
@@ -45,7 +29,9 @@ const getArticle = async (req, res) => {
         if(_article){
             return res.render("forum/article.pug", {
                 title: _article.title,
-                article: _article
+                article: _article,
+                active:"Forum",
+                userName: req.session.user
             });
         }else{
             return res.send("No corresponding article")
@@ -106,8 +92,7 @@ const createArticle = async (req, res) => {
     }
 }
 
-
-// Deleting an article
+//Deleting an article
 const deleteArticle = async (req, res) => {
     var enteredNumber = parseInt(req.params.articleNum, 10);
 
@@ -132,13 +117,17 @@ const deleteArticle = async (req, res) => {
     }
 }
 
+//Go to edit article
 const getEditArticle = async (req,res) => {
     try {
-        const _article = await Article.findOne({"articleNum":enteredNumber});
+        const _article = await Article.findOne({"articleNum":req.params.articleNum});
 
-        return res.render("forum/'change_article.pug", {
+        return res.render("forum/change_article.pug", {
             title:'Change Article', 
-            articleNum : _article.articleNum
+            articleNum : _article.articleNum,
+            active:"Forum",
+            userName: req.session.user
+            
         });
 
     }catch(err){
@@ -147,7 +136,7 @@ const getEditArticle = async (req,res) => {
     }
 }
 
-//changes an article's contents using the articleNum as a point of reference
+//Changes an article's contents using the articleNum as a point of reference
 const changeArticle = async (req, res) => {
     if(!req.params.articleNum){
         res.status(400)
@@ -172,7 +161,7 @@ const changeArticle = async (req, res) => {
                 _new["body"] = req.body.body;
             }
             const update = await Article.findOneAndUpdate({"articleNum":req.params.articleNum},_new);
-            return res.send(update);
+            return await res.redirect("/forum/" + req.params.articleNum);
             
         }catch(err){
             res.status(400);
@@ -186,29 +175,37 @@ const createComment = async (req, res) => {
     if(!req.params.articleNum){
         return res.send("Article num not provided when creating comment");
     }
+
     if(!req.body.commentBody){
         res.status(400);
         return res.send("Can't make empty comment");
     }
     try{
         const _article = await Article.findOne({"articleNum":req.params.articleNum});
+        
         if(!_article){
             res.status(404)
             return res.send("No such article.");
-        }else{
+        }
+        
+        else{
             var comments = _article.comments.slice();
             var _new = {}
-            if(req.body.author){
-                _new["commentAuthor"] = req.body.author;
-            }else{
+           
+            if(req.session.user){
+                _new["commentAuthor"] = req.session.user;
+            }
+            
+            else{
                 _new["commentAuthor"] = "anonymous";
             }
             _new["commentBody"] = req.body.commentBody;
             _new["commentNumber"] = comments.length + 1;
+
             comments.push(_new);
 
             const _update = await Article.findOneAndUpdate({"articleNum":req.params.articleNum},{"comments":comments});
-            return res.send(_update);
+            return await res.redirect("/forum/" + req.params.articleNum);
 
         }
     }catch(err){
@@ -217,9 +214,13 @@ const createComment = async (req, res) => {
     }
 }
 
+const getComment = async (req, res) => {
+    
+}
 
+//Deleting a comment 
 const deleteComment = async (req, res) => {
-    var enteredNumber = parseInt(req.params.commentNum, 10);
+    var enteredNumber = parseInt(req.params.commentNumber, 10);
     var articleNumber = parseInt(req.params.articleNum, 10);
 
     try{
@@ -251,7 +252,7 @@ const deleteComment = async (req, res) => {
             return res.send("No such comment.");
         }else{
             const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":comments});
-            return res.send(_update);
+            return await res.redirect("/forum/" + req.params.articleNum);
         }
         
     }catch(err){
@@ -260,11 +261,40 @@ const deleteComment = async (req, res) => {
     }
 }
 
+const getEditComment = async (req, res) => {
+    try {
+        var enteredNumber = req.params.commentNumber;
+        var articleNumber = req.params.articleNum;
+
+        const _article = await Article.findOne({"articleNum":articleNumber});
+
+        if(!_article){
+            res.status(404)
+            return res.send("No such article.");
+        }
+
+        return res.render("forum/change_comment.pug", {
+            title:'Change Comment', 
+            article: _article,
+            articleNum : articleNumber,
+            commentNumber : enteredNumber,
+            active:"Forum",
+            userName: req.session.user
+            
+        });
+
+    }catch(err){
+        res.status(400);
+        return res.send("could not find comment");
+    }
+}
+
+//Editing a Comment
 const changeComment= async (req, res) => {
-    if(!req.params.commentNum || !req.params.articleNum){
+    if(!req.params.commentNumber|| !req.params.articleNum){
         return res.send("No sufficient information provided");
     }
-    var enteredNumber = req.params.commentNum;
+    var enteredNumber = req.params.commentNumber;
     var articleNumber = req.params.articleNum;
 
     try{
@@ -279,10 +309,11 @@ const changeComment= async (req, res) => {
         var flag = 0;
         
         for(i in comments){
-            if(enteredNumber === comments[i]["commentNumber"]){
+            if(enteredNumber == comments[i].commentNumber){
                 if(comments[i].commentAuthor === req.session.user){
-                    if(req.body.newComment){
-                        comments[i].commentBody = req.body.newComment;
+                    if(req.body.commentBody){
+                        comments[i].commentBody = req.body.commentBody;
+;
                     }
                     flag = 1;
                     break;
@@ -297,8 +328,9 @@ const changeComment= async (req, res) => {
             res.status(404)
             return res.send("No such comment.");
         }else{
-            const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":comments});
-            return res.send(_update);
+            const _update = await Article.findOneAndUpdate({"articleNum":article.articleNum},{"comments":comments});
+
+            return await res.redirect("/forum/" + article.articleNum);
         }
         
     }catch(err){
@@ -306,7 +338,6 @@ const changeComment= async (req, res) => {
         return res.send("Database failed when deleteComment");
     }
 }
-
 
 module.exports = {
     getForum,
@@ -317,5 +348,6 @@ module.exports = {
     changeArticle,
     createComment,
     deleteComment,
+    getEditComment,
     changeComment
 }

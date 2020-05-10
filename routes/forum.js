@@ -30,13 +30,16 @@ forumRouter.post("/:articleNum/edit", (req, res, next) => loginController.isLogg
 //creates a new comment
 forumRouter.post("/:articleNum", (req, res, next) => loginController.isLoggedIn(req, res, next),(req, res) => forumController.createComment(req,res))
 
+//get  comment
+forumRouter.get("/:articleNum/:commentNumber", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getComment(req,res));
+
 //deletes a comment
-forumRouter.delete("/:articleNum/:commentNum", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteComment(req,res));
+forumRouter.delete("/:articleNum/:commentNumber", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteComment(req,res));
 
 //get page to edit comment 
-forumRouter.post("/:articleNum/:commentNum/edit", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getEditComment(req,res));
+forumRouter.get("/:articleNum/:commentNumber/edit" , (req, res, next)   => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getEditComment(req,res));
 
 //edits a comment
-forumRouter.post("/:articleNum/:commentNum/edit", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.changeComment(req,res));
+forumRouter.post("/:articleNum/:commentNumber/edit", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.changeComment(req,res));
 
 module.exports = forumRouter;

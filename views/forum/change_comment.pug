@@ -1,0 +1,15 @@
+extends ../navbar
+
+block content
+    div.main
+
+    if ([article.comments[i]].commentAuthor == useName)
+        form(action= ("/forum/" + articleNum + "/" + commentNumber + "/edit") method="POST")
+            div Edit comment
+            input(type="text" name="commentBody")
+            input(type="submit" value="Edit Comment")
+    
+        form(action= ("/forum/" + articleNum + "/" + commentNumber)
+            div Delete Comment
+            
+    
