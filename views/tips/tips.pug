@@ -1,0 +1,10 @@
+extends ../navbar
+
+block content
+        div.table
+            h2 List of Tips
+            each tip in current_tips
+                    ul
+                        li
+                            a(href = '/tips/' + tip.tipNum) #{tip.title}
+        
