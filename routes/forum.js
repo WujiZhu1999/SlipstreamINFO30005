@@ -34,7 +34,7 @@ forumRouter.post("/:articleNum", (req, res, next) => loginController.isLoggedIn(
 forumRouter.get("/:articleNum/:commentNumber", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getComment(req,res));
 
 //deletes a comment
-forumRouter.delete("/:articleNum/:commentNumber", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteComment(req,res));
+forumRouter.post("/:articleNum/:commentNumber/delete", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteComment(req,res));
 
 //get page to edit comment 
 forumRouter.get("/:articleNum/:commentNumber/edit" , (req, res, next)   => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getEditComment(req,res));

@@ -11,12 +11,16 @@ block content
             input(type="submit" value="Post")
        
         div.table
-                each comment in article.comments
-                    ul
-                        li
-                            a(href = '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit") 
-                                div.comment #{comment.commentBody}
-                                div.comment_author From: #{comment.commentAuthor}
+            each comment in article.comments
+                ul
+                    li
+                        div.comment #{comment.commentBody}
+                        div.comment_author From: #{comment.commentAuthor}
+
+                        if (comment.commentAuthor == userName)
+                            a(href= '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit") <button type="button">Edit Comment</button></a>
+                            form(action=("/forum/" + article.articleNum  + "/" + comment.commentNumber + "/delete") method="POST")
+                                input(type="submit" value="Delete Comment")
             
         par
         if article.author == userName
