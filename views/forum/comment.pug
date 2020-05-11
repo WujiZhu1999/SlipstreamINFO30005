@@ -1,0 +1,7 @@
+extends ../navbar
+
+block content
+    div.main
+
+    form(action=("/forum/" + articleNum + "/" + commentNumber + "/delete") method="POST")
+        input(type="submit" value="Delete Comment")
