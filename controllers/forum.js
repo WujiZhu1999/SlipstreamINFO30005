@@ -6,7 +6,6 @@ const getForum = async (req, res) => {
 
     try {
         const _articles = await Article.find();
-
         return res.render('forum/forum.pug', {
             title:'Forum',
             active:"Forum",
