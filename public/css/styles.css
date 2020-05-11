@@ -25,6 +25,7 @@ nav ul {
     padding: 0;
     overflow: hidden;
     background-color: var(--background-colour);
+    padding-right: 20px;
 }
 
 nav li {
@@ -64,6 +65,7 @@ nav li.dropDown {
 }
 
 nav .dropDownContent {
+    margin-right: 20px;
     display: none;
     position: absolute;
     min-width: 160px;
@@ -89,14 +91,12 @@ img {
 
 body {
     background-color: var(--white);
-}
-div.main {
-    
-    margin-left: 13%;
-    margin-right: 13%;
+    width: 50%;
+    min-width: 1000px;
     font-family: Arial, Helvetica, sans-serif;
     display: block;
     height: 100%;
+    margin: 0 auto;
 }
 
 div.table {
@@ -166,4 +166,19 @@ form.createArticle textarea {
     height: 100px;
     box-sizing: border-box;
     resize: none;
+}
+
+div.login {
+    border: solid 3px grey;
+    width: 30%;
+    min-width: 400px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    text-align: center;
+    margin-top: 100px;
+}
+
+div.login form{
+
+
 }
