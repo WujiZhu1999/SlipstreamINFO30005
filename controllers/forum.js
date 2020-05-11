@@ -215,6 +215,27 @@ const createComment = async (req, res) => {
 }
 
 const getComment = async (req, res) => {
+
+    try{
+        var enteredNumber = parseInt(req.params.commentNumber, 10);
+        var articleNumber = parseInt(req.params.articleNum, 10);
+
+        const _article = await Article.findOne({"articleNum":articleNumber});
+
+        return res.render("forum/comment.pug", {
+            title:'Get Comment', 
+            articleNum : _article.articleNum,
+            commentNumber: enteredNumber,
+            active:"Forum",
+            userName: req.session.user
+            
+        });
+    }
+
+    catch{
+        res.status(400);
+        return res.send("Database failed when create comments.");
+    }
     
 }
 
@@ -224,23 +245,24 @@ const deleteComment = async (req, res) => {
     var articleNumber = parseInt(req.params.articleNum, 10);
 
     try{
-        const article = await Article.findOne({"articleNum":articleNumber});
+        const article = await Article.findOne({"articleNum":req.params.articleNum})
         
         
         if(!article){
             res.status(404)
             return res.send("No such article found.");
         }
-        var comments = article.comments.slice();
+        //var comments = article.comments.splice();
         var flag = 0;
         
         for(i in comments){
-            if(enteredNumber === (parseInt(i)+1)){
-                if(comments[i].commentAuthor === req.session.user || article.author === req.session.user){
-                    comments.splice(i);
+            if(enteredNumber == article.comments[i].commentNumber){
+                if(article.comments[i].commentAuthor == req.session.user){
+                    article.comments.splice(i,1);
                     flag = 1;
                     break;
                 }
+
                 else{
                     res.status(403)
                     return res.send("Not authorized to delete the comment");
@@ -251,8 +273,9 @@ const deleteComment = async (req, res) => {
             res.status(404)
             return res.send("No such comment.");
         }else{
-            const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":comments});
-            return await res.redirect("/forum/" + req.params.articleNum);
+
+            //const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":comments});
+            return await res.redirect("/forum/" + articleNumber);
         }
         
     }catch(err){
@@ -349,5 +372,6 @@ module.exports = {
     createComment,
     deleteComment,
     getEditComment,
-    changeComment
+    changeComment,
+    getComment
 }
