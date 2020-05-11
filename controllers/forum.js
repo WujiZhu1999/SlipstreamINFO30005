@@ -254,9 +254,10 @@ const deleteComment = async (req, res) => {
         //var comments = article.comments.splice();
         var flag = 0;
         
-        for(i in comments){
+        for(i in article.comments){
             if(enteredNumber == article.comments[i].commentNumber){
-                if(article.comments[i].commentAuthor == req.session.user){
+                console.log(i)
+                if(article.comments[i].commentAuthor === req.session.user){
                     article.comments.splice(i,1);
                     flag = 1;
                     break;
@@ -273,13 +274,13 @@ const deleteComment = async (req, res) => {
             return res.send("No such comment.");
         }else{
 
-            //const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":comments});
+            const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":article.comments});
             return await res.redirect("/forum/" + articleNumber);
         }
         
     }catch(err){
         res.status(400);
-        return res.send("Database failed when deleteComment");
+        return res.send("Database failed when deleteComment" + err);
     }
 }
 
