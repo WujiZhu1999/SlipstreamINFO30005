@@ -1,0 +1,97 @@
+body,h1 {
+	font-family: "Raleway", sans-serif;
+}
+body, html {
+	height: 100%
+	width:90vw;
+	height: 90vh;
+}
+.bgimg {
+  background-image: url('./pic/map_welcome.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+div{
+	padding-left: 15vw;
+	padding-top: 11vh;
+	color: white;
+	margin-bottom: 0;
+	width: 50%;
+	
+}
+
+@keyframes mymove1 {
+  0%{
+  	display: none;
+  	opacity: 0;
+  }
+  1% {
+  	display: block;
+  	opacity: 0;
+  }
+  100% {
+  	display: block;
+  	opacity: 1;
+  }
+  from {left: 15vw;}
+  to {left: 0vw;}
+}
+
+h1{
+	font-size: 115px;
+	margin-bottom: 0;
+	position: relative;
+  animation: mymove1 2s infinite;
+  animation-iteration-count: 1;
+}
+h2{	
+
+	font-size: 40px;
+	position: relative;
+  	animation: mymove1 2s infinite;
+  	animation-iteration-count: 1;
+  	animation-delay: 0.5s;
+  	opacity: 0;
+  	animation-fill-mode: forwards;
+}
+
+li{
+	font-size:30px;
+	position: relative;
+  	animation: mymove1 2s infinite;
+  	animation-iteration-count: 1;
+  	opacity: 0;
+  	animation-fill-mode: forwards;
+}
+li.l1{
+	animation-delay: 1s;
+}
+li.l2{
+	animation-delay: 1.5s;
+}
+li.l3{
+	animation-delay: 2s;
+}
+li.l4{
+	animation-delay: 2.5s;
+}
+li.l5{
+	animation-delay: 3s;
+}
+li.l6{
+	animation-delay: 3.5s;
+}
+a{	
+
+	font-size:60px;
+	position: relative;
+  	color: white;
+  	text-decoration: none;
+  	transition-duration: 1s;
+  	padding-left: 30px;
+  	padding-right: 30px;
+}
+a:hover{
+	background-color: rgba(255,255,255,0.5);
+}
