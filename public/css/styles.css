@@ -6,8 +6,10 @@
     --white: #F1F1F1;
 }
 
-img{
+img.logo{
     width: 64px;
+    
+    height: 65px;
 }
 
 h1 {
@@ -89,7 +91,16 @@ nav .dropDownContent input[type="submit"] {
     text-decoration: none;
     display: block;
     text-align: left;
+    background-color: var(--main-colour);
+    font-size: 16px;
+    width: 100%;
+    border: none;
+
 }
+nav .dropDownContent input[type="submit"]:hover {
+    background-color: var(--highlite-colour);
+}
+
 
 .dropDown:hover .dropDownContent {
     display: block;
