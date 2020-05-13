@@ -2,222 +2,189 @@ const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Friend = mongoose.model("friends");
 
-const getFriends = async (req, res) =>{
+async function friends(req) {
     try{
+        var friends = []
         var _friends = await Friend.find({
             "receiver": req.session.user,
             "status": "ACCEPTED"
         });
 
-        _friends += await Friend.find({
+        for (friend of _friends){
+            friends.push(friend.sender);
+        }
+
+        _friends = await Friend.find({
             "sender": req.session.user,
             "status": "ACCEPTED"
         });
 
-        const _requests = await Friend.find({
-            "reciever": req.session.user,
+        for (friend of _friends){
+            friends.push(friend.receiver);
+        }
+
+        return friends
+    }catch(err){
+        return "Database Failure when getting friends"
+    }
+}
+
+async function requests(req){
+    try{
+        var requestList = [];
+        var _requests = await Friend.find({
+            "receiver": req.session.user,
             "status": "PENDING"
         });
 
-        var _Friendlist = [];
-        for(user of _friends){
-            if (user["sender"] == req.session.user){
-                _Friendlist.push(user["reciever"])
-            } else {
-                _Friendlist.push(user["sender"]);
-            }
+        for (request of _requests){
+            requestList.push(request.sender);
         }
-        const _friends_detail = await User.find({
-            "userName":{ $in: _Friendlist}
-        });
+        console.log(requestList)
+        return requestList
 
-        var _requestList = [];
-        for(user of _friends){
-            _requestList.push(user["sender"])
-        }
-        const _request_detail = await User.find({
-            "userName":{ $in: _Friendlist}
-        });
-        //send _request_detail
 
-        res.render("friends/friends", {
+    } catch(err){
+        return "Database Failure when getting friend requests"
+    }
+    
+}
+
+const getFriends = async (req, res) =>{
+    res.render("friends/friends", {
         title:"Friends",
         active: "Friends",
         userName: req.session.user,
-        friends: _friends_detail
-        })
-        //return res.send(_friends_detail);
-    }catch(err){
-        res.status(400);
-        return res.render("friends/friends", {
-            title:"Friends",
-            active: "Friends",
-            userName: req.session.user,
-            friends: {},
-            error: "Database Failure when getting friends"
-        })
-    }
+        friends: await friends(req),
+        requests: await requests(req)
+    })
 }
 
 
 const sendFriendRequest = async (req, res) => {
-    try{
+    try {
         if(!req.body.receiver){
             res.status(400);
-            return res.render("friends/friends", {
-                title:"Friends",
-                active: "Friends",
-                userName: req.session.user,
-                friends: {},
-                error: "Missing receiver"
+            return res.render("error", {
+                error: "Missing receiver",
+                redirect: "/Friends"
             });
         }
         if(req.body.receiver === req.session.user){
             res.status(400);
-            return res.render("friends/friends", {
-                title:"Friends",
-                active: "Friends",
-                userName: req.session.user,
-                friends: {},
-                error: "Can't be friends with yourself"
+            return res.render("error", {
+                error: "Can't be friends with yourself",
+                redirect: "/Friends"
             });
         }
         const _me = await User.findOne({"userName":req.session.user});
         if(!_me){
             res.status(400);
-            return res.render("friends/friends", {
-                title:"Friends",
-                active: "Friends",
-                userName: req.session.user,
-                friends: {},
-                error: "Server Error: Can't get your personal profile"
+            return res.render("error", {
+                error: "Server Error: Can't get your personal profile",
+                redirect: "/Friends"
             });
         }
         const _them = await User.findOne({"userName":req.body.receiver});
         if(!_them){
             res.status(400);
-            return res.render("friends/friends", {
-                title:"Friends",
-                active: "Friends",
-                userName: req.session.user,
-                friends: {},
-                error: "No such user, make sure their username is spelled correctly"
+            return res.render("error", {
+                error: "No such user, make sure their username is spelled correctly",
+                redirect: "/Friends"
             });
         }
 
-        const _request = await Friend.findOne({
-            "sender": _them["userName"],
-            "receiver": _me["userName"]
-        });
+        var request = await Friend.findOne({"sender": req.session.user, "receiver": req.body.receiver})
 
-        if (_request){
-            if (_request["status"] == "PENDING" || _request["status"] == "REJECTED"){
-                const result1 = await  Friend.findOneAndUpdate({"sender": _them["userName"], "receiver": req.session.user}, {"status":"ACCEPTED"})
-            } else if (_request["status"] == "ACCEPTED"){
-                res.status(400)
-                return res.render("friends/friends", {
-                    title:"Friends",
-                    active: "Friends",
-                    userName: req.session.user,
-                    friends: {},
-                    error: "your already friends, you idiot"
+        if (!request){
+
+
+            request = await Friend.findOne({"receiver": req.session.user, "sender": req.body.receiver})
+
+
+            if (!request){
+                await Friend.create({
+                    "sender": req.session.user,
+                    "receiver": req.body.receiver,
+                    "status": "PENDING"
                 });
-            }else if (_request["status"] == "DELETED"){
-                const result1 = await  Friend.findOneAndUpdate({"sender": _them["userName"], "receiver": req.session.user}, {"status":"PENDING"})
+                console.log("create new request")
+                return res.redirect("/Friends");
+            } else {
+                if (request.status == "PENDING"){
+                    console.log("accept request")
+                    console.log(await Friend.findOneAndUpdate({"sender": req.body.receiver, "receiver": req.session.user}, {"status":"ACCEPTED"}));
+                    return res.redirect("/Friends");
+                } else {
+                    return res.render("error", {
+                        error: "You are already friends",
+                        redirect: "/Friends"
+                    });
+                }
             }
+
         }
 
+        return res.render("error", {
+            error: "you have already sent a request",
+            redirect: "/Friends"
+        });
         
-        const _had = await Friend.findOne({
-            "sender": _me["userName"],
-            "receiver": _them["userName"]
-        });
-        if(_had){
-            if(_had["status"]=="PENDING"){
-                res.status(400);
-                return res.render("friends/friends", {
-                    title:"Friends",
-                    active: "Friends",
-                    userName: req.session.user,
-                    friends: {},
-                    error: "Request sent already"
-                });
-            }else if(_had["status"]=="ACCEPTED"){
-                res.status(400);
-                return res.render("friends/friends", {
-                    title:"Friends",
-                    active: "Friends",
-                    userName: req.session.user,
-                    friends: {},
-                    error: "You're already friends with this person"
-                });
-            }
-        }
-        const _newFriend = await Friend.create({
-            "sender": _me["userName"],
-            "receiver": _them["userName"],
-            "status": "PENDING"
-        });
-        return res.render("friends/friends", {
-            title:"Friends",
-            active: "Friends",
-            userName: req.session.user,
-            friends: {}
-        });
-        return res.send(_newFriend);
-    }catch(err){
-        res.status(400);
-        return res.render("friends/friends", {
-            title:"Friends",
-            active: "Friends",
-            userName: req.session.user,
-            friends: {},
-            error: "Server Error: Database Failure when sending friend request"
+    } catch(err){
+        return res.render("error", {
+            error: err,
+            redirect: "/Friends"
         });
     }
 }
 
+
 const deleteFriendRequest = async (req, res) => {
     try{
+        
         var _friend = await Friend.findOne({
             "sender":req.session.user,
-            "receiver":req.params.userName,
+            "receiver":req.body.friend,
             "status":"ACCEPTED"
         });
 
         if(!_friend){
             _friend = await Friend.findOne({
-                "sender":req.params.userName,
+                "sender":req.body.friend,
                 "receiver":req.session.user,
                 "status":"ACCEPTED"
             });
 
             if(!_friend){
-                res.session(400)
-                return res.send("Not friend at all.");
+                res.status(400)
+                return res.render("error", {
+                    error: "You are already not friends",
+                    redirect: "/Friends"
+                });
             }
         }
-        const _result = await Friend.findOneAndUpdate({
-            "sender":_friend["sender"],
-            "receiver":_friend["reciever"],
-            "status":"ACCEPTED"
-            },
-            {
-                "status":"DELETED"
-            }
-        );
-        return res.send(_result);
+        await Friend.deleteOne({"sender":_friend.sender, "receiver":_friend.receiver})
+
+        return res.redirect("/Friends")
     }catch(err){
         res.status(400);
-        return res.send("Database Failure when deleting friend request");
+        return res.render("error", {
+            error: err,
+            redirect: "/Friends"
+        });
     }
 }
 
 const rejectFriendRequest = async (req, res) => {
     try{
-        if(!req.body.sender ){
-            return res.send("sender/choice not provided");
+        if(!req.body.sender){
+            return res.render("error", {
+                error: "sender not specified",
+                redirect: "/Friends"
+            });
         }
+
+
         var _request = await Friend.findOne({
             "sender":req.body.sender,
             "receiver":req.session.user,
@@ -225,21 +192,21 @@ const rejectFriendRequest = async (req, res) => {
         });
         if(!_request){
             res.status(400);
-            return res.send("No such request");
-        }else{
-            const _update = await Friend.findOneAndUpdate({
-            "sender":req.body.sender,
-            "receiver":req.session.user,
-            "status":"PENDING"
-            },
-            {
-                "status":"REJECTED"
+            return res.render("error", {
+                error: "No such request",
+                redirect: "/Friends"
             });
-            return res.send(_update);
+        } else {
+            await Friend.deleteOne({"sender":req.body.sender, "receiver":req.session.user})
+
+            return res.redirect("/Friends");
         }
     }catch(err){
         res.status(400);
-        return res.send("Database Failure when dealing friend request");
+        return res.render("error", {
+            error: err,
+            redirect: "/Friends"
+        });
     }
 }
 

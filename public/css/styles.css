@@ -200,11 +200,6 @@ div.login {
 }
 
 
-div.login form{
-
-
-}
-
 .error {
     margin-top: 20px;
     background-color: rgb(255, 162, 162);
@@ -213,4 +208,20 @@ div.login form{
     padding: 18px;
     width: 30%;
     margin: 0 auto;
+}
+
+.button {
+    margin-top: 5px;
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: var(--secondary-colour);
+    border: none;
+    color: black;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: var(--main-colour);
+    color: white;
 }
