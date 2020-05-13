@@ -95,7 +95,7 @@ const changeUser = async (req, res) => {
         if(req.body.name){_new["name"] = req.body.name};
         if(req.body.password){_new["password"] = req.body.password};
         const update = await User.findOneAndUpdate({"userName":req.body.userName},_new);
-        return res.send(update); 
+        return res.redirect("/users/" + req.body.userName); 
     }catch(err){
         res.status(500);
         return res.send("Database query failed. Change User Failed");
