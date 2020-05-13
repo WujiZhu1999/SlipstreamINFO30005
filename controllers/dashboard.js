@@ -19,11 +19,16 @@ const getHomepage = async (req, res) => {
 
         leaderboard: leaderboardData,
         user: userData
-    })
+        })
 
     }catch(err){
         res.status(400);
-        return res.send("Failed when dealing personal information.");
+        return res.render("main/dashboard", {
+            title:"Dashboard",
+            active: "Home",
+            userName: req.session.user,
+            error:"Failed when dealing personal information"
+        });
     }
 }
 
@@ -35,7 +40,12 @@ async function getStats(req, res) {
 
     }catch(err){
         res.status(400);
-        return "Failure when fetching personal information for main page(dashboard)";
+        return res.render("main/dashboard", {
+            title:"Dashboard",
+            active: "Home",
+            userName: req.session.user,
+            error:"Failed when fetching personal information"
+        });
     }
 };
 
@@ -74,7 +84,12 @@ async function getLeaderboard(req, res){
 
     }catch(err){
         res.status(400);
-        return "Failure when getLeaderboard for friends.";
+        return res.render("main/dashboard", {
+            title:"Dashboard",
+            active: "Home",
+            userName: req.session.user,
+            error:"Failed when getLeaderboard for friends"
+        });
     }
 }
 

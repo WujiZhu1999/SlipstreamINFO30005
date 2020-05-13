@@ -32,7 +32,10 @@ const postLogIn = async (req, res) => {
     //if the required information is missing, send an error
     if (req.body.userName == null || req.body.password == null){
         res.status(400);
-        res.send("missing information");
+        return res.render("login", {
+            title:"Login",
+            error:"Please enter a username and password"
+        });
         return;
     }
     try{
@@ -41,12 +44,18 @@ const postLogIn = async (req, res) => {
             req.session.user = req.body.userName;
             return res.redirect("/");
         }else{
-            return res.send("Make sure your account and password are both correct.");
+            return res.render("login", {
+                title:"Login",
+                error:"Make sure your account and password are both correct"
+            });
         }
         return res.send(_new);
     }catch(err){
         res.status(400);
-        return res.send("Database failed. Login Failed. " + err);
+        return res.render("login", {
+            title:"Login",
+            error:"Database failed. Login Failed"
+        });
     }
 }
 

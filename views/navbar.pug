@@ -5,7 +5,7 @@ block navbar
     nav
         ul
             li
-                img(src="/logo.jpg")
+                img(src="/logo.jpg").logo
             li
                 div(style="margin:30px;")
 
@@ -17,12 +17,18 @@ block navbar
                     else
                         a(href=links[num])= pageNames[num]  
                 - num++
-            //li(style="float:right;")
-            //    div(style="margin:5px;")
+
             li(style="float:right;" class="dropDown")
-                a(class="dropDownButton")= userName
-                div(class="dropDownContent")
-                    a(href=`/Users/${userName}`) settings
+                if userName
+                    a(class="dropDownButton")= userName
+                    div(class="dropDownContent")
+                        a(href=`/Users/${userName}`) Settings
+                        a(href=`/Friends`) Friends
+                        form(action = "/Login/Logout" method = "POST")
+                                input(type="submit" value="Friends")
+
+                else
+                    a(href="/Login") Login
             
 
     div(style="margin:70px;")
