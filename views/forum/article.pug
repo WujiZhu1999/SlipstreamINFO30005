@@ -4,6 +4,16 @@ block content
      div.main
         h1 #{article.title}
         par #{article.body}
+
+        div Author : #{article.author}
+
+        div
+        if article.author == userName
+            a(href= "/forum/" + article.articleNum + "/edit") <button type="button">Edit Article</button></a>
+            form(action=("/forum/" + article.articleNum + "/delete") method="POST")
+                input(type="submit" value="Delete Article")
+        
+    
         
         form(action=("/forum/" + article.articleNum) method="POST" class="createArticle")
             h2 Comments

@@ -1,0 +1,21 @@
+doctype html
+html
+	body
+		p #{route}
+		a(class = "a1" href='/') Home
+		a(class = "a2" href='/Forum') Forum
+		a(class = "a3" href='/Tips') Tips
+		a(class = "a4" href=`/Users/${userName}`) Setting
+
+		form(action="/Map/halt" method="post")
+			label(for="origin")
+			input(type="text" id="origin" name="origin" value=route["origin"])
+			label(for="end")
+			input(type="text" id="destination" name="destination" value=route["destination"])
+			input(type="submit" value="haultRoute")
+		form(action="/Map/end" method="post")
+			label(for="origin")
+			input(type="text" id="origin" name="origin" value=route["origin"])
+			label(for="end")
+			input(type="text" id="destination" name="destination" value=route["destination"])
+			input(type="submit" value="endRoute")

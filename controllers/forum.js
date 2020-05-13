@@ -103,7 +103,7 @@ const deleteArticle = async (req, res) => {
                 return res.send("You are not authorised to delete this article");
             }else{
                 await Article.deleteOne({"articleNum":enteredNumber});
-                return res.send("Article delete successful" + enteredNumber);
+                return res.redirect("/forum");
             }
         }else{
             res.status(400)
@@ -211,31 +211,6 @@ const createComment = async (req, res) => {
         res.status(400);
         return res.send("Database failed when create comments.");
     }
-}
-
-const getComment = async (req, res) => {
-
-    try{
-        var enteredNumber = parseInt(req.params.commentNumber, 10);
-        var articleNumber = parseInt(req.params.articleNum, 10);
-
-        const _article = await Article.findOne({"articleNum":articleNumber});
-
-        return res.render("forum/comment.pug", {
-            title:'Get Comment', 
-            articleNum : _article.articleNum,
-            commentNumber: enteredNumber,
-            active:"Forum",
-            userName: req.session.user
-            
-        });
-    }
-
-    catch{
-        res.status(400);
-        return res.send("Database failed when create comments.");
-    }
-    
 }
 
 //Deleting a comment 
@@ -372,6 +347,5 @@ module.exports = {
     createComment,
     deleteComment,
     getEditComment,
-    changeComment,
-    getComment
+    changeComment
 }

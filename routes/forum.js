@@ -19,7 +19,7 @@ forumRouter.get("/:articleNum", (req, res) => forumController.getArticle(req, re
 forumRouter.post("/", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.createArticle(req, res));
 
 //delete and article based off of the article number number
-forumRouter.delete("/:articleNum/", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteArticle(req,res));
+forumRouter.post("/:articleNum/delete", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteArticle(req,res));
 
 //get article to edit
 forumRouter.get("/:articleNum/edit", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getEditArticle(req, res));
@@ -29,9 +29,6 @@ forumRouter.post("/:articleNum/edit", (req, res, next) => loginController.isLogg
 
 //creates a new comment
 forumRouter.post("/:articleNum", (req, res, next) => loginController.isLoggedIn(req, res, next),(req, res) => forumController.createComment(req,res))
-
-//get  comment
-forumRouter.get("/:articleNum/:commentNumber", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getComment(req,res));
 
 //deletes a comment
 forumRouter.post("/:articleNum/:commentNumber/delete", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.deleteComment(req,res));

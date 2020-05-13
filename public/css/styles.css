@@ -6,6 +6,9 @@
     --white: #F1F1F1;
 }
 
+img{
+    width: 64px;
+}
 
 h1 {
     color: var(--main-colour);

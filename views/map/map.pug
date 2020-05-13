@@ -1,0 +1,109 @@
+doctype html
+html
+	head
+		meta(name="viewport" content="initial-scale=1.0,user-scalable=no")
+		meta(charset="utf-8")
+		title Direction Service
+		link(rel='stylesheet' href='/css/map/map.css')
+	body
+		div(id="floating-panel")
+				b Start:
+				if(origin && origin!="---")
+					input(type="text" id="start" value = origin)
+				else
+					input(type="text" id="start")
+				b End:
+				if(destination && destination!="---")
+					input(type="text" id="end" value = destination)
+				else
+					input(type="text" id="end")
+				input(type="submit" id="sub")
+		div(id="map")
+
+		div(id="magic")
+			form(action="/Map/start" method="post")
+				label(for="_origin")
+				input(type="text" id="_origin" name="_origin" required)
+				label(for="_end")
+				input(type="text" id="_end" name="_end" required)
+				input(type="submit" value="Start Route")
+				input(type="submit" value="SaveRoute" formaction = "/Map/saveRoute")
+				input(type="submit" value="deleteRoute" id= "deleteSaved" formaction = "/Map/deleteRoute")
+		div(id="route info") abc_placeholder
+		div(id="route info2") abc_placeholder
+		div(id="route info3") abc_placeholder
+		div(id="route info4")
+			a(class = "a1" href='/') Home
+			a(class = "a2" href='/Forum') Forum
+			a(class = "a3" href='/Tips') Tips
+			a(class = "a4" href=`/Users/${userName}`) Setting
+		div(id="route info5") abc_placeholder
+			h1 saved route
+			if(route)
+				ul
+					each r in route
+						li(class= r["origin"] + r["destination"] onclick="loadDATA(this)")
+							p(class= r["origin"] + r["destination"]+"1")= r["origin"]
+							p(class= r["origin"] + r["destination"]+"2")= r["destination"]
+							p(class= r["origin"] + r["destination"]+"3")= r["distance"]
+							p(class= r["origin"] + r["destination"]+"4")= r["duration"]
+							p(class= r["origin"] + r["destination"]+"5")= r["status"]
+							button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") delete Route
+		div(id="route info6") abc_placeholder
+		div(id="route info7") abc_placeholder
+		div(id="route info8") abc_placeholder
+		div(id="route info9") abc_placeholder
+		script.
+			function initMap() {
+				var directionsService = new google.maps.DirectionsService();
+				var directionsRenderer = new google.maps.DirectionsRenderer();
+				var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 13,
+				center: {lat: -37.8105, lng: 144.9624}
+			});
+				directionsRenderer.setMap(map);
+				var onChangeHandler = function() {
+					calculateAndDisplayRoute(directionsService, directionsRenderer);
+				};
+				document.getElementById('sub').addEventListener('click', function() {
+					calculateAndDisplayRoute(directionsService, directionsRenderer);
+				});
+				if(document.getElementById('start').value && document.getElementById('start').value !='---' &&document.getElementById('end').value && document.getElementById('end').value !='---'){
+					
+					calculateAndDisplayRoute(directionsService, directionsRenderer);
+				}
+			}
+			function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+			directionsService.route({
+				origin: {query: document.getElementById('start').value},
+				destination: {query: document.getElementById('end').value},
+				travelMode: 'BICYCLING'
+			},
+				function(response, status) {
+					if (status === 'OK') {
+
+						document.getElementById("_origin").value = document.getElementById("start").value;
+						document.getElementById("_end").value = document.getElementById("end").value;
+						document.getElementById("route info").innerHTML = JSON.stringify(response["routes"][0]["legs"][0]["distance"])
+						document.getElementById("route info2").innerHTML = JSON.stringify(response["routes"][0]["legs"][0]["duration"])
+						var str = JSON.stringify(response["routes"][0]["legs"][0])
+						directionsRenderer.setDirections(response);
+						document.getElementById("route info3").innerHTML = str.split("turn").length-1;
+
+					} else {
+						window.alert('Directions request failed due to ' + status);
+					}
+				});
+			}
+		script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&callback=initMap").
+		script.
+			function loadDATA(ele){
+				document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML;
+				document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML;
+			}
+
+			function deleteRoute(ele){
+				document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML;
+				document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML;
+				document.getElementById("deleteSaved").click();
+			}

@@ -1,0 +1,89 @@
+doctype html
+html
+	head
+		title Welcome
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+		link(rel="stylesheet" href="/css/map/maphome.css")
+		link(rel="stylesheet" href='https://fonts.googleapis.com/css?family=Oleo Script')
+		link(rel="stylesheet" href='https://fonts.googleapis.com/css?family=Kavoon')
+	body
+		div(class="div_1")
+			span
+				a(class = "a1" href='/') Home
+				a(class = "a2" href='/Forum') Forum
+				a(class = "a3" href='/Tips') Tips
+				a(class = "a4" href=`/Users/${userName}`) Setting
+		
+		span(class="div_2")
+			h1 Hello #{userName}, how are you doing today!
+			ul(class="roadul")
+				each route in routes
+					li(class="roadli" onclick="insertRoad(this)")
+						img(class="roadimg" src="/css/map/pic/road.png")
+						if route["destination"] == "---"
+							h3(class="roadh3") Waiting for your exploration
+						else
+							h3(class="roadh3") #{route["destination"]}
+						p(class="roadp") Origin: #{route["origin"]} 
+						p(class="roadp") Destination: #{route["destination"]}
+						p(class="roadp") Total Trial: #{route["totalTrial"]}
+		div(id = "go")
+			div(id="goheader" class = "dropbtn") Where to Go
+			form(action="/Map/route" method="POST")
+				label(for="origin") Origin
+				br
+				input(type="text" id="origin" name="origin")
+				br
+				label(for="destination") Destination
+				br
+				input(type="text" id="destination" name="destination")
+				br
+				br
+				input(type="submit" value="GO")
+		script.
+			dragElement(document.getElementById("go"));
+			function dragElement(elmnt) {
+				var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+				if (document.getElementById(elmnt.id + "header")) {
+					document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+				} else {
+					elmnt.onmousedown = dragMouseDown;
+				}
+				function dragMouseDown(e) {
+					e = e || window.event;
+					e.preventDefault();
+					pos3 = e.clientX;
+					pos4 = e.clientY;
+					document.onmouseup = closeDragElement;
+					document.onmousemove = elementDrag;
+				}
+				function elementDrag(e) {
+					e = e || window.event;
+					e.preventDefault();
+					pos1 = pos3 - e.clientX;
+					pos2 = pos4 - e.clientY;
+					pos3 = e.clientX;
+					pos4 = e.clientY;
+					elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+					elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+				}
+				function closeDragElement() {
+					document.onmouseup = null;
+					document.onmousemove = null;
+				}
+			}
+			function insertRoad(ele){
+				//alert(ele.innerHTML);
+				//alert(ele.innerHTML.search("<p class=\"roadp\">Origin"));
+				var origin_start = ele.innerHTML.search("<p class=\"roadp\">Origin:") + 25;
+				var origin_end = ele.innerHTML.search("</p><p class=\"roadp\">Destination:") -1;
+				const origin = ele.innerHTML.slice(origin_start,origin_end);
+				var dest_start = ele.innerHTML.search("<p class=\"roadp\">Destination:") + 30;
+				var dest_end = ele.innerHTML.search("</p><p class=\"roadp\">Total Trial:");
+				const destination = ele.innerHTML.slice(dest_start,dest_end);
+				if(origin !="---" && destination !="---"){
+					document.getElementById("origin").value = origin;
+					document.getElementById("destination").value = destination;
+				}
+			}
