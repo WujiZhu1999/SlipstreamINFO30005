@@ -62,7 +62,13 @@ const getUser = async (req, res) => {
     try{ 
         const user = await User.findOne({"userName":req.params.userName});
         if(user){
-            return res.send(user);
+
+            return res.render("user/user_profile.pug", {
+                user: user,
+                active:"Home",
+                userName: req.session.user
+            });
+    
         }
         else{
             res.status(404);
