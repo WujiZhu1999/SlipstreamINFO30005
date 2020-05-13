@@ -22,5 +22,6 @@ block content
                         a(href = '/Forum/' + article.articleNum)
                             div.title #{article.title}
                             
-                            div.author Author: #{article.author}
+                            div.author
+                            a(href = "/users/" + article.author) From: #{article.author}
                             div.author Comments: #{article.comments.length}
