@@ -39,10 +39,23 @@ const getFriends = async (req, res) =>{
             "userName":{ $in: _Friendlist}
         });
         //send _request_detail
-        return res.send(_friends_detail);
+
+        res.render("friends/friends", {
+        title:"Friends",
+        active: "Friends",
+        userName: req.session.user,
+        friends: _friends_detail
+        })
+        //return res.send(_friends_detail);
     }catch(err){
         res.status(400);
-        return res.send("Database Failure when getting friends ");
+        return res.render("friends/friends", {
+            title:"Friends",
+            active: "Friends",
+            userName: req.session.user,
+            friends: {},
+            error: "Database Failure when getting friends"
+        })
     }
 }
 
@@ -51,21 +64,45 @@ const sendFriendRequest = async (req, res) => {
     try{
         if(!req.body.receiver){
             res.status(400);
-            return res.send("Missing receiver.");
+            return res.render("friends/friends", {
+                title:"Friends",
+                active: "Friends",
+                userName: req.session.user,
+                friends: {},
+                error: "Missing receiver"
+            });
         }
         if(req.body.receiver === req.session.user){
             res.status(400);
-            return res.send("Can't be friend to yourself");
+            return res.render("friends/friends", {
+                title:"Friends",
+                active: "Friends",
+                userName: req.session.user,
+                friends: {},
+                error: "Can't be friends with yourself"
+            });
         }
         const _me = await User.findOne({"userName":req.session.user});
         if(!_me){
             res.status(400);
-            return res.send("Can't get your personal profile.");
+            return res.render("friends/friends", {
+                title:"Friends",
+                active: "Friends",
+                userName: req.session.user,
+                friends: {},
+                error: "Server Error: Can't get your personal profile"
+            });
         }
         const _them = await User.findOne({"userName":req.body.receiver});
         if(!_them){
             res.status(400);
-            return res.send("No such user, make sure your search name is correct.")
+            return res.render("friends/friends", {
+                title:"Friends",
+                active: "Friends",
+                userName: req.session.user,
+                friends: {},
+                error: "No such user, make sure their username is spelled correctly"
+            });
         }
 
         const _request = await Friend.findOne({
@@ -78,7 +115,13 @@ const sendFriendRequest = async (req, res) => {
                 const result1 = await  Friend.findOneAndUpdate({"sender": _them["userName"], "receiver": req.session.user}, {"status":"ACCEPTED"})
             } else if (_request["status"] == "ACCEPTED"){
                 res.status(400)
-                res.send("your already friends, you idiot")
+                return res.render("friends/friends", {
+                    title:"Friends",
+                    active: "Friends",
+                    userName: req.session.user,
+                    friends: {},
+                    error: "your already friends, you idiot"
+                });
             }else if (_request["status"] == "DELETED"){
                 const result1 = await  Friend.findOneAndUpdate({"sender": _them["userName"], "receiver": req.session.user}, {"status":"PENDING"})
             }
@@ -92,10 +135,22 @@ const sendFriendRequest = async (req, res) => {
         if(_had){
             if(_had["status"]=="PENDING"){
                 res.status(400);
-                return res.send("Request Send already.");
+                return res.render("friends/friends", {
+                    title:"Friends",
+                    active: "Friends",
+                    userName: req.session.user,
+                    friends: {},
+                    error: "Request sent already"
+                });
             }else if(_had["status"]=="ACCEPTED"){
                 res.status(400);
-                return res.send("FRIENDS already");
+                return res.render("friends/friends", {
+                    title:"Friends",
+                    active: "Friends",
+                    userName: req.session.user,
+                    friends: {},
+                    error: "You're already friends with this person"
+                });
             }
         }
         const _newFriend = await Friend.create({
@@ -103,10 +158,22 @@ const sendFriendRequest = async (req, res) => {
             "receiver": _them["userName"],
             "status": "PENDING"
         });
+        return res.render("friends/friends", {
+            title:"Friends",
+            active: "Friends",
+            userName: req.session.user,
+            friends: {}
+        });
         return res.send(_newFriend);
     }catch(err){
         res.status(400);
-        return res.send("Database Failure when sending friend request");
+        return res.render("friends/friends", {
+            title:"Friends",
+            active: "Friends",
+            userName: req.session.user,
+            friends: {},
+            error: "Server Error: Database Failure when sending friend request"
+        });
     }
 }
 

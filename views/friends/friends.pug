@@ -1,0 +1,8 @@
+extends ../navbar
+
+block content
+    form(action = "/Friends" method="POST")
+        div userName
+        input(type="text" name="receiver")
+        br
+        input(type="submit" value="Send")

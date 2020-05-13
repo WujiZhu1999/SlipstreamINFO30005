@@ -8,4 +8,7 @@ html
     body
         block navbar
 
+        if error
+            div.error #{error}
+
         block content
