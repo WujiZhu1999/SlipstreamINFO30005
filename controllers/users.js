@@ -62,7 +62,13 @@ const getUser = async (req, res) => {
     try{ 
         const user = await User.findOne({"userName":req.params.userName});
         if(user){
-            return res.send(user);
+
+            return res.render("user/user_profile.pug", {
+                user: user,
+                active:"Home",
+                userName: req.session.user
+            });
+    
         }
         else{
             res.status(404);
@@ -89,7 +95,7 @@ const changeUser = async (req, res) => {
         if(req.body.name){_new["name"] = req.body.name};
         if(req.body.password){_new["password"] = req.body.password};
         const update = await User.findOneAndUpdate({"userName":req.body.userName},_new);
-        return res.send(update); 
+        return res.redirect("/users/" + req.body.userName); 
     }catch(err){
         res.status(500);
         return res.send("Database query failed. Change User Failed");

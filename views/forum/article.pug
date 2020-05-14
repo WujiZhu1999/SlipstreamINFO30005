@@ -5,7 +5,8 @@ block content
         h1 #{article.title}
         par #{article.body}
 
-        div Author : #{article.author}
+        div 
+        a(href = "/users/" + article.author) Author: #{article.author}
 
         div
         if article.author == userName
@@ -25,7 +26,7 @@ block content
                 ul
                     li
                         div.comment #{comment.commentBody}
-                        div.comment_author From: #{comment.commentAuthor}
+                        a(href = "/users/" + comment.commentAuthor) From: #{comment.commentAuthor}
 
                         if (comment.commentAuthor == userName)
                             a(href= '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit") <button type="button">Edit Comment</button></a>
