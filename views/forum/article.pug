@@ -25,7 +25,8 @@ block content
                 ul
                     li
                         div.comment #{comment.commentBody}
-                        a(href = "/users/" + comment.commentAuthor) From: #{comment.commentAuthor}
+                        if (comment.author != "anonymous")
+                            a(href = "/users/" + comment.commentAuthor) From: #{comment.commentAuthor}
 
                         if (comment.commentAuthor == userName)
                             a(href= '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit") <button type="button">Edit Comment</button></a>
