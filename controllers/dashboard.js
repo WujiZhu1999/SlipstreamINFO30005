@@ -6,19 +6,24 @@ const Friend = mongoose.model("friends");
 const getHomepage = async (req, res) => {
 
     try {
-        var userData = await getStats(req, res);
+        if (req.session.user){
+            var userData = await getStats(req, res);
 
-        var leaderboardData = await getLeaderboard(req, res)
-        res.render("main/dashboard", {
-            title: "Dashboard",
+            var leaderboardData = await getLeaderboard(req, res)
+            res.render("main/dashboard", {
+                title: "Dashboard",
 
-            //always specify these!
-            active: "Home",
-            userName: req.session.user,
+                //always specify these!
+                active: "Home",
+                userName: req.session.user,
 
-            leaderboard: leaderboardData,
-            user: userData
-        })
+                leaderboard: leaderboardData,
+                user: userData
+            })
+        } else {
+            res.render("main/loggedOut")
+        }
+        
 
     } catch (err) {
         res.status(400);
