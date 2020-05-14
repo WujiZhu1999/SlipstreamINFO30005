@@ -7,9 +7,11 @@ body, html {
 	height: 90vh;
 }
 .bgimg {
-  background-image: url('./pic/map_welcome.jpg');
+  background-image: url('./pic/map_welcome2.jpg');
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-color: black;
 }
 
 div{
