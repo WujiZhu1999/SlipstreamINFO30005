@@ -10,6 +10,7 @@ const getHomepage = async (req, res) => {
             var userData = await getStats(req, res);
 
             var leaderboardData = await getLeaderboard(req, res)
+            console.log(leaderboardData)
             res.render("main/dashboard", {
                 title: "Dashboard",
 
@@ -49,35 +50,45 @@ async function getStats(req, res) {
 async function getLeaderboard(req, res) {
 
     try {
+        friends = []
         var _friends = await Friend.find({
             "sender": req.session.user,
             "status": "ACCEPTED"
         });
 
-        _friends += await Friend.find({
-            "reciever": req.session.user,
+        for (i of _friends){
+            friends.push(i)
+        }
+
+        _friends = await Friend.find({
+            "receiver": req.session.user,
             "status": "ACCEPTED"
         });
 
+        for (i of _friends){
+            friends.push(i)
+        }
 
 
         var _list = [];
-        for(user of _friends){
-            if (user["sender"] == req.session.user){
-                _list.push(user["reciever"]);
+        for(user of friends){
+            if (user.sender == req.session.user){
+                _list.push(user.receiver);
             } else {
-                _list.push(user["sender"]);
+                _list.push(user.sender);
             }
         }
 
         _list.push(req.session.user)
 
-        const _detail = await User.find({
-            "userName":{ $in: _list}
-        });
+
+        details = []
+        for (user of _list){
+            details.push(await User.findOne({"userName":user}));
+        }
 
 
-        return _detail;
+        return details;
 
     } catch (err) {
         res.status(400);

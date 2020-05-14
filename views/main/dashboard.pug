@@ -27,7 +27,7 @@ block content
                     div(class="rankList")
                         - for (var i=0,l=leaderboard.length;i<l;i++)
                             div(class="rankItem")
-                                div(class="rankNumber") #{i}.
+                                div(class="rankNumber") #{i + 1}.
                                 div(class="rankDes")
                                     span #{leaderboard[i].name}
                                     span #{leaderboard[i].data.totalDistance}KM cyceled,#{leaderboard[i].data.carbonSaved}KG 

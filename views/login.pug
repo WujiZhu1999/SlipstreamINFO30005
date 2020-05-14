@@ -1,21 +1,23 @@
 extends default
 
 block content
-    div.login
-        h1
-            
-            div Welcome to Slipstream
-            div Please Log In
-
-        form(action="/login" method="POST")
-            div Username
-            input(type="text" name="userName")
+    div.loginBackground
+        div.login
+            h1
+                
+                div Welcome to Slipstream
+            h2
+                div Please Log In
             br
-            div Password
-            input(type="password" name="password")
+            form(action="/login" method="POST")
+                div Username
+                input(type="text" name="userName")
+                br
+                div Password
+                input(type="password" name="password")
+                br
+                input(type="submit" value="Login" style="font-size: 16px; margin-top: 15px;").button
+
             br
-            input(type="submit" value="Login").button
-
-        br
-
-        a(href="/Login/Register").button Register
+            br
+            a(href="/Login/Register").buttonDark Register

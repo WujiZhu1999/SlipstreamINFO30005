@@ -2,6 +2,20 @@ extends ../navbar
 
 block content
 
+    
+    
+    div.table
+        h2 List of Articles
+        each article in current_articles
+                ul
+                    li
+                        a(href = '/Forum/' + article.articleNum).articleButton
+                            div.title #{article.title}
+                            
+                            div.author Comments: #{article.comments.length}
+                            div.author From: #{article.author}
+
+
     form(action="/forum" method="POST" class="createArticle")
         h2 Create a New Article!
         div Title
@@ -11,15 +25,3 @@ block content
         textarea(name="body")
         br
         input(type="submit" value="Post")
-    
-    div.table
-        h2 List of Articles
-        each article in current_articles
-                ul
-                    li
-                        a(href = '/Forum/' + article.articleNum)
-                            div.title #{article.title}
-                            
-                            div.author
-                            a(href = "/users/" + article.author) From: #{article.author}
-                            div.author Comments: #{article.comments.length}

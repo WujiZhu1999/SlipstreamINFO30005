@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
+const Friends = mongoose.model("friends")
 
 //register a new user
 const createUser = async (req, res) => {
@@ -48,7 +49,10 @@ const deleteUser = async (req, res) => {
             return res.send("userNameNotGiven");
         }
         else{
-            await User.remove({"userName":req.params.userName});
+            await User.deleteOne({"userName":req.params.userName});
+            await Friends.deleteMany({"receiver":req.session.user});
+            
+            await Friends.deleteMany({"sender":req.session.user});
             req.session.user = null;
             res.redirect("/")
         }
