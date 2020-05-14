@@ -185,21 +185,24 @@ const changeArticle = async (req, res) => {
 
 //Creates a new comment
 const createComment = async (req, res) => {
-    if(!req.params.articleNum){
-        return res.render("error", {
-            error: "This article does not exist",
-            redirect: "/forum/"
-        });
-    }
-
-    if(!req.body.commentBody){
-        return res.render("error", {
-            error: "Cannot make an empty comment",
-            redirect: "/forum/" + _article.articleNum
-        });
-    }
     try{
+        
+        if(!req.params.articleNum){
+            return res.render("error", {
+                error: "This article does not exist",
+                redirect: "/forum/"
+            });
+        }
+
         const _article = await Article.findOne({"articleNum":req.params.articleNum});
+
+    
+        if(!req.body.commentBody){
+            return res.render("error", {
+                error: "Cannot make an empty comment",
+                redirect: "/forum/" + _article.articleNum
+            });
+        }
         
         if(!_article){
             return res.render("error", {
@@ -307,11 +310,20 @@ const getEditComment = async (req, res) => {
             });
         }
 
+        var _comment = -1
+
+        for (comment in _article.comments){
+            if (_article.comments[comment].commentNumber == enteredNumber){
+                _comment = comment
+            }
+        }
+
         return res.render("forum/change_comment.pug", {
             title:'Change Comment', 
             article: _article,
             articleNum : articleNumber,
             commentNumber : enteredNumber,
+            commentIndex: _comment,
             active:"Forum",
             userName: req.session.user
             
@@ -348,7 +360,7 @@ const changeComment= async (req, res) => {
         }
         var comments = article.comments.slice();
         var flag = 0;
-        
+
         for(i in comments){
             if(enteredNumber == comments[i].commentNumber){
                 if(comments[i].commentAuthor === req.session.user){

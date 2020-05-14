@@ -129,7 +129,7 @@ body {
 }
 
 div.table {
-    padding: 10px;
+    padding: 0px;
 }
 
 div.table ul {
@@ -167,22 +167,7 @@ div.table div.comment_author{
     color: grey;
 }
 
-form.createArticle{
-    padding: 10px;
-}
 
-form.createArticle input[type="submit"]{
-    margin-top: 5px;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    background-color: var(--secondary-colour);
-    border: none;
-    
-}
-form.createArticle input[type="submit"]:hover {
-    background-color: var(--main-colour);
-}
 
 form.createArticle input[name="title"] {
     border: 1px solid grey;
