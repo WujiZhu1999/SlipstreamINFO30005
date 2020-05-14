@@ -189,7 +189,8 @@ const startRoute = async (req, res) =>{
                 }
                 const _create = await Route.create(_new);
                 return res.render("map/ride",{
-                    route: _create
+                    route: _create,
+                    userName: req.session.user
                 });
             }else{
                 res.status(400);
@@ -201,7 +202,8 @@ const startRoute = async (req, res) =>{
                 const _update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end},_route);
                 const _updatee = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
                 return res.render("map/ride",{
-                    route:_updatee
+                    route:_updatee,
+                    userName: req.session.user
                 })
             }else if(_route["completed"][_route["totalTrial"]-1] == "NOTYET"){
                 var d = new Date();
@@ -214,7 +216,8 @@ const startRoute = async (req, res) =>{
             const _update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end},_route);
             const _updatee = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
             return res.render("map/ride",{
-                route:_updatee
+                route:_updatee,
+                userName: req.session.user
             })
         }
     }catch(err){
@@ -241,7 +244,7 @@ const haltRoute = async (req, res) =>{
             }
             const _update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body.origin,"destination":req.body.destination},_route);
             _updatee = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
-            return res.render("map/hault",{route:_updatee});
+            return res.render("map/hault",{route:_updatee,userName: req.session.user});
         }
     }catch(err){
         res.status(400);
@@ -276,7 +279,7 @@ const endRoute = async (req, res) =>{
                 const _new_route = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body.origin,"destination":req.body.destination},_route);
                 const _new_user = await User.findOneAndUpdate({"userName":req.session.user},_user);
 
-                return res.render("map/end",{route:_route});
+                return res.render("map/end",{route:_route,userName: req.session.user});
 
             }else{
                 return res.send("Already up to date, lastest route halted/stopped Already");
@@ -291,7 +294,8 @@ const mapPlan = async (req,res)=>{
     if(req.session.user){
         var out = {
             origin:"---",
-            destination:"---"
+            destination:"---",
+            userName: req.session.user
         };
         if(req.body.origin){
             out["origin"] = req.body.origin;

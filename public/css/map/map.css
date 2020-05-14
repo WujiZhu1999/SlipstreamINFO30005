@@ -1,6 +1,6 @@
 #map {
         height: 100%;
-      }
+}
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
@@ -79,4 +79,38 @@ li{
   height:49%;
   margin-left: 1%;
   overflow: auto;
+}
+#hault, #end{
+  display: none;
+}
+#realtimeroad{
+  float: left;
+  height: 35%;
+  width: 38%;
+  border: solid;
+  margin-left: 1%;
+  border-color: green;
+}
+#routecontroller{
+  float: left;
+  height: 5%;
+  width: 38%;
+  border: solid;
+  margin-left: 1%;
+  border-color: blue;
+}
+#streetView{
+  float: left;
+  height: 45%;
+  width: 38%;
+  border: solid;
+  margin-left: 1%;
+}
+#viewmap, #pano {
+  float: left;
+  height: 100%;
+  width: 49%;
+}
+#lat, #lng{
+  display: none;
 }
