@@ -3,8 +3,9 @@ extends default
 block content
     div.login
         h1
-            div logged out homepage
+            
             div Welcome to Slipstream
+            div Please Log In
 
         form(action="/login" method="POST")
             div Username
@@ -13,4 +14,8 @@ block content
             div Password
             input(type="password" name="password")
             br
-            input(type="submit" value="Login")
+            input(type="submit" value="Login").button
+
+        br
+
+        a(href="/Login/Register").button Register

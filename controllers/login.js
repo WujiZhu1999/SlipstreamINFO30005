@@ -62,7 +62,7 @@ const postLogIn = async (req, res) => {
 
 
 const getRegistration = (req, res) => {
-    return res.send("Register Page")
+    return res.render("register")
 }
 
 //log a user out of the website

@@ -1,0 +1,16 @@
+extends default
+
+block content
+    div.login
+        h1 Register a new account
+        form(action="/login/register" method="POST")
+            div Username
+            input(type="text" name="userName")
+            br
+            div Name
+            input(type="text" name="name")
+            br
+            div Password
+            input(type="password" name="password")
+            br
+            input(type="submit" value="Register").button
