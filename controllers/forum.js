@@ -13,9 +13,12 @@ const getForum = async (req, res) => {
             userName: req.session.user
         });
 
-    }catch(err){
-        res.status(400);
-        return res.send("Database failed when finding all articles(create forums)");
+    }
+    catch(err){
+        return res.render("error", {
+            error: "Server Error: Could not fetch articles from database",
+            redirect: "/"
+        });
     }
 }    
  
@@ -33,31 +36,17 @@ const getArticle = async (req, res) => {
                 userName: req.session.user
             });
         }else{
-            return res.send("No corresponding article")
+            return res.render("error", {
+                error: "No corresponding article",
+                redirect: "/forum"
+            });
         }
     }catch(err){
-        res.status(400);
-        res.send("Database failed when getting 1 article");
+        return res.render("error", {
+            error: "Server Error: Could not fetch article from database",
+            redirect: "/forum"
+        });
     }
-    
-
-    /*
-    if(article){
-        var output = "<h1> Article: " + article.title + "</h1>" +  "<body>" + article.body + "</body>" + "<br>" + "<br>"+ "COMMENTS";
-
-        //sends all the corresponding comments
-        for (i in article.comments) {
-            output += "<br>" +  article.comments[i].commentAuthor + " said:"+ "<br>"  + article.comments[i].commentBody + "<br>" ;
-        }
-
-        res.send(output);
-    }
-
-    else{
-        res.status(400);
-        res.send("This article does not exist");
-    }
-    */
 }
 
 //Creates a new article
@@ -65,9 +54,10 @@ const createArticle = async (req, res) => {
 
     //checks whether all the paramters needed to create an article is present
     if (req.body.title == null || req.body.title == ""  || req.body.body == null || req.body.body == ""){
-        res.status(400);
-        res.send("There is incomplete data");
-        return;
+        return res.render("error", {
+            error: "There is incomplete data for article. Make sure you include a title and body",
+            redirect: "/forum"
+        });
     }
 
     try{
@@ -86,11 +76,13 @@ const createArticle = async (req, res) => {
             "edit": false,
             "comments": []
         });
-        return res.redirect("/Forum/" + num);
+        return res.redirect("/forum/" + num);
 
     }catch(err){
-        res.status(400);
-        res.send("Failed when creating articles");
+        return res.render("error", {
+            error: "Server Error: Failed to create article",
+            redirect: "/forum"
+        });
     }
 }
 
@@ -102,20 +94,26 @@ const deleteArticle = async (req, res) => {
         const intended = await Article.findOne({"articleNum":enteredNumber});
         if(intended){
             if(intended.author !== req.session.user){
-                res.status(403)
-                return res.send("You are not authorised to delete this article");
+                return res.render("error", {
+                    error: "You are not authorised to delete this article",
+                    redirect: "/fourm/" + intended.articleNum
+                });
+                
             }else{
                 await Article.deleteOne({"articleNum":enteredNumber});
                 return res.redirect("/forum");
             }
         }else{
-            res.status(400)
-            return res.send("This article does not exist");
+            return res.render("error", {
+                error: "This article does not exist",
+                redirect: "/forum"
+            });
         }
     }catch(err){
-        res.status(400);
-        
-        return res.send("Database failed when deleting article.");
+        return res.render("error", {
+            error: "Server Error: Failed to when deleteing article",
+            redirect: "/forum" + intended.articleNum
+        });
     }
 }
 
@@ -133,27 +131,36 @@ const getEditArticle = async (req,res) => {
         });
 
     }catch(err){
-        res.status(400);
-        return res.send("could not find article");
+        return res.render("error", {
+            error: "Server Error: Failed to get article to edit",
+            redirect: "/forum/" + _article.articleNum
+        });
     }
 }
 
 //Changes an article's contents using the articleNum as a point of reference
 const changeArticle = async (req, res) => {
     if(!req.params.articleNum){
-        res.status(400)
-        return res.send("Ariticle num not provided");
+        return res.render("error", {
+            error: "Article Number was not provided",
+            redirect: "/forum"
+        });
     }else{
         try{
             var _article = await Article.findOne({"articleNum":req.params.articleNum});
             
             if(!_article){
-                res.status(404)
-                return res.send("Article does not exist");
+                return res.render("error", {
+                    error: "This article does not exist",
+                    redirect: "/forum"
+                });
             }
             if(_article.author !== req.session.user){
-                res.status(403)
-                return res.send("You are not authorised to change this article");
+                return res.render("error", {
+                    error: "You are not authorised to change this article",
+                    redirect: "/forum/" + _article.articleNum
+                });
+
             }
             var _new = {};
             if(req.body.title){
@@ -168,8 +175,10 @@ const changeArticle = async (req, res) => {
             return await res.redirect("/forum/" + req.params.articleNum);
             
         }catch(err){
-            res.status(400);
-            return res.send("Database Failed when trying to modify article.");
+            return res.render("error", {
+                error: "Server Error: Failed to edit article",
+                redirect: "/forum/" + _article.articleNum
+            });
         }
     }
 }
@@ -177,19 +186,26 @@ const changeArticle = async (req, res) => {
 //Creates a new comment
 const createComment = async (req, res) => {
     if(!req.params.articleNum){
-        return res.send("Article num not provided when creating comment");
+        return res.render("error", {
+            error: "This article does not exist",
+            redirect: "/forum/"
+        });
     }
 
     if(!req.body.commentBody){
-        res.status(400);
-        return res.send("Can't make empty comment");
+        return res.render("error", {
+            error: "Cannot make an empty comment",
+            redirect: "/forum/" + _article.articleNum
+        });
     }
     try{
         const _article = await Article.findOne({"articleNum":req.params.articleNum});
         
         if(!_article){
-            res.status(404)
-            return res.send("No such article.");
+            return res.render("error", {
+                error: "This article does not exist",
+                redirect: "/forum/"
+            });
         }
         
         else{
@@ -216,8 +232,10 @@ const createComment = async (req, res) => {
 
         }
     }catch(err){
-        res.status(400);
-        return res.send("Database failed when create comments.");
+        return res.render("error", {
+            error: "Server Error: Failed to make comment",
+            redirect: "/forum/" + req.params.articleNum
+        });
     }
 }
 
@@ -231,10 +249,12 @@ const deleteComment = async (req, res) => {
         
         
         if(!article){
-            res.status(404)
-            return res.send("No such article found.");
+            return res.render("error", {
+                error: "This article does not exist",
+                redirect: "/forum/"
+            });
         }
-        //var comments = article.comments.splice();
+        
         var flag = 0;
         
         for(i in article.comments){
@@ -247,14 +267,18 @@ const deleteComment = async (req, res) => {
                 }
 
                 else{
-                    res.status(403)
-                    return res.send("Not authorized to delete the comment");
+                    return res.render("error", {
+                        error: "You are not authorised to delete this comment",
+                        redirect: "/forum/" + article.articleNum
+                    });
                 }
             }   
         }
         if(!flag){
-            res.status(404)
-            return res.send("No such comment.");
+            return res.render("error", {
+                error: "This comment does not exist",
+                redirect: "/forum/" + article.articleNum
+            });
         }else{
 
             const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":article.comments});
@@ -262,8 +286,10 @@ const deleteComment = async (req, res) => {
         }
         
     }catch(err){
-        res.status(400);
-        return res.send("Database failed when deleteComment" + err);
+        return res.render("error", {
+            error: "Server Error: Failed to delete comment",
+            redirect: "/forum/" + article.articleNum
+        });
     }
 }
 
@@ -275,8 +301,10 @@ const getEditComment = async (req, res) => {
         const _article = await Article.findOne({"articleNum":articleNumber});
 
         if(!_article){
-            res.status(404)
-            return res.send("No such article.");
+            return res.render("error", {
+                error: "This article does not exist",
+                redirect: "/forum/"
+            });
         }
 
         return res.render("forum/change_comment.pug", {
@@ -290,15 +318,20 @@ const getEditComment = async (req, res) => {
         });
 
     }catch(err){
-        res.status(400);
-        return res.send("could not find comment");
+        return res.render("error", {
+            error: "Server Error: Failed to get comment to edit",
+            redirect: "/forum"
+        });
     }
 }
 
 //Editing a Comment
 const changeComment= async (req, res) => {
     if(!req.params.commentNumber|| !req.params.articleNum){
-        return res.send("No sufficient information provided");
+        return res.render("error", {
+            error: "Sufficient Information has not been provided",
+            redirect: "/forum/" + _article.articleNum
+        });
     }
     var enteredNumber = req.params.commentNumber;
     var articleNumber = req.params.articleNum;
@@ -308,8 +341,10 @@ const changeComment= async (req, res) => {
         
         
         if(!article){
-            res.status(404)
-            return res.send("No such article found.");
+            return res.render("error", {
+                error: "This article does not exist",
+                redirect: "/forum/" 
+            });
         }
         var comments = article.comments.slice();
         var flag = 0;
@@ -327,14 +362,18 @@ const changeComment= async (req, res) => {
                     break;
                 }
                 else{
-                    res.status(403)
-                    return res.send("Not authorized to change the comment");
+                    return res.render("error", {
+                        error: "You are not authorised to make this change",
+                        redirect: "/forum/" + article.articleNum
+                    });
                 }
             }   
         }
         if(!flag){
-            res.status(404)
-            return res.send("No such comment.");
+            return res.render("error", {
+                error: "This comment does not exist",
+                redirect: "/forum/" + article.articleNum
+            });
         }else{
             const _update = await Article.findOneAndUpdate({"articleNum":article.articleNum},{"comments":comments});
 
@@ -342,8 +381,10 @@ const changeComment= async (req, res) => {
         }
         
     }catch(err){
-        res.status(400);
-        return res.send("Database failed when deleteComment");
+        return res.render("error", {
+            error: "Server Error: Failed to edit comment",
+            redirect: "/forum/" + _article.articleNum
+        });
     }
 }
 

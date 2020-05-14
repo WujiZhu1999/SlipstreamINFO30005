@@ -14,8 +14,10 @@ const getTips = async (req, res) => {
         });
 
     }catch(err){
-        res.status(400);
-        return res.send("Database Failed getting all tips");
+        return res.render("error", {
+            error: "Server Error: Failed to get tips",
+            redirect: "/" 
+        });
     }
 }
 
@@ -37,14 +39,18 @@ const getTip = async (req, res) => {
         }
 
         else{
-            res.status(404);
-            return res.send("This tip does not exists");
+            return res.render("error", {
+                error: "This tip does not exist",
+                redirect: "/tips" 
+            });
         }
     }
 
     catch(err){
-        res.status(400);
-        res.send("Database failed, find one tip");
+        return res.render("error", {
+            error: "Server Error: Failed to get tip " + req.params.tipNum,
+            redirect: "/tips" 
+        });
     }
 }
 

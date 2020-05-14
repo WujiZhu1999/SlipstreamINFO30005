@@ -49,7 +49,7 @@ const postLogIn = async (req, res) => {
                 error:"Make sure your account and password are both correct"
             });
         }
-        return res.send(_new);
+        
     }catch(err){
         res.status(400);
         return res.render("login", {
