@@ -205,6 +205,7 @@ const createComment = async (req, res) => {
             }
             _new["commentBody"] = req.body.commentBody;
             _new["commentNumber"] = comments.length + 1;
+            const d = new Date();
             _new["time"] = d.toString().slice(0,24);
             _new["edit"] = false;
 
@@ -318,6 +319,7 @@ const changeComment= async (req, res) => {
                 if(comments[i].commentAuthor === req.session.user){
                     if(req.body.commentBody){
                         comments[i].commentBody = req.body.commentBody;
+                        const d = new Date();
                         comments[i]["time"] = d.toString().slice(0,24);
                         comments[i]["edit"] = true;
                     }
