@@ -10,6 +10,8 @@ body, html {
   background-image: url('./pic/map_welcome2.jpg');
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-color: black;
 }
 
 div{
