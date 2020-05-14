@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Friends = mongoose.model("friends")
+const Article = mongoose.model("article");
 
 //register a new user
 const createUser = async (req, res) => {
@@ -66,13 +67,27 @@ const deleteUser = async (req, res) => {
 const getUser = async (req, res) => {
     try{ 
         const user = await User.findOne({"userName":req.params.userName});
+        
         if(user){
 
-            return res.render("user/user_profile.pug", {
+            var articles = []
+
+            const _articles = await Article.find();
+
+            for(i in _articles){
+                if(user.userName == _articles[i].author){
+                    articles.push(_articles[i])
+                }
+                
+            }
+
+            return await res.render("user/user_profile.pug", {
                 user: user,
+                articles: articles,
                 active:"Home",
                 userName: req.session.user
             });
+        
     
         }
         else{
