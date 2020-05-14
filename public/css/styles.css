@@ -240,6 +240,7 @@ div.login form input[type="submit"]:hover {
 }
 
 .button {
+    font-size: 16px;
     display: inline-block;
     margin: 10px;
     padding: 10px;
