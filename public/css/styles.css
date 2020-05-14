@@ -56,10 +56,6 @@ nav li a {
     display: block;
 }
 
-nav li a.active {
-    background-color: var(--secondary-colour);
-}
-
 nav li a:hover {
     color: black;
     background-color: var(--highlite-colour);

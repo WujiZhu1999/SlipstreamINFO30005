@@ -30,7 +30,7 @@ block content
             
             input(type="text" name="userName", value = userName, style = "visibility:hidden")
 
-        form(action= ("/users/" + userName + "/delete") method="POST")
+        form(action= ("/users/" + userName + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to submit?');")
             p Delete account
             input(type="submit" value="Delete Account")
             input(type="text" name="userName", value = userName, style = "visibility:hidden")
