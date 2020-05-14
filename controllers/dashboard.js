@@ -5,53 +5,45 @@ const Friend = mongoose.model("friends");
 
 const getHomepage = async (req, res) => {
 
-    try{
+    try {
         var userData = await getStats(req, res);
 
         var leaderboardData = await getLeaderboard(req, res)
-        console.log(leaderboardData)
         res.render("main/dashboard", {
-        title:"Dashboard",
-        
-        //always specify these!
-        active: "Home",
-        userName: req.session.user,
+            title: "Dashboard",
 
-        leaderboard: leaderboardData,
-        user: userData
-        })
-
-    }catch(err){
-        res.status(400);
-        return res.render("main/dashboard", {
-            title:"Dashboard",
+            //always specify these!
             active: "Home",
             userName: req.session.user,
-            error:"Failed when dealing personal information"
-        });
+
+            leaderboard: leaderboardData,
+            user: userData
+        })
+
+    } catch (err) {
+        res.status(400);
+        return res.send("Failed when dealing personal information.");
     }
 }
 
 async function getStats(req, res) {
-    try{
-        const user = await User.findOne({"userName":req.session.user});
+    try {
+        const user = await User.findOne({
+            "userName": req.session.user
+        });
 
         return user
 
-    }catch(err){
+    } catch (err) {
         res.status(400);
-        return res.render("main/dashboard", {
-            title:"Dashboard",
-            active: "Home",
-            userName: req.session.user,
-            error:"Failed when fetching personal information"
-        });
+        return "Failure when fetching personal information for main page(dashboard)";
     }
 };
 
 
-async function getLeaderboard(req, res){
-    try{
+async function getLeaderboard(req, res) {
+
+    try {
         var _friends = await Friend.find({
             "sender": req.session.user,
             "status": "ACCEPTED"
@@ -78,18 +70,13 @@ async function getLeaderboard(req, res){
         const _detail = await User.find({
             "userName":{ $in: _list}
         });
-        
-        
+
+
         return _detail;
 
-    }catch(err){
+    } catch (err) {
         res.status(400);
-        return res.render("main/dashboard", {
-            title:"Dashboard",
-            active: "Home",
-            userName: req.session.user,
-            error:"Failed when getLeaderboard for friends"
-        });
+        return "Failure when getLeaderboard for friends.";
     }
 }
 

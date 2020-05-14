@@ -11,6 +11,9 @@ html
 			a(class = "a2" href='/Forum') Forum
 			a(class = "a3" href='/Tips') Tips
 			a(class = "a4" href=`/Users/${userName}`) Setting
+			a(href=`/Friends`) Friends
+			form(action="/Login/Logout" method="POST")
+				input(type="submit" value= "Logout")
 		div(id="mapcontainer")
 			div(id="map")
 		div(id="floating-panel")
@@ -62,7 +65,7 @@ html
 				document.getElementById('sub').addEventListener('click', function() {
 					calculateAndDisplayRoute(directionsService, directionsRenderer);
 				});
-				if(document.getElementById('start').value && document.getElementById('start').value !='---' &&document.getElementById('end').value && document.getElementById('end').value !='---'){
+				if(document.getElementById('_origin').value && document.getElementById('_origin').value !='---' &&document.getElementById('_end').value && document.getElementById('_end').value !='---'){
 					
 					//calculateAndDisplayRoute(directionsService, directionsRenderer);
 				}

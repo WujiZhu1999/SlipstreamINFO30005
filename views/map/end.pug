@@ -1,8 +1,21 @@
 doctype html
-thml
+html
+	head
+		link(rel='stylesheet' href='/css/map/map.css')
 	body
-		p #{route}
-		a(class = "a1" href='/') Home
-		a(class = "a2" href='/Forum') Forum
-		a(class = "a3" href='/Tips') Tips
-		a(class = "a4" href=`/Users/${userName}`) Setting
+		div(id="navigation")
+			a(class = "a1" href='/') Home
+			a(class = "a2" href='/Forum') Forum
+			a(class = "a3" href='/Tips') Tips
+			a(class = "a4" href=`/Users/${userName}`) Setting
+			a(href=`/Friends`) Friends
+			form(action="/Login/Logout" method="POST")
+				input(type="submit" value= "Logout")
+		div(id="counting")
+			p Congratulations!
+			p Distance: #{route["distance"] * 0.001} km
+			p Duration: #{route["duration"]*1/60} mins
+			p CO2 saved: #{route["distance"] * 0.016} g
+			p Calories saved: #{route["distance"] * 1.1} kJ
+		form(action="/Map" method="get")
+			input(type="submit" value="AnotherRide")
