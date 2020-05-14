@@ -76,11 +76,14 @@ const createArticle = async (req, res) => {
         if(lastArticle[0]){
             num = lastArticle[0].articleNum + 1;
         }
+        const d = new Date();
         const _new = await Article.create({
             "articleNum": num,
             "title":req.body.title,
             "body":req.body.body,
             "author":req.session.user,
+            "time":d.toString().slice(0,24),
+            "edit": false,
             "comments": []
         });
         return res.redirect("/Forum/" + num);
@@ -159,6 +162,8 @@ const changeArticle = async (req, res) => {
             if(req.body.body){
                 _new["body"] = req.body.body;
             }
+            _new["time"] = d.toString().slice(0,24);
+            _new["edit"] = true;
             const update = await Article.findOneAndUpdate({"articleNum":req.params.articleNum},_new);
             return await res.redirect("/forum/" + req.params.articleNum);
             
@@ -200,6 +205,8 @@ const createComment = async (req, res) => {
             }
             _new["commentBody"] = req.body.commentBody;
             _new["commentNumber"] = comments.length + 1;
+            _new["time"] = d.toString().slice(0,24);
+            _new["edit"] = false;
 
             comments.push(_new);
 
@@ -311,7 +318,8 @@ const changeComment= async (req, res) => {
                 if(comments[i].commentAuthor === req.session.user){
                     if(req.body.commentBody){
                         comments[i].commentBody = req.body.commentBody;
-;
+                        comments[i]["time"] = d.toString().slice(0,24);
+                        comments[i]["edit"] = true;
                     }
                     flag = 1;
                     break;

@@ -4,7 +4,9 @@ const articleSchema = new mongoose.Schema({
     title: String,
     body: String,
     author: String,
-    comments:Array
+    time: String,
+    comments:Array,
+    edit:Boolean
 },{ versionKey: false });
 
 const Article = mongoose.model("article", articleSchema, "article");
