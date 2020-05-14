@@ -49,7 +49,8 @@ const deleteUser = async (req, res) => {
         }
         else{
             await User.remove({"userName":req.params.userName});
-            return res.send("Removed: "+req.params.userName);
+            req.session.user = null;
+            res.redirect("/")
         }
     }catch(err){
         res.status(400);
