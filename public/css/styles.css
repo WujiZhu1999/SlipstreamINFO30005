@@ -5,7 +5,6 @@
     --background-colour: #444;
     --white: #F1F1F1;
 }
-
 img.logo{
     width: 64px;
 
@@ -23,6 +22,7 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 1000;
 }
 
 nav ul {
@@ -109,7 +109,7 @@ img {
 body {
     background-color: var(--white);
     width: 50%;
-    min-width: 1000px;
+    min-width: 500px;
     font-family: Arial, Helvetica, sans-serif;
     display: block;
     height: 100%;
@@ -125,6 +125,10 @@ div.table ul {
     margin-left: 0;
     margin-right: 0;
     padding-left: 0px;
+<<<<<<< HEAD
+=======
+    background-color: white;
+>>>>>>> a306505edd313542e42c40b9beb1b5f23cd21368
     list-style-type: none;
     background-color: white;
     color: black;
@@ -304,6 +308,29 @@ div.login {
 
 form.friendsearchbar{
     padding: 10px 0px;
+#map {
+    height: 100%;
+  }
+/* Optional: Makes the sample page fill the window. */
+
+
+#floating-panel {
+position: absolute;
+top: 10px;
+left: 25%;
+z-index: 5;
+background-color: #fff;
+padding: 5px;
+border: 1px solid #999;
+text-align: center;
+font-family: 'Roboto','sans-serif';
+line-height: 30px;
+padding-left: 10px;
+}
+
+/* Tip页 */
+
+.tipList {
     display: flex;
 }
 hr {
@@ -313,6 +340,25 @@ hr {
     border-top: 1px solid #ccc;
     margin: 1em 0;
     padding: 0;
+}
+
+.tipList .tipContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding:15px;
+}
+.tipList li {
+    flex: 1;
+    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
+    margin-right: 3.5%;
+    margin-bottom: 10px;
+    background-color: #fff;
 }
 ul.friends{
     list-style-type: none;

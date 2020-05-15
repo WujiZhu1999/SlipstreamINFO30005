@@ -1,26 +1,50 @@
-doctype html
-html
-	head
-		title Welcome
-		meta(charset="UTF-8")
-		meta(name="viewport" content="width=device-width, initial-scale=1")
-		link(rel="stylesheet" href="/css/map/maphome.css")
-		link(rel="stylesheet" href='https://fonts.googleapis.com/css?family=Oleo Script')
-		link(rel="stylesheet" href='https://fonts.googleapis.com/css?family=Kavoon')
-	body
-		div(class="div_1")
-			span
-				a(class = "a1" href='/') Home
-				a(class = "a2" href='/Forum') Forum
-				a(class = "a3" href='/Tips') Tips
-				a(class = "a4" href=`/Users/${userName}`) Setting
-		
-		span(class="div_2")
-			h1 Hello #{userName}, how are you doing today!
-			ul(class="roadul")
+extends ../navbar
+block styles
+	link(rel='stylesheet', href='/css/map_total.css')
+	
+block content
+	div(id="postwall")
+		div(class="mySlides")
+			img(class = "timage" src = "../home_0.jpg" )
+			div(class="text") Route
+				hr(width="40%")
+				p same precision level as google map
+		div(class="mySlides")
+			img(class = "timage" src = "../home_1.jpg" )
+			div(class="text") Energy
+				hr(width="40%")
+				p protect environment and burn calories
+		div(class="mySlides")
+			img(class = "timage" src = "../home_2.jpg" )
+			div(class="text") Trace
+				hr(width="40%")
+				p simple path planning and recording
+		div(class="mySlides")
+			img(class = "timage" src = "../home_3.jpg" )
+			div(class="text") Community
+				hr(width="40%")
+				p friends community and real time articles
+		div(id = "dududu" style="text-align:center")
+			span(id = "dudu1" class="dot" onclick = "changepic(this)")
+			span(id = "dudu2" class="dot" onclick = "changepic(this)")
+			span(id = "dudu3" class="dot" onclick = "changepic(this)")
+			span(id = "dudu4" class="dot" onclick = "changepic(this)")
+	div(id="start")
+		img(id="start_img" src = "../start.jpg")
+		div(id = "go")
+			form(action="/Map/route" method="POST")
+				input(type="text" id="origin" name="origin" placeholder="Origin")
+				input(type="text" id="destination" name="destination" placeholder="Destination")
+				br
+				br
+				input(type="submit" value="GO" id = "_go")
+	div(id="saved")
+		img(id = "plan_img" src="../plan.jpg")
+		div(id="containroute")
+			ul(class="roads")
 				each route in routes
 					li(class="roadli" onclick="insertRoad(this)")
-						img(class="roadimg" src="/css/map/pic/road.png")
+						img(class="roading" src="/logo.jpg")
 						if route["destination"] == "---"
 							h3(class="roadh3") Waiting for your exploration
 						else
@@ -28,62 +52,48 @@ html
 						p(class="roadp") Origin: #{route["origin"]} 
 						p(class="roadp") Destination: #{route["destination"]}
 						p(class="roadp") Total Trial: #{route["totalTrial"]}
-		div(id = "go")
-			div(id="goheader" class = "dropbtn") Where to Go
-			form(action="/Map/route" method="POST")
-				label(for="origin") Origin
-				br
-				input(type="text" id="origin" name="origin")
-				br
-				label(for="destination") Destination
-				br
-				input(type="text" id="destination" name="destination")
-				br
-				br
-				input(type="submit" value="GO")
-		script.
-			dragElement(document.getElementById("go"));
-			function dragElement(elmnt) {
-				var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-				if (document.getElementById(elmnt.id + "header")) {
-					document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-				} else {
-					elmnt.onmousedown = dragMouseDown;
-				}
-				function dragMouseDown(e) {
-					e = e || window.event;
-					e.preventDefault();
-					pos3 = e.clientX;
-					pos4 = e.clientY;
-					document.onmouseup = closeDragElement;
-					document.onmousemove = elementDrag;
-				}
-				function elementDrag(e) {
-					e = e || window.event;
-					e.preventDefault();
-					pos1 = pos3 - e.clientX;
-					pos2 = pos4 - e.clientY;
-					pos3 = e.clientX;
-					pos4 = e.clientY;
-					elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-					elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-				}
-				function closeDragElement() {
-					document.onmouseup = null;
-					document.onmousemove = null;
-				}
+	
+	script.
+		var slideIndex = 0;
+		showSlides();
+		function showSlides(){
+			var i;
+			var slides = document.getElementsByClassName("mySlides");
+			var dots = document.getElementsByClassName("dot");
+			for(i = 0; i < slides.length; i++){
+				slides[i].style.display = "none";
 			}
-			function insertRoad(ele){
-				//alert(ele.innerHTML);
-				//alert(ele.innerHTML.search("<p class=\"roadp\">Origin"));
-				var origin_start = ele.innerHTML.search("<p class=\"roadp\">Origin:") + 25;
-				var origin_end = ele.innerHTML.search("</p><p class=\"roadp\">Destination:") -1;
-				const origin = ele.innerHTML.slice(origin_start,origin_end);
-				var dest_start = ele.innerHTML.search("<p class=\"roadp\">Destination:") + 30;
-				var dest_end = ele.innerHTML.search("</p><p class=\"roadp\">Total Trial:");
-				const destination = ele.innerHTML.slice(dest_start,dest_end);
-				if(origin !="---" && destination !="---"){
-					document.getElementById("origin").value = origin;
-					document.getElementById("destination").value = destination;
-				}
+			slideIndex++;
+			if (slideIndex > slides.length) {slideIndex = 1}
+			for (i = 0; i < dots.length; i++) {
+				dots[i].className = dots[i].className.replace(" active", "");
 			}
+			slides[slideIndex-1].style.display = "block";  
+			dots[slideIndex-1].className += " active";
+			setTimeout(showSlides, 6000);
+		}
+
+		function changepic(ele){
+			const ii = parseInt(ele.id.slice(4));
+			var i;
+			var slides = document.getElementsByClassName("mySlides");
+			var dots = document.getElementsByClassName("dot");
+			for(i = 0; i < slides.length; i++){
+				slides[i].style.display = "none";
+			}
+			slideIndex = ii;
+			if (slideIndex > slides.length) {slideIndex = 1}
+			for (i = 0; i < dots.length; i++) {
+				dots[i].className = dots[i].className.replace(" active", "");
+			}
+			slides[slideIndex-1].style.display = "block";  
+			dots[slideIndex-1].className += " active";
+		}
+		function insertRoad(ele){
+			const ori = ele.childNodes[2].innerHTML.slice(8);
+			const des = ele.childNodes[3].innerHTML.slice(13);
+			if(ori != "---"){
+				document.getElementById("origin").value = ori;
+				document.getElementById("destination").value = des;
+			}
+		}
