@@ -376,25 +376,19 @@ padding-left: 10px;
     align-items: center;
     text-decoration: none;
     padding:15px;
-}
-.tipList li {
-    flex: 1;
-    width: 30%;
-    min-width: 30%;
-    max-width: 30%;
-    box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
-    margin-right: 3.5%;
-    margin-bottom: 10px;
     background-color: #fff;
 }
+
 .tipList li:nth-child(3n){
     margin-right: 0;
 }
 .tipList .title {
+    font-size: 18px;
     text-align: center;
     margin-bottom: 8px;
 }
 .tipList .tipsInfo {
+    font-size: 16px;
     text-align: center;
 }
 
@@ -407,23 +401,15 @@ hr {
     padding: 0;
 }
 
-.tipList .tipContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    padding:15px;
-}
+
 .tipList li {
     flex: 1;
-    width: 30%;
-    min-width: 30%;
-    max-width: 30%;
-    box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
-    margin-right: 3.5%;
+    box-sizing: border-box;
+    width: 33%;
+    min-width: 33%;
+    max-width: 33%;
+    padding: 20px;
     margin-bottom: 10px;
-    background-color: #fff;
 }
 ul.friends{
     list-style-type: none;
