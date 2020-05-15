@@ -3,9 +3,9 @@ extends ../navbar
 block content
     h2 List of Tips
         div.table
-            each tip in current_tips
-                    ul
-                        li
-                            a(href = '/tips/' + tip.tipNum) 
-                                div.title #{tip.title}
-                                
+            ul.tipList
+                each tip in current_tips    
+                    li
+                        div.tipContainer
+                            div.title #{tip.title}
+                            div.tipsInfo #{tip.body}

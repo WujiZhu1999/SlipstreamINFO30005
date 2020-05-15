@@ -132,7 +132,7 @@ const sendFriendRequest = async (req, res) => {
         
     } catch(err){
         return res.render("error", {
-            error: err,
+            error: "Server Error: Failed to send friend request",
             redirect: "/Friends"
         });
     }
@@ -169,7 +169,7 @@ const deleteFriendRequest = async (req, res) => {
     }catch(err){
         res.status(400);
         return res.render("error", {
-            error: err,
+            error: "Server Error: Failed to delete friend request",
             redirect: "/Friends"
         });
     }
@@ -179,7 +179,7 @@ const rejectFriendRequest = async (req, res) => {
     try{
         if(!req.body.sender){
             return res.render("error", {
-                error: "sender not specified",
+                error: "Sender was not specified",
                 redirect: "/Friends"
             });
         }
@@ -204,7 +204,7 @@ const rejectFriendRequest = async (req, res) => {
     }catch(err){
         res.status(400);
         return res.render("error", {
-            error: err,
+            error: "Server Side: Failed to reject friend request",
             redirect: "/Friends"
         });
     }

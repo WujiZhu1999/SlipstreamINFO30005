@@ -27,8 +27,10 @@ const getHomepage = async (req, res) => {
         
 
     } catch (err) {
-        res.status(400);
-        return res.send("Failed when dealing personal information.");
+        return res.render("error", {
+            error: "Server Error: Failed to get dashboard",
+            redirect: "/" 
+        });
     }
 }
 
@@ -41,8 +43,10 @@ async function getStats(req, res) {
         return user
 
     } catch (err) {
-        res.status(400);
-        return "Failure when fetching personal information for main page(dashboard)";
+        return res.render("error", {
+            error: "Server Error: Failed to get statistics",
+            redirect: "/" 
+        });
     }
 };
 
@@ -91,8 +95,10 @@ async function getLeaderboard(req, res) {
         return details;
 
     } catch (err) {
-        res.status(400);
-        return "Failure when getLeaderboard for friends.";
+        return res.render("error", {
+            error: "Server Error: Failed to get leaderboard",
+            redirect: "/" 
+        });
     }
 }
 

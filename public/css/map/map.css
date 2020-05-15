@@ -21,6 +21,10 @@ html, body {
   height:20%;
   margin-left: 1%;
 }
+
+body {
+  width: 100%;
+}
 #buttons{
   width:49vw;
   height: 49vh;

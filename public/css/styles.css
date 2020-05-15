@@ -129,16 +129,11 @@ body {
 }
 
 div.table {
-    padding: 10px;
+    padding: 0px;
 }
 
 div.table ul {
-    margin: 4px;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0px;
     list-style-type: none;
-    background-color: white;
     color: black;
 }
 
@@ -167,22 +162,7 @@ div.table div.comment_author{
     color: grey;
 }
 
-form.createArticle{
-    padding: 10px;
-}
 
-form.createArticle input[type="submit"]{
-    margin-top: 5px;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    background-color: var(--secondary-colour);
-    border: none;
-    
-}
-form.createArticle input[type="submit"]:hover {
-    background-color: var(--main-colour);
-}
 
 form.createArticle input[name="title"] {
     border: 1px solid grey;
@@ -240,6 +220,7 @@ div.login form input[type="submit"]:hover {
 }
 
 .button {
+    font-size: 16px;
     display: inline-block;
     margin: 10px;
     padding: 10px;
@@ -359,3 +340,54 @@ div.login form input[type="submit"]:hover {
   }
 /* Optional: Makes the sample page fill the window. */
 
+
+#floating-panel {
+position: absolute;
+top: 10px;
+left: 25%;
+z-index: 5;
+background-color: #fff;
+padding: 5px;
+border: 1px solid #999;
+text-align: center;
+font-family: 'Roboto','sans-serif';
+line-height: 30px;
+padding-left: 10px;
+}
+
+/* Tip页 */
+
+.tipList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 15px;
+}
+.tipList .tipContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding:15px;
+}
+.tipList li {
+    flex: 1;
+    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    border: 2px solid #000;
+    margin-right: 3.5%;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+.tipList li:nth-child(3n){
+    margin-right: 0;
+}
+.tipList .title {
+    text-align: center;
+    margin-bottom: 8px;
+}
+.tipList .tipsInfo {
+    text-align: center;
+}

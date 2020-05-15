@@ -11,9 +11,9 @@ block content
                     li
                         a(href = '/Forum/' + article.articleNum).articleButton
                             div.title #{article.title}
-                            
+                            div.author(style = "float: right") Posted: #{article.time}
+                            div.author From: #{article.author}                            
                             div.author Comments: #{article.comments.length}
-                            div.author From: #{article.author}
 
 
     form(action="/forum" method="POST" class="createArticle")
@@ -24,4 +24,4 @@ block content
         div Body
         textarea(name="body")
         br
-        input(type="submit" value="Post")
+        input(type="submit" value="Post" style="margin:0").button
