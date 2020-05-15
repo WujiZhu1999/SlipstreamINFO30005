@@ -125,6 +125,7 @@ const getEditArticle = async (req,res) => {
         return res.render("forum/change_article.pug", {
             title:'Change Article', 
             articleNum : _article.articleNum,
+            article: _article,
             active:"Forum",
             userName: req.session.user
             
@@ -155,7 +156,7 @@ const changeArticle = async (req, res) => {
                     redirect: "/forum"
                 });
             }
-            if(_article.author !== req.session.user){
+            if(_article.author != req.session.user){
                 return res.render("error", {
                     error: "You are not authorised to change this article",
                     redirect: "/forum/" + _article.articleNum
@@ -169,14 +170,15 @@ const changeArticle = async (req, res) => {
             if(req.body.body){
                 _new["body"] = req.body.body;
             }
+            const d = new Date();
             _new["time"] = d.toString().slice(0,24);
             _new["edit"] = true;
-            const update = await Article.findOneAndUpdate({"articleNum":req.params.articleNum},_new);
-            return await res.redirect("/forum/" + req.params.articleNum);
+            await Article.findOneAndUpdate({"articleNum":req.params.articleNum}, _new);
+            return res.redirect("/forum/" + req.params.articleNum);
             
         }catch(err){
             return res.render("error", {
-                error: "Server Error: Failed to edit article",
+                error: "Server Error: Failed to edit article. " + err,
                 redirect: "/forum/" + _article.articleNum
             });
         }
