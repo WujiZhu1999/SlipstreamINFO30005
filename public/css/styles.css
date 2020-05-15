@@ -303,8 +303,34 @@ div.login {
 }
 
 form.friendsearchbar{
-    padding: 10px;
     display: flex;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+ul.friends{
+    list-style-type: none;
+}
+
+ul.request{
+    list-style-type: none;
+}
+ul.friend{
+    display :flex;
+    list-style-type: none;
+    padding : 10px 0px;
+}
+
+ul.request{
+    display :flex;
+    list-style-type: none;
+    padding : 10px 0px;
 }
 
 
