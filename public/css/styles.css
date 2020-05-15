@@ -454,4 +454,18 @@ form.friendsearchbar{
     display: flex;
 }
 
+ul.stat{
+    list-style-type: none;
+}
+.leftS,.rightS{
+    width:25%;
+    position: fixed;
+}
+.leftS{
+    left:25%;
+}
+.rightS{
+    right:25%;
+    text-align: left;
+}
 
