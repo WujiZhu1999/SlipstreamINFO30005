@@ -1,0 +1,253 @@
+body{
+	margin:0;
+	width:100%;
+	padding: 0;
+
+	padding-top: 64px;
+	background-color: rgb(242, 242, 242);
+}
+#dududu{
+	position: absolute;
+	bottom: 3%;
+	width: 100%;
+	text-align: center;
+	align-items: center;
+}
+#postwall{
+	width:100%;
+	height:100vh;
+	border-color: red;
+
+}
+.mySlides {
+	width:100%;
+	height: 100%;
+	display: none;
+}
+.timage {
+	width:100%;
+	height: 100%;
+}
+.text {
+  color: white;
+  font-size: 150px;
+  position: absolute;
+  bottom: 40%;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+}
+.text > p{
+	padding-top:1%;
+	font-size: 20px;
+}
+.text > hr{
+	margin-left: 30%;
+}
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 3.6s ease;
+}
+.active {
+  background-color: #717171;
+}
+
+#start{
+	width:38%;
+	height: 540px;
+	float: left;
+	margin-left: 5%;
+	margin-right: 5%;
+	min-width: 450px;
+	margin-top: 5%;
+	background-color: white;
+}
+#saved{
+	width:38%;
+	height: 540px;
+	float: left;
+	margin-left: 5%;
+	margin-right: 5%;
+	min-width: 450px;
+	margin-top: 5%;
+	background-color: white;
+	overflow: scroll;
+}
+#start_img, #plan_img {
+	width:100%;
+}
+#origin, #destination {
+
+	padding-top: 14%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    width:38%;
+
+	margin-left: 5%;
+	margin-right: 5%;
+	min-width: 200px;
+	font-size: 15px;
+}
+#go > form {
+	text-align: center;
+}
+#_go {
+	text-align: center;
+	font-size: 30px;
+	border: solid;
+	background-color: white;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 5px;
+	border-color: rgb(242, 242, 242);
+	border-radius: 25px;
+}
+.roading{
+	width:20%;
+	float: left;
+}
+.roads > ul{
+	list-style-type: none;
+	width: 100%;
+
+	overflow:scroll;
+}
+
+.roadli {
+	overflow: auto;
+	width: 100%;
+	border-color: rgb(242, 242, 242);
+}
+
+.roads > li:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+.roads > li > p {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+#containroute{
+	width:100%;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track { 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey; 
+  border-radius: 10px;
+}
+
+#mapcontainer{
+	width:100%;
+	height: 95vh;
+}
+
+#floating-panel {
+position: absolute;
+top: 128px;
+left: 5%;
+z-index: 5;
+background-color: #fff;
+padding: 5px;
+border: 1px solid #999;
+text-align: center;
+font-family: 'Roboto','sans-serif';
+line-height: 30px;
+padding-left: 10px;
+border:solid;
+width: 16%;
+
+	min-width: 230px;
+}
+
+#start, #end{
+	font-size: 20px;
+}
+#routeinfo {
+	position: absolute;
+	top: 270px;
+	left: 5%;
+	z-index: 5;
+	background-color: #fff;
+	padding: 5px;
+	border: 1px solid #999;
+	text-align: center;
+	font-family: 'Roboto','sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+	border:solid;
+	width: 16%;
+	min-width: 230px;
+}
+#savedRoute{
+	width:100%;
+	min-width: 480px;
+
+	background-color: black;
+}
+#savedRoute > ol{
+	counter-reset: index;
+	color: rgb(92,92,92);
+	min-width: 290px;
+	width:40%;
+	margin-left: 30%;
+}
+#savedRoute li{
+	text-align: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	counter-increment: index;
+  	align-items: center;
+ 	padding: 12px 0;
+}
+
+#savedRoute li::before {
+  content: counters(index, ".", decimal-leading-zero);
+  font-size: 1.5rem;
+  font-weight: bold;
+  min-width: 50px;
+  padding-right: 12px;
+  font-variant-numeric: tabular-nums;
+  background-image: linear-gradient(to bottom, rgb(102, 255, 204), rgb(255, 165, 0));
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  display: flex;
+}
+
+#savedRoute button{
+	width: 20px;
+	padding: 0;
+	border: none;
+	color:white;
+	font-size: 20px;
+	font-weight: 5px;
+	background-color: black;
+	color:rgb(92,92,92);
+}
+#savedRoute button:hover{
+	background: white;
+	color:rgb(92,92,92);
+}
+#savedRoute li + li{
+	counter-increment: index;
+  	align-items: center;
+  	padding: 12px 0;
+  	box-sizing: border-box;
+	border-top: 1px solid rgb(92,92,92);
+}
