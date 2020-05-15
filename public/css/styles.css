@@ -2,7 +2,7 @@
     --main-colour: #377750;
     --secondary-colour: rgb(69, 199, 112);
     --highlite-colour: #F7FFF7;
-    --background-colour: #444444;
+    --background-colour: #444;
     --white: #F1F1F1;
 }
 img.logo{
@@ -12,7 +12,7 @@ img.logo{
 }
 
 
-h1, h3, h2 {
+h1 {
     color: var(--main-colour);
 }
 
@@ -105,20 +105,8 @@ nav .dropDownContent input[type="submit"]:hover {
 img {
     vertical-align: middle;
 }
-div.loginBackground {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    
-    background-size: 300px;
-    background-image: url("/logoSparse.png");
-}
 
 body {
-    
     background-color: var(--white);
     width: 50%;
     min-width: 500px;
@@ -129,7 +117,7 @@ body {
 }
 
 div.table {
-    padding: 0px;
+    padding: 10px;
 }
 
 div.table ul {
@@ -137,12 +125,16 @@ div.table ul {
     margin-left: 0;
     margin-right: 0;
     padding-left: 0px;
+<<<<<<< HEAD
+=======
     background-color: white;
+>>>>>>> a306505edd313542e42c40b9beb1b5f23cd21368
     list-style-type: none;
+    background-color: white;
     color: black;
 }
 
-div.table a.articleButton{
+div.table a{
     display: block;
     color: black;
     padding: 15px;
@@ -154,7 +146,7 @@ div.table div.title{
     color: black;
 }
 
-div.table .author{
+div.table div.author{
     color: grey;
 }
 
@@ -167,7 +159,22 @@ div.table div.comment_author{
     color: grey;
 }
 
+form.createArticle{
+    padding: 10px;
+}
 
+form.createArticle input[type="submit"]{
+    margin-top: 5px;
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: var(--secondary-colour);
+    border: none;
+    
+}
+form.createArticle input[type="submit"]:hover {
+    background-color: var(--main-colour);
+}
 
 form.createArticle input[name="title"] {
     border: 1px solid grey;
@@ -183,36 +190,14 @@ form.createArticle textarea {
 }
 
 div.login {
-    background-color: white;
-    padding-top: 30px;
-    padding-bottom: 50px;
-    box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
+    border: solid 3px grey;
     width: 30%;
     min-width: 400px;
     margin: 0 auto;
+    padding-bottom: 20px;
     text-align: center;
     margin-top: 100px;
 }
-
-div.login form input {
-    padding: 5px;
-}
-
-div.login form input[type="submit"] {
-    margin-top: 5px;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    background-color: var(--secondary-colour);
-    border: none;
-    color: black;
-    text-decoration: none;
-}
-
-div.login form input[type="submit"]:hover {
-    background-color: var(--main-colour);
-    color: white;
-} 
 
 .error {
     margin-top: 20px;
@@ -225,9 +210,8 @@ div.login form input[type="submit"]:hover {
 }
 
 .button {
-    font-size: 16px;
-    display: inline-block;
-    margin: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
@@ -240,24 +224,6 @@ div.login form input[type="submit"]:hover {
 .button:hover {
     background-color: var(--main-colour);
     color: white;
-} 
-
-.buttonDark {
-    
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    background-color: var(--main-colour);
-    border: none;
-    color: white;
-    text-decoration: none;
-}
-
-.buttonDark:hover {
-    background-color: var(--highlight-colour);
-    color: black;
 } 
 
 /* 主页样式 */
@@ -340,6 +306,8 @@ div.login form input[type="submit"]:hover {
     align-items: center;
 }
 
+form.friendsearchbar{
+    padding: 10px 0px;
 #map {
     height: 100%;
   }
@@ -364,10 +332,16 @@ padding-left: 10px;
 
 .tipList {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    padding: 15px;
 }
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
 .tipList .tipContainer {
     display: flex;
     flex-direction: column;
@@ -386,13 +360,21 @@ padding-left: 10px;
     margin-bottom: 10px;
     background-color: #fff;
 }
-.tipList li:nth-child(3n){
-    margin-right: 0;
+ul.friends{
+    list-style-type: none;
 }
-.tipList .title {
-    text-align: center;
-    margin-bottom: 8px;
+
+ul.request{
+    list-style-type: none;
 }
-.tipList .tipsInfo {
-    text-align: center;
+ul.friend{
+    display :flex;
+    list-style-type: none;
+    padding : 10px 0px;
+}
+
+ul.request{
+    display :flex;
+    list-style-type: none;
+    padding : 10px 0px;
 }
