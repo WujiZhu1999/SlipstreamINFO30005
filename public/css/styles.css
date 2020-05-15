@@ -5,7 +5,6 @@
     --background-colour: #444444;
     --white: #F1F1F1;
 }
-
 img.logo{
     width: 64px;
 
@@ -23,6 +22,7 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 1000;
 }
 
 nav ul {
@@ -121,7 +121,7 @@ body {
     
     background-color: var(--white);
     width: 50%;
-    min-width: 1000px;
+    min-width: 500px;
     font-family: Arial, Helvetica, sans-serif;
     display: block;
     height: 100%;
@@ -359,16 +359,3 @@ div.login form input[type="submit"]:hover {
   }
 /* Optional: Makes the sample page fill the window. */
 
-#floating-panel {
-position: absolute;
-top: 10px;
-left: 25%;
-z-index: 5;
-background-color: #fff;
-padding: 5px;
-border: 1px solid #999;
-text-align: center;
-font-family: 'Roboto','sans-serif';
-line-height: 30px;
-padding-left: 10px;
-}

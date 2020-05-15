@@ -1,55 +1,40 @@
 extends ../navbar
 
-block styles
-	link(rel='stylesheet', href='/css/map/map.css')
-
 block content
-
-
-	div(id="navigation")
-		a(class = "a1" href='/') Home
-		a(class = "a2" href='/Forum') Forum
-		a(class = "a3" href='/Tips') Tips
-		a(class = "a4" href=`/Users/${userName}`) Setting
-		a(href=`/Friends`) Friends
-		form(action="/Login/Logout" method="POST")
-			input(type="submit" value= "Logout")
 	div(id="mapcontainer")
 		div(id="map")
 	div(id="floating-panel")
 		div(id="magic")
 			form(action="/Map/start" method="post")
-				label(for="_origin")
 				if(origin && origin!="---")
-					input(type="text" id="_origin" name="_origin" required value = origin)
+					input(type="text" id="_origin" name="_origin" required value = origin placeholder="Origin")
 				else
-					input(type="text" id="_origin" name="_origin" required)
-				label(for="_end")
+					input(type="text" id="_origin" name="_origin" required placeholder="Origin")
 				if(destination && destination!="---")
-					input(type="text" id="_end" name="_end" required value = destination)
+					input(type="text" id="_end" name="_end" required value = destination placeholder="Destination")
 				else
-					input(type="text" id="_end" name="_end" required)
+					input(type="text" id="_end" name="_end" required placeholder="Destination")
 				input(type="submit" value="Start Route")
 				input(type="submit" value="SaveRoute" formaction = "/Map/saveRoute")
-				input(type="submit" value="deleteRoute" id= "deleteSaved" formaction = "/Map/deleteRoute")
+				input(type="submit" value="deleteRoute" id= "deleteSaved" formaction = "/Map/deleteRoute" style="display:none")
 			input(type="submit" id="sub" value = "Search Route")
 
 	div(id="routeinfo")
+		div(id="routeinfohide") abc
 		div(id="route info") abc_placeholder
 		div(id="route info2") abc_placeholder
 		div(id="route info3") abc_placeholder
 	div(id="savedRoute")
-		h1 saved route
 		if(route)
-			ul
+			ol(style=" list-style-type: none;")
 				each r in route
-					li(class= r["origin"] + r["destination"] onclick="loadDATA(this)")
-						p(class= r["origin"] + r["destination"]+"1")= r["origin"]
-						p(class= r["origin"] + r["destination"]+"2")= r["destination"]
-						p(class= r["origin"] + r["destination"]+"3")= r["distance"]
-						p(class= r["origin"] + r["destination"]+"4")= r["duration"]
-						p(class= r["origin"] + r["destination"]+"5")= r["status"]
-						button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") delete Route
+					li(class= r["origin"] + r["destination"])
+						p(class= r["origin"] + r["destination"]+"1") From #{r["origin"]}
+						p(class= r["origin"] + r["destination"]+"2") To #{r["destination"]}
+						p(class= r["origin"] + r["destination"]+"3") With #{(r["distance"] * 0.001).toFixed(3)} kms
+						p(class= r["origin"] + r["destination"]+"4") About #{(r["duration"] * (1/60)).toFixed(3)} mins
+						button(class=r["origin"] + r["destination"] onclick="loadDATA(this)") O 
+						button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") X 
 	script.
 		function initMap() {
 			var directionsService = new google.maps.DirectionsService();
@@ -92,8 +77,9 @@ block content
 	script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&callback=initMap").
 	script.
 		function loadDATA(ele){
-			document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML;
-			document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML;
+			document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML.slice(5);
+			document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML.slice(3);
+			window.location.href = "#mapcontainer";
 		}
 
 		function deleteRoute(ele){
