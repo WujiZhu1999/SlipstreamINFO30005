@@ -51,10 +51,10 @@ const deleteRoute = async (req, res) =>{
         }
         var route = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
         if(!route){
-            return res.render("map/welcome",{});
+            return res.render("error", {error:"Route not found, cannot delete"})
         }else{
             if(route["status"][route["totalTrial"]-1] != "WAIT"){
-                return res.render("map/welcome",{});
+                return res.render("map/map",{"route":route, redirect:"/Map"});
             }
             const new_status = route["status"].slice(0,route["totalTrial"]-1);
             const new_complete = route["completed"].slice(0,route["totalTrial"]-1);
