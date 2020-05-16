@@ -1,11 +1,15 @@
 extends ../navbar
 
 block content
+    //displays a list of all the tips in the system
+
+    //lists out all the tips in the system
     h2 List of Tips
         div.table
             ul.tipList(style="background-color: var(--white); padding-right: 0;")
                 each tip in current_tips    
-                    li
+                    li 
+                        //list item 
                         div.tipContainer
                             div.title #{tip.title}
                             div.tipsInfo #{tip.body}

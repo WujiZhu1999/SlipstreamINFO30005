@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Article = mongoose.model("article");
 
-//Forum Page
+//get a forum page that displays all the titles of the current articles 
 const getForum = async (req, res) => {
 
     try {
@@ -26,6 +26,8 @@ const getForum = async (req, res) => {
 const getArticle = async (req, res) => {
     try{
         const number = parseInt(req.params.articleNum, 10);
+
+        //Finds the article according do the parameters of the URL
         const _article = await Article.findOne({"articleNum":number});
         
         if(_article){
@@ -61,12 +63,17 @@ const createArticle = async (req, res) => {
     }
 
     try{
+        //finds the lowest avaliable article number
         const lastArticle = await Article.find().sort({_id:-1}).limit(1);
         var num = 1;
         if(lastArticle[0]){
             num = lastArticle[0].articleNum + 1;
         }
+
+        //finds the current date
         const d = new Date();
+
+        //creates new article
         const _new = await Article.create({
             "articleNum": num,
             "title":req.body.title,
@@ -76,6 +83,8 @@ const createArticle = async (req, res) => {
             "edit": false,
             "comments": []
         });
+
+        //directs to new article
         return res.redirect("/forum/" + num);
 
     }catch(err){
@@ -86,19 +95,22 @@ const createArticle = async (req, res) => {
     }
 }
 
-//Deleting an article
+//Deleting an article pased on article number
 const deleteArticle = async (req, res) => {
     var enteredNumber = parseInt(req.params.articleNum, 10);
 
     try{
         const intended = await Article.findOne({"articleNum":enteredNumber});
+
+        //checks if the article specified exsists
         if(intended){
+            //checking authorisation
             if(intended.author !== req.session.user){
                 return res.render("error", {
                     error: "You are not authorised to delete this article",
                     redirect: "/fourm/" + intended.articleNum
                 });
-                
+               
             }else{
                 await Article.deleteOne({"articleNum":enteredNumber});
                 return res.redirect("/forum");
@@ -117,7 +129,7 @@ const deleteArticle = async (req, res) => {
     }
 }
 
-//Go to edit article
+//Go to a page to edit an article
 const getEditArticle = async (req,res) => {
     try {
         const _article = await Article.findOne({"articleNum":req.params.articleNum});
@@ -141,6 +153,8 @@ const getEditArticle = async (req,res) => {
 
 //Changes an article's contents using the articleNum as a point of reference
 const changeArticle = async (req, res) => {
+
+    //checks whether article number was provided
     if(!req.params.articleNum){
         return res.render("error", {
             error: "Article Number was not provided",
@@ -148,6 +162,7 @@ const changeArticle = async (req, res) => {
         });
     }else{
         try{
+            //checks if the article exists
             var _article = await Article.findOne({"articleNum":req.params.articleNum});
             
             if(!_article){
@@ -156,6 +171,8 @@ const changeArticle = async (req, res) => {
                     redirect: "/forum"
                 });
             }
+
+            //checks if the user is authorsied to edit the article
             if(_article.author != req.session.user){
                 return res.render("error", {
                     error: "You are not authorised to change this article",
@@ -163,6 +180,8 @@ const changeArticle = async (req, res) => {
                 });
 
             }
+
+            //sets new edit changes 
             var _new = {};
             if(req.body.title){
                 _new["title"] = req.body.title;
@@ -170,9 +189,13 @@ const changeArticle = async (req, res) => {
             if(req.body.body){
                 _new["body"] = req.body.body;
             }
+
+            //saves the date it was edited 
             const d = new Date();
             _new["time"] = d.toString().slice(0,24);
             _new["edit"] = true;
+
+            //makes changes
             await Article.findOneAndUpdate({"articleNum":req.params.articleNum}, _new);
             return res.redirect("/forum/" + req.params.articleNum);
             
@@ -185,10 +208,11 @@ const changeArticle = async (req, res) => {
     }
 }
 
-//Creates a new comment
+//Creates a new comment based on a post request
 const createComment = async (req, res) => {
     try{
         
+        //checks if an article number was specifed 
         if(!req.params.articleNum){
             return res.render("error", {
                 error: "This article does not exist",
@@ -198,7 +222,7 @@ const createComment = async (req, res) => {
 
         const _article = await Article.findOne({"articleNum":req.params.articleNum});
 
-    
+        //checks if there is suffecient amout of data
         if(!req.body.commentBody){
             return res.render("error", {
                 error: "Cannot make an empty comment",
@@ -206,6 +230,7 @@ const createComment = async (req, res) => {
             });
         }
         
+        //checks if the article exists
         if(!_article){
             return res.render("error", {
                 error: "This article does not exist",
@@ -224,6 +249,8 @@ const createComment = async (req, res) => {
             else{
                 _new["commentAuthor"] = "anonymous";
             }
+
+            //crates a new  comment
             _new["commentBody"] = req.body.commentBody;
             _new["commentNumber"] = comments.length + 1;
             const d = new Date();
@@ -252,7 +279,7 @@ const deleteComment = async (req, res) => {
     try{
         const article = await Article.findOne({"articleNum":req.params.articleNum})
         
-        
+        //checks if article exists
         if(!article){
             return res.render("error", {
                 error: "This article does not exist",
@@ -261,7 +288,7 @@ const deleteComment = async (req, res) => {
         }
         
         var flag = 0;
-        
+        //finds and deletes the comment specifed based off of comment number
         for(i in article.comments){
             if(enteredNumber == article.comments[i].commentNumber){
                 console.log(i)
@@ -285,7 +312,7 @@ const deleteComment = async (req, res) => {
                 redirect: "/forum/" + article.articleNum
             });
         }else{
-
+            //updats delete in the databse
             const _update = await Article.findOneAndUpdate({"articleNum":articleNumber},{"comments":article.comments});
             return await res.redirect("/forum/" + articleNumber);
         }
@@ -298,6 +325,7 @@ const deleteComment = async (req, res) => {
     }
 }
 
+//Gets a page to edit a comment
 const getEditComment = async (req, res) => {
     try {
         var enteredNumber = req.params.commentNumber;
@@ -305,6 +333,7 @@ const getEditComment = async (req, res) => {
 
         const _article = await Article.findOne({"articleNum":articleNumber});
 
+        //checks if the article exsists
         if(!_article){
             return res.render("error", {
                 error: "This article does not exist",
@@ -314,12 +343,14 @@ const getEditComment = async (req, res) => {
 
         var _comment = -1
 
+        //finds the comment
         for (comment in _article.comments){
             if (_article.comments[comment].commentNumber == enteredNumber){
                 _comment = comment
             }
         }
 
+        //goes to edit comment page
         return res.render("forum/change_comment.pug", {
             title:'Change Comment', 
             article: _article,
@@ -339,8 +370,9 @@ const getEditComment = async (req, res) => {
     }
 }
 
-//Editing a Comment
+//Editing a Comment using a post request
 const changeComment= async (req, res) => {
+    //checking there is sufficent data to find the ocmment
     if(!req.params.commentNumber|| !req.params.articleNum){
         return res.render("error", {
             error: "Sufficient Information has not been provided",
@@ -363,6 +395,7 @@ const changeComment= async (req, res) => {
         var comments = article.comments.slice();
         var flag = 0;
 
+        //edits the comment
         for(i in comments){
             if(enteredNumber == comments[i].commentNumber){
                 if(comments[i].commentAuthor === req.session.user){
@@ -389,6 +422,7 @@ const changeComment= async (req, res) => {
                 redirect: "/forum/" + article.articleNum
             });
         }else{
+            //updates the comment in the Article database
             const _update = await Article.findOneAndUpdate({"articleNum":article.articleNum},{"comments":comments});
 
             return await res.redirect("/forum/" + article.articleNum);
