@@ -444,15 +444,13 @@ form.friendsearchbar{
 ul.stat{
     list-style-type: none;
 }
-.leftS,.rightS{
-    width:25%;
-    position: fixed;
-}
+
 .leftS{
-    left:25%;
+    width:48%;
 }
 .rightS{
-    right:25%;
+    float: right;
+    width:48%;
     text-align: left;
 }
 

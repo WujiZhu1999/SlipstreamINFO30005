@@ -23,7 +23,7 @@ block content
             br
             if (user.userName != userName)
                 form(action= ("/friends/") method="POST")
-                    input(type="submit" value="Send Friend Request").button
+                    input(type="submit" value="Send Friend Request"  style="margin-left:0").button
                     input(type="text" name="receiver", value = user.userName, style = "visibility:hidden")
 
             if (user.userName == userName)
@@ -34,12 +34,12 @@ block content
                     p New Password
                     input(type="text" name="password")
                     br
-                    input(type="submit" value="Change Profile").button
+                    input(type="submit" value="Change Profile"  style="margin-left:0").button
                     
                     input(type="text" name="userName", value = userName, style = "visibility:hidden")
 
                 form(action= ("/users/" + userName + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');")
-                    input(type="submit" value="Delete Account").button
+                    input(type="submit" value="Delete Account" style="margin-left:0").button
                     input(type="text" name="userName", value = userName, style = "visibility:hidden")
     
         
