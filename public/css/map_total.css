@@ -406,22 +406,6 @@ button{
 
 }
 
-
-
-#_originLabel{
-	position: absolute;
-	top: 19px;
-	left: 14%;
-	font-size: 21px;
-}
-
-#_endLabel{
-	position: absolute;
-	top: 62px;
-	left: 14%;
-	font-size: 21px;
-}
-
 #sub, #bst, #bsa, #savedd{
 	width:60%;
 	height: 50px;
