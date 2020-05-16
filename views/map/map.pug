@@ -12,17 +12,13 @@ block content
 			form(action="/Map/start" method="post")
 				
 				if(origin && origin!="---")
-					label(for="_origin" id = "_originLabel" style="display:none") Origin
-					input(type="text" id="_origin" name="_origin" required value = origin onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
+					input(type="text" id="_origin" name="_origin" required value = origin placeholder = "Origin")
 				else
-					label(for="_origin" id = "_originLabel") Origin
-					input(type="text" id="_origin" name="_origin" required onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
+					input(type="text" id="_origin" name="_origin" required placeholder = "Origin")
 				if(destination && destination!="---")
-					label(for="_end" id = "_endLabel" style="display:none") Destination
-					input(type="text" id="_end" name="_end" required value = destination onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
+					input(type="text" id="_end" name="_end" required placeholder = "Destination")
 				else
-					label(for="_end" id = "_endLabel") Destination
-					input(type="text" id="_end" name="_end" required onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
+					input(type="text" id="_end" name="_end" required placeholder = "Destination")
 				br
 				input(type="submit" value="Start Route" id = "bst")
 				br
@@ -97,21 +93,10 @@ block content
 		function loadDATA(ele){
 			document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML.slice(5).trim();
 			document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML.slice(3).trim();
-			document.getElementById("_originLabel").style.display="none";
-			document.getElementById("_endLabel").style.display="none";
 			window.location.href = "#mapcontainer";
 		}
 
 		function deleteRoute(ele){
 			document.getElementById("O").click();
 			document.getElementById("deleteSaved").click();
-		}
-	script.
-		function changeLabel(ele){
-			document.getElementById(ele.id+"Label").style.display = "none";
-		}
-		function changeLabelBack(ele){
-			if(!ele.value){
-				document.getElementById(ele.id+"Label").style.display = "block";
-			}
 		}
