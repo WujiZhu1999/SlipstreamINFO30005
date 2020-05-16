@@ -8,7 +8,8 @@ block content
         div.table
             ul.tipList(style="background-color: var(--white); padding-right: 0;")
                 each tip in current_tips    
-                    li
+                    li 
+                        //list item 
                         div.tipContainer
                             div.title #{tip.title}
                             div.tipsInfo #{tip.body}

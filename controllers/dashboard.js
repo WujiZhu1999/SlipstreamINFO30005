@@ -7,21 +7,21 @@ const getHomepage = async (req, res) => {
 
     try {
         if (req.session.user){
+            //get user data from MongoDB
             var userData = await getStats(req, res);
-
+            //get leaderboard data from MongoDB
             var leaderboardData = await getLeaderboard(req, res)
-            console.log(leaderboardData)
+            //render dashboard template
             res.render("main/dashboard", {
                 title: "Dashboard",
-
                 //always specify these!
                 active: "Home",
                 userName: req.session.user,
-
                 leaderboard: leaderboardData,
                 user: userData
             })
         } else {
+            //if not has login,redirect logout page
             res.render("main/loggedOut")
         }
         
