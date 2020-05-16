@@ -1,8 +1,8 @@
-// a page used to enter the changes to a comment
-
 extends ../navbar
 
 block content
+    // a page used to enter the changes to a comment
+
     // gives an option to change an comment
     if ([article.comments[commentIndex]].commentAuthor == useName)
         form(action= ("/forum/" + articleNum + "/" + commentNumber + "/edit") method="POST").createArticle

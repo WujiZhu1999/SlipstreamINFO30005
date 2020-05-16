@@ -1,8 +1,8 @@
-// a page used to enter the edits for an article
-
 extends ../navbar
 
 block content
+    // a page used to enter the edits for an article
+
     //Connects to a post request to edit an article
     form(action= ("/forum/" + articleNum + "/edit") method="POST").createArticle
         div Title
