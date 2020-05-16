@@ -8,6 +8,26 @@ const MC_RATE = 0.016;//g
 //reference to : http://ecf.com/files/wp-content/uploads/ECF_BROCHURE_EN_planche.pdf
 const axios = require("axios");
 
+/*
+Function list:
+    1.localRoute: Since we do want user to have some view about what the map can do
+        even if the are not registered. So this is a conditinoal local router which sends
+        to welcome page or main page. If send to main page, all saved route will be passed
+        though render.
+    2.historicalRoute: Find historical finished route based on total trial and out put the 
+        top 6.
+    3.deleteRoute: This is when a user delete a route that they saved for use earlier. So the
+        route won't appaer on their saved route list.
+    4.saveRoute: This is when a user choose to save a route for later ride.
+    5.startRoute: This is when a user choose to start a route and enter navigation
+    6.haultRoute: This is when a user choose to hault a route after starting a route. In this way
+        the route will be considered as failed but marked as hault.
+    7.endRoute: This is when a user end a route and data counted to personal database(record) the
+        route will also be marked as success.
+    8.mapPlan: When from the map home page to real map planning page, pass origin and destination for initializing
+        the map(although they could still manually do that).
+    
+*/
 
 const localRoute = async (req, res) =>{
     if(!req.session.user){

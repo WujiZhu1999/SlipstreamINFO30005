@@ -23,3 +23,7 @@ require("./tips");
 require("./article");
 require("./route");
 require("./friends");
+
+/*
+same as taught in tut
+*/

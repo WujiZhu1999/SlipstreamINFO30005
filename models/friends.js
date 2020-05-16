@@ -12,3 +12,8 @@ const friendSchema = new mongoose.Schema({
 
 const Friends = mongoose.model("friends", friendSchema, "friends");
 module.exports = Friends;
+
+/*
+	friends model with a sender/receiver who are sendning friend request/finish firend request. Whichever role you are
+	in this relationship, you are mutually friends anyway.
+*/
