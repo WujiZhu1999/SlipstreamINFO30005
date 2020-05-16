@@ -11,7 +11,7 @@ const axios = require("axios");
 
 const localRoute = async (req, res) =>{
     if(!req.session.user){
-        return res.render("map/welcome",{});
+        return res.redirect("/");
     }else{
         const _routes = await historicalRoute(req, res);
         if(_routes.length <=6){
@@ -51,11 +51,10 @@ const deleteRoute = async (req, res) =>{
         }
         var route = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
         if(!route){
-
-            return res.render("map/welcome",{});
+            return res.redirect("/");
         }else{
             if(route["status"][route["totalTrial"]-1] != "WAIT"){
-                return res.render("map/welcome",{});
+                return res.redirect("/");
             }
             const new_status = route["status"].slice(0,route["totalTrial"]-1);
             const new_complete = route["completed"].slice(0,route["totalTrial"]-1);
@@ -77,6 +76,8 @@ const deleteRoute = async (req, res) =>{
             }
             var out = {};
             out["route"] = _route;
+            
+            out["userName"] = req.session.user;
             return res.render("map/map",out);
 
         }
@@ -144,6 +145,7 @@ const saveRoute = async (req, res) =>{
 
             var out = {};
             out["route"] = _route;
+            out["userName"] = req.session.user;
             return res.render("map/map",out);
         }else{
             const ret = await Route.create(_out);
@@ -156,6 +158,8 @@ const saveRoute = async (req, res) =>{
             }
             var out = {};
             out["route"] = _route;
+            
+            out["userName"] = req.session.user;
             return res.render("map/map",out);
         }
         
@@ -194,21 +198,7 @@ const startRoute = async (req, res) =>{
                     userName: req.session.user
                 });
             }else{
-                var out = {
-                    origin:"---",
-                    destination:"---",
-                    userName: req.session.user,
-                    alertt : true
-                };
-                const routes = await Route.find({"user":req.session.user})
-                    var _routa  = [];
-                    for(route of routes){
-                        if(route["status"][route["totalTrial"]-1] =="WAIT"){
-                            _routa.push(route);
-                        }
-                    }
-                    out["route"] = _routa;
-                    return res.render('map/map',out);
+                return res.render("error", {error:"route not found", redirect:"/Map"})
                 //res.status(400);
                 //return res.send("Failed when initializing a route");
             }
@@ -238,7 +228,7 @@ const startRoute = async (req, res) =>{
         }
     }catch(err){
         res.status(400);
-        return res.send("Failed when startRoute");
+        return res.render("error", {error:"Server Error: " + err, redirect:"/Map"})
     }
 }
 
@@ -328,6 +318,7 @@ const mapPlan = async (req,res)=>{
             }
         }
         out["route"] = _route;
+        out["userName"] = req.session.user;
         return res.render("map/map",out);
     }else{
         return res.redirect("/");
