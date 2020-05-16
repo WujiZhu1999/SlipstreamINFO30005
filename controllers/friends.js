@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Friend = mongoose.model("friends");
-
 //Finds all current friends of the currently logged in user
 async function friends(req) {
     try{

@@ -2,6 +2,18 @@ extends ../navbar
 block styles
 	link(rel='stylesheet', href='/css/map_total.css')
 
+//-
+	this is the page when you are actually riding
+	div mapcontainer:
+		the container for actual map. which will load the route for user. and will button set floating on top of the map pannel for control. HALT for halting route. End route means finish the route and route data will records to your personal records. View destination will give you the real time view of your destination to give user better understanding about the route. If the click the post which says view your destination then they will go back to map itself
+
+		For hault route I actually defined a halt page with a cool pic on it. But considering if people hault then they are likey to in a situation where they want to start a new route right now which a hault page will waste their time so I just Through then back to map page where they could restart the route.
+
+		THe other form/p for lat/lng are just place holder for lat/lng such that google map needs for street view
+	div routecontroller:
+		since the button above are attached to the form but if the user accidentally change the form will cause problem and also for eaiser formating so in this div contain the actual form and implementation
+	script:
+		first 2 are for route display, then the 2 are for street view display
 block content
 	div(id="mapcontainer")
 		div(id="map")

@@ -7,3 +7,10 @@ const tipsSchema = new mongoose.Schema({
 
 const Tips = mongoose.model("tips", tipsSchema, "tips");
 module.exports = Tips;
+
+/*
+	A tip system which give user safety tips
+	tipNum -> identifier
+	title -> tip title
+	body -> tip Body
+*/

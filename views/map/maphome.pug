@@ -2,7 +2,22 @@ extends ../navbar
 block styles
 	link(rel='stylesheet', href='/css/map_total.css')
 	link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
-	
+//-
+	div postwall:
+		four image that will do Automatic Slideshow. Which post the info about our web service
+		the four dudu button will just change shadow and if you click will change page to indicate which page is on
+		ref: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow_auto
+	div start:
+		the boxes contain the start which will direct you to the real map page
+	div saved:
+		the boxes such contain historical most visited/tried route which we considered as most interested
+		this will show the top 6 through a sliding bar but if you have less than 6 in record. The message will just show waiting for your exploration
+	script:
+		3 functions:
+			showSlides() automatic change slides every 6 secs
+			changepic(ele) change slides if user click so
+			insertRoad(ele) insert the road to start div/s form if there is actual origin/destinaiton instead of placeholder
+
 block content
 	div(id="postwall")
 		div(class="mySlides")

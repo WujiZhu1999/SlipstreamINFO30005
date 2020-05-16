@@ -219,7 +219,11 @@ body{
 	width:100%;
 	min-width: 480px;
 
+	background-image: url("../OX.png");
+	background-size: 100% auto;
+	background-repeat: no-repeat;
 	background-color: black;
+	min-height: 320px;
 }
 #savedRoute > ol{
 	counter-reset: index;

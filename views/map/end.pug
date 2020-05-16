@@ -1,8 +1,13 @@
 extends ../navbar
 block styles
 	link(rel='stylesheet', href='/css/map_total.css')
-
+//-
+	div counting is for div contain the conclusion report for users after they finish route
+	if its first time: a first time message will show up
+	div progress will actually show the percentage in a progress bar way
+	move/frame is function used for dynamic loading the progress bar
 block content
+	
 	div(id="counting")
 		h1 Congratulations!
 		p Distance: #{(route["distance"] * 0.001).toFixed(3)} km

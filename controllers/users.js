@@ -3,6 +3,13 @@ const User = mongoose.model("users");
 const Friends = mongoose.model("friends")
 const Article = mongoose.model("article");
 
+/*
+    1.createUser: -> if user exist -> if all data need given from req -> waiting database create user -> return :)
+    2.deleteUser: -> if user exist -> delete User -> logyou out -> return to main page
+    3.getUser:    -> check by userName(Identifier) -> return user if there is any
+    4.changeUser: -> change user's info despite userName cuz that's the identifier
+*/
+
 //register a new user
 const createUser = async (req, res) => {
     //if the form is incomplete, send an error
@@ -65,6 +72,7 @@ const deleteUser = async (req, res) => {
             });
         }
         else{
+            //delete user and its relationship with friends
             await User.deleteOne({"userName":req.params.userName});
             await Friends.deleteMany({"receiver":req.session.user});
             

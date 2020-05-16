@@ -3,7 +3,29 @@ extends ../navbar
 block styles
 	link(rel='stylesheet', href='/css/map_total.css')
 	
+//-
+	div mapcontainer:
+	for display map from google map api. When clickging on button which make a api call the actual thing will happen is call google map api in front end for map display and there will also triger startroute in backend if you choose to start which actually casue api call that store the route data the reason having nested container here is because google map api need the div(id = map) to be actually same 100% size as its container otherwise the map won't work
 
+	div floating-panel:
+	a bunch of button which share a same form with usage
+	Start Route -> actually start route and you will go to the riding(bike navigation) page
+	Save Route -> save the route you input in the origin/destination form
+	deleteRoute -> this button is postioned in the form for convenience but actually its hidden
+	so users can't click it. This button will be clicked via javascript below if someone choose to delete the route through the pannel and the panel button will click this button. This will make sure that the delete function sent to backend actually has corresponding route.
+	Search Route -> this button cause the map to trigger some of the google map api front end that will display the route on the map without refreshing the page
+	Saved -> transfer to down side of the page with saved route
+
+	div routeinfo:
+	the pannel for display route distance/time/turns which float on the map that will help people make better decision
+
+	div saved route:
+	the actual div for saved route/done through input origin and destination on the floating pannel above. And display them in the whole screen list
+
+	the first script group is just for map route control when search
+	the second script group is for google map api callback
+	the third script is when you click the load data from saved route panel
+	the fourth script is for delete data button linkage
 block content
 	div(id="mapcontainer")
 		div(id="map")
