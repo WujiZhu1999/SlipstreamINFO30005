@@ -3,6 +3,7 @@ extends ../navbar
 block content
     div(class = "col")
         div(class = "rightS")
+            //Lists all the article posted by the user
             h1 Articles Posted
             hr
             ul.arts
@@ -11,6 +12,7 @@ block content
                         div.title #{article.title}
     div(class = "col")                    
         div(class = "leftS")
+            // Lists all the user information
             h1 #{user.name} 
             hr
             p User Name: #{user.userName}
