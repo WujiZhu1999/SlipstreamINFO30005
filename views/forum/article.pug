@@ -1,18 +1,19 @@
+//Displays an article and it's comments based on an article number, giving options to interact  with both comments and the article
+
 extends ../navbar
 
 block content
 
-
-
+        //shows a delete article button if the aritcle author views the article
         if article.author == userName
             a(href= "/forum/" + article.articleNum + "/edit" style="float:right;").button Edit Article
             form(action=("/forum/" + article.articleNum + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your post?');")
                 input(type="submit" value="Delete Article" style="float:right;").button
 
         
+        //shows article title and links to author's profile
         h1 #{article.title}
-
-                
+        
         a(href = "/users/" + article.author style = "color: var(--background-colour);") Author: #{article.author}
 
         div(style = "margin-top: 30px;")
@@ -21,6 +22,7 @@ block content
         
         hr
         
+        //Option to comment on an article
         form(action=("/forum/" + article.articleNum) method="POST" class="createArticle")
             h2 Comments
             //input(type="text" name="commentBody" required)
@@ -28,6 +30,7 @@ block content
             input(type="submit" value="Post" style="font-size: 16px; display: block; margin-left: 0;").button
        
         div.table
+            //shows all the comments on the article and gives option to edit or delete if the author of the comment is viewing the article
             each comment in article.comments
                 ul(style="padding: 10px;")
                     li(style="white-space: nowrap;")
@@ -38,7 +41,6 @@ block content
                             a(href = "/users/" + comment.commentAuthor style="float:right; color: var(--background-colour); margin-top: -40px") From: #{comment.commentAuthor}
                         
                         
-
                         div(style="float:right; display: inline-block; margin-top: -15px") #{article.time}
 
                         

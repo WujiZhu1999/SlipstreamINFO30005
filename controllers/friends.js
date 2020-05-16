@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Friend = mongoose.model("friends");
 
+//Finds all current friends of the currently logged in user
 async function friends(req) {
     try{
         var friends = []
@@ -29,6 +30,7 @@ async function friends(req) {
     }
 }
 
+//Finds all the current  request of the currenlty logged in user
 async function requests(req){
     try{
         var requestList = [];
@@ -50,6 +52,7 @@ async function requests(req){
     
 }
 
+//Gets all the current friends and friend requests of the current user
 const getFriends = async (req, res) =>{
     res.render("friends/friends", {
         title:"Friends",
@@ -60,9 +63,11 @@ const getFriends = async (req, res) =>{
     })
 }
 
-
+//Sends a friend request to another user
 const sendFriendRequest = async (req, res) => {
     try {
+
+        //checks if there is valid and all the nessesarying information
         if(!req.body.receiver){
             res.status(400);
             return res.render("error", {
@@ -94,6 +99,7 @@ const sendFriendRequest = async (req, res) => {
             });
         }
 
+        //checks whether a friend request has laready been sent
         var request = await Friend.findOne({"sender": req.session.user, "receiver": req.body.receiver})
 
         if (!request){
@@ -103,6 +109,7 @@ const sendFriendRequest = async (req, res) => {
 
 
             if (!request){
+                //creates new friend request that is pending
                 await Friend.create({
                     "sender": req.session.user,
                     "receiver": req.body.receiver,
@@ -111,6 +118,8 @@ const sendFriendRequest = async (req, res) => {
                 console.log("create new request")
                 return res.redirect("/Friends");
             } else {
+                
+                // accepts a friend request if already requested
                 if (request.status == "PENDING"){
                     console.log("accept request")
                     console.log(await Friend.findOneAndUpdate({"sender": req.body.receiver, "receiver": req.session.user}, {"status":"ACCEPTED"}));
@@ -138,10 +147,10 @@ const sendFriendRequest = async (req, res) => {
     }
 }
 
-
+//Deletes a friend request 
 const deleteFriendRequest = async (req, res) => {
     try{
-        
+        //finds a current friend relationship
         var _friend = await Friend.findOne({
             "sender":req.session.user,
             "receiver":req.body.friend,
@@ -163,6 +172,8 @@ const deleteFriendRequest = async (req, res) => {
                 });
             }
         }
+
+        //deletes relationship
         await Friend.deleteOne({"sender":_friend.sender, "receiver":_friend.receiver})
 
         return res.redirect("/Friends")
@@ -175,6 +186,7 @@ const deleteFriendRequest = async (req, res) => {
     }
 }
 
+//Reject a friend request
 const rejectFriendRequest = async (req, res) => {
     try{
         if(!req.body.sender){
@@ -183,7 +195,6 @@ const rejectFriendRequest = async (req, res) => {
                 redirect: "/Friends"
             });
         }
-
 
         var _request = await Friend.findOne({
             "sender":req.body.sender,
@@ -197,6 +208,8 @@ const rejectFriendRequest = async (req, res) => {
                 redirect: "/Friends"
             });
         } else {
+
+            //deletes freind request
             await Friend.deleteOne({"sender":req.body.sender, "receiver":req.session.user})
 
             return res.redirect("/Friends");

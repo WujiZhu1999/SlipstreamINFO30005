@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Tips = mongoose.model("tips");
 
 
-//get"s a tip page
+//gets a tip page listing all the tips 
 const getTips = async (req, res) => {
     try{
         const _tips = await Tips.find();
@@ -21,7 +21,7 @@ const getTips = async (req, res) => {
     }
 }
 
-//get a particular tip based off of the tipNumber
+//get a particular tip based off of the tipNum
 const getTip = async (req, res) => {
     const id = parseInt(req.params.tipNum, 10);
     

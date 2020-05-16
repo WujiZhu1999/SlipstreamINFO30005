@@ -16,6 +16,7 @@ const createUser = async (req, res) => {
                 });
             }
             else{
+                //creates a new user
                 const _new  = await User.create({
                     "name":req.body.name,
                     "userName":req.body.userName,
@@ -48,6 +49,8 @@ const createUser = async (req, res) => {
 
 //delete a user of the chosen name
 const deleteUser = async (req, res) => {
+
+    //checks whether authorised to delete user
     if(req.body.userName!=req.session.user){
         return res.render("error", {
             error: "You are not authorised to delete this user",
