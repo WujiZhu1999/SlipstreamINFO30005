@@ -1,34 +1,35 @@
 extends ../navbar
 block styles
 	link(rel='stylesheet', href='/css/map_total.css')
+	link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
 	
 block content
 	div(id="postwall")
 		div(class="mySlides")
 			img(class = "timage" src = "../home_0.jpg" )
 			div(class="text") Route
-				hr(width="40%")
 				p same precision level as google map
 		div(class="mySlides")
 			img(class = "timage" src = "../home_1.jpg" )
 			div(class="text") Energy
-				hr(width="40%")
 				p protect environment and burn calories
 		div(class="mySlides")
 			img(class = "timage" src = "../home_2.jpg" )
 			div(class="text") Trace
-				hr(width="40%")
 				p simple path planning and recording
 		div(class="mySlides")
 			img(class = "timage" src = "../home_3.jpg" )
 			div(class="text") Community
-				hr(width="40%")
 				p friends community and real time articles
+		a(href="#start")
+			i(id = "down" class="fa fa-angle-down" style="font-size:128px")
 		div(id = "dududu" style="text-align:center")
 			span(id = "dudu1" class="dot" onclick = "changepic(this)")
 			span(id = "dudu2" class="dot" onclick = "changepic(this)")
 			span(id = "dudu3" class="dot" onclick = "changepic(this)")
 			span(id = "dudu4" class="dot" onclick = "changepic(this)")
+
+		
 	div(id="start")
 		img(id="start_img" src = "../start.jpg")
 		div(id = "go")
@@ -90,8 +91,8 @@ block content
 			dots[slideIndex-1].className += " active";
 		}
 		function insertRoad(ele){
-			const ori = ele.childNodes[2].innerHTML.slice(8);
-			const des = ele.childNodes[3].innerHTML.slice(13);
+			const ori = ele.childNodes[2].innerHTML.slice(8).trim();
+			const des = ele.childNodes[3].innerHTML.slice(13).trim();
 			if(ori != "---"){
 				document.getElementById("origin").value = ori;
 				document.getElementById("destination").value = des;

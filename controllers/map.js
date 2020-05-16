@@ -51,10 +51,11 @@ const deleteRoute = async (req, res) =>{
         }
         var route = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
         if(!route){
-            return res.render("error", {error:"Route not found, cannot delete"})
+
+            return res.render("map/welcome",{});
         }else{
             if(route["status"][route["totalTrial"]-1] != "WAIT"){
-                return res.render("map/map",{"route":route, redirect:"/Map"});
+                return res.render("map/welcome",{});
             }
             const new_status = route["status"].slice(0,route["totalTrial"]-1);
             const new_complete = route["completed"].slice(0,route["totalTrial"]-1);
@@ -193,8 +194,23 @@ const startRoute = async (req, res) =>{
                     userName: req.session.user
                 });
             }else{
-                res.status(400);
-                return res.send("Failed when initializing a route");
+                var out = {
+                    origin:"---",
+                    destination:"---",
+                    userName: req.session.user,
+                    alertt : true
+                };
+                const routes = await Route.find({"user":req.session.user})
+                    var _routa  = [];
+                    for(route of routes){
+                        if(route["status"][route["totalTrial"]-1] =="WAIT"){
+                            _routa.push(route);
+                        }
+                    }
+                    out["route"] = _routa;
+                    return res.render('map/map',out);
+                //res.status(400);
+                //return res.send("Failed when initializing a route");
             }
         }else{
             if(_route["status"][_route["totalTrial"]-1] == "WAIT"){
@@ -244,7 +260,7 @@ const haltRoute = async (req, res) =>{
             }
             const _update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body.origin,"destination":req.body.destination},_route);
             _updatee = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
-            return res.render("map/hault",{route:_updatee,userName: req.session.user});
+            return res.render("map/map",{route:_updatee,userName: req.session.user});
         }
     }catch(err){
         res.status(400);

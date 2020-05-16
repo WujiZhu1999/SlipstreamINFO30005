@@ -1,47 +1,38 @@
-doctype html
-html
-	head
-		link(rel='stylesheet' href='/css/map/map.css')
-	body
-		div(id="navigation")
-			a(class = "a1" href='/') Home
-			a(class = "a2" href='/Forum') Forum
-			a(class = "a3" href='/Tips') Tips
-			a(class = "a4" href=`/Users/${userName}`) Setting
-			a(href=`/Friends`) Friends
-			form(action="/Login/Logout" method="POST")
-				input(type="submit" value= "Logout")
-		div(id="mapcontainer")
-			div(id="map")
-		div(id="realtimeroad")
-			p Distance: #{route["distance"]}
-			p Duration:	#{route["duration"]*0.265}
-			p Turns: #{route["turns"]}
-			h2 History:
-			if(route["status"].length == 1)
-				p Its your first time on this route. GOOD LUCK.
-			else
-				p Your historical Success: #{route["status"].filter(x => x=="COMPLETED").length}
-				p Your historical Failure: #{route["totalTrial"] - route["status"].filter(x => x=="COMPLETED").length}
-				p Success Rate: #{route["status"].filter(x => x=="COMPLETED").length/route["totalTrial"]}
-		div(id = "routecontroller")
-			form(action="/Map/halt" method="post" id = "hault")
-				label(for="origin")
-				input(type="text" id="origin" name="origin" value=route["origin"])
-				label(for="end")
-				input(type="text" id="destination" name="destination" value=route["destination"])
-			input(type="submit" value="haultRoute" form = "hault")
-			form(action="/Map/end" method="post" id = "end")
-				label(for="origin")
-				input(type="text" id="origin" name="origin" value=route["origin"])
-				label(for="end")
-				input(type="text" id="destination" name="destination" value=route["destination"])
-			input(type="submit" value="endRoute" form = "end")
-		div(id = "streetView")
-			div(id="viewmap")
-			div(id="pano")
-	p(id="lat") #{route["response"]["routes"][0]["legs"][0]["end_location"]["lat"]}
-	p(id="lng") #{route["response"]["routes"][0]["legs"][0]["end_location"]["lng"]}
+extends ../navbar
+block styles
+	link(rel='stylesheet', href='/css/map_total.css')
+
+block content
+	div(id="mapcontainer")
+		div(id="map")
+		div(id="button_set")
+			button(id="HALT" onclick="document.getElementById('hr').click()") HALT
+			br
+			button(id="HALT" onclick="document.getElementById('er').click()") FINISH
+			br
+			button(id="street_view_trigger" onclick="window.location.href = '#streetView'") View Destination
+	
+	div(id = "streetView")
+		img(id="start_img" src = "../view.jpg" style="border:solid" onclick="window.location.href = '#mapcontainer' ")
+		div(id="viewmap")
+		div(id="pano")
+
+	
+	div(id = "routecontroller" style="display:none")
+		form(action="/Map/halt" method="post" id = "hault")
+			label(for="origin")
+			input(type="text" id="origin" name="origin" value=route["origin"])
+			label(for="end")
+			input(type="text" id="destination" name="destination" value=route["destination"])
+		input(id = "hr" type="submit" value="haultRoute" form = "hault")
+		form(action="/Map/end" method="post" id = "end")
+			label(for="origin")
+			input(type="text" id="origin" name="origin" value=route["origin"])
+			label(for="end")
+			input(type="text" id="destination" name="destination" value=route["destination"])
+		input(id = "er" type="submit" value="endRoute" form = "end")
+	p(id="lat" style="display:none") #{route["response"]["routes"][0]["legs"][0]["end_location"]["lat"]}
+	p(id="lng" style="display:none") #{route["response"]["routes"][0]["legs"][0]["end_location"]["lng"]}
 	script.
 			function initMap() {
 				var directionsService = new google.maps.DirectionsService();
@@ -92,3 +83,4 @@ html
 			map.setStreetView(panorama);
 		}
 	script(async defer src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&callback=initMap").
+	script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js").

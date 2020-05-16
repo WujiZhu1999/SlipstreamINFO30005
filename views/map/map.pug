@@ -2,6 +2,7 @@ extends ../navbar
 
 block styles
 	link(rel='stylesheet', href='/css/map_total.css')
+	
 
 block content
 	div(id="mapcontainer")
@@ -9,24 +10,35 @@ block content
 	div(id="floating-panel")
 		div(id="magic")
 			form(action="/Map/start" method="post")
+				
 				if(origin && origin!="---")
-					input(type="text" id="_origin" name="_origin" required value = origin placeholder="Origin")
+					label(for="_origin" id = "_originLabel" style="display:none") Origin
+					input(type="text" id="_origin" name="_origin" required value = origin onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
 				else
-					input(type="text" id="_origin" name="_origin" required placeholder="Origin")
+					label(for="_origin" id = "_originLabel") Origin
+					input(type="text" id="_origin" name="_origin" required onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
 				if(destination && destination!="---")
-					input(type="text" id="_end" name="_end" required value = destination placeholder="Destination")
+					label(for="_end" id = "_endLabel" style="display:none") Destination
+					input(type="text" id="_end" name="_end" required value = destination onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
 				else
-					input(type="text" id="_end" name="_end" required placeholder="Destination")
-				input(type="submit" value="Start Route")
-				input(type="submit" value="SaveRoute" formaction = "/Map/saveRoute")
+					label(for="_end" id = "_endLabel") Destination
+					input(type="text" id="_end" name="_end" required onfocus = "changeLabel(this)" onfocusout = "changeLabelBack(this)")
+				br
+				input(type="submit" value="Start Route" id = "bst")
+				br
+				input(type="submit" value="Save Route" formaction = "/Map/saveRoute" id = "bsa")
 				input(type="submit" value="deleteRoute" id= "deleteSaved" formaction = "/Map/deleteRoute" style="display:none")
+
 			input(type="submit" id="sub" value = "Search Route")
+			button(type="submit" id="savedd" onclick="window.location.href='#savedRoute'") Saved
 
 	div(id="routeinfo")
-		div(id="routeinfohide") abc
-		div(id="route info") abc_placeholder
-		div(id="route info2") abc_placeholder
-		div(id="route info3") abc_placeholder
+		h1 Route Info
+		p(id="route info") Distance
+		p(id="route info2") Time
+		p(id="route info3") Turns
+	if(alertt)
+		p(id="shout" styles="display:none") The route can't be find.
 	div(id="savedRoute")
 		if(route)
 			ol(style=" list-style-type: none;")
@@ -36,9 +48,12 @@ block content
 						p(class= r["origin"] + r["destination"]+"2") To #{r["destination"]}
 						p(class= r["origin"] + r["destination"]+"3") With #{(r["distance"] * 0.001).toFixed(3)} kms
 						p(class= r["origin"] + r["destination"]+"4") About #{(r["duration"] * (1/60)).toFixed(3)} mins
-						button(class=r["origin"] + r["destination"] onclick="loadDATA(this)") O 
+						button(id = "O" class=r["origin"] + r["destination"] onclick="loadDATA(this)") O 
 						button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") X 
 	script.
+		if(document.getElementById("shout")){
+			alert(document.getElementById("shout").innerHTML);
+		}
 		function initMap() {
 			var directionsService = new google.maps.DirectionsService();
 			var directionsRenderer = new google.maps.DirectionsRenderer();
@@ -55,7 +70,7 @@ block content
 			});
 			if(document.getElementById('_origin').value && document.getElementById('_origin').value !='---' &&document.getElementById('_end').value && document.getElementById('_end').value !='---'){
 				
-				//calculateAndDisplayRoute(directionsService, directionsRenderer);
+				calculateAndDisplayRoute(directionsService, directionsRenderer);
 			}
 		}
 		function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -66,11 +81,11 @@ block content
 		},
 			function(response, status) {
 				if (status === 'OK') {
-					document.getElementById("route info").innerHTML = JSON.stringify(response["routes"][0]["legs"][0]["distance"])
-					document.getElementById("route info2").innerHTML = JSON.stringify(response["routes"][0]["legs"][0]["duration"])
+					document.getElementById("route info").innerHTML = JSON.stringify((response["routes"][0]["legs"][0]["distance"]["value"]/1000).toFixed(3)) + " Kms"
+					document.getElementById("route info2").innerHTML = JSON.stringify((response["routes"][0]["legs"][0]["duration"]['value']/60).toFixed(3)) + " Mins"
 					var str = JSON.stringify(response["routes"][0]["legs"][0])
 					directionsRenderer.setDirections(response);
-					document.getElementById("route info3").innerHTML = str.split("turn").length-1;
+					document.getElementById("route info3").innerHTML = (str.split("turn").length-1) + " Turns";
 
 				} else {
 					window.alert('Directions request failed due to ' + status);
@@ -80,13 +95,23 @@ block content
 	script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&callback=initMap").
 	script.
 		function loadDATA(ele){
-			document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML.slice(5);
-			document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML.slice(3);
+			document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML.slice(5).trim();
+			document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML.slice(3).trim();
+			document.getElementById("_originLabel").style.display="none";
+			document.getElementById("_endLabel").style.display="none";
 			window.location.href = "#mapcontainer";
 		}
 
 		function deleteRoute(ele){
-			document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML;
-			document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML;
+			document.getElementById("O").click();
 			document.getElementById("deleteSaved").click();
+		}
+	script.
+		function changeLabel(ele){
+			document.getElementById(ele.id+"Label").style.display = "none";
+		}
+		function changeLabelBack(ele){
+			if(!ele.value){
+				document.getElementById(ele.id+"Label").style.display = "block";
+			}
 		}

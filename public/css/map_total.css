@@ -1,3 +1,6 @@
+html {
+  scroll-behavior: smooth;
+}
 body{
 	margin:0;
 	width:100%;
@@ -13,11 +16,26 @@ body{
 	text-align: center;
 	align-items: center;
 }
+#down{
+	position: absolute;
+	bottom: 20%;
+	width: 100%;
+	text-align: center;
+	align-items: center;
+	color:white;
+}
 #postwall{
 	width:100%;
 	height:100vh;
 	border-color: red;
 
+}
+#postwall a{
+	opacity: 0;
+	transition: 3s;
+}
+#postwall:hover a{
+	opacity: 1;
 }
 .mySlides {
 	width:100%;
@@ -41,9 +59,6 @@ body{
 	padding-top:1%;
 	font-size: 20px;
 }
-.text > hr{
-	margin-left: 30%;
-}
 .dot {
   height: 15px;
   width: 15px;
@@ -51,7 +66,7 @@ body{
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
-  transition: background-color 3.6s ease;
+  transition: background-color 1s ease;
 }
 .active {
   background-color: #717171;
@@ -59,7 +74,7 @@ body{
 
 #start{
 	width:38%;
-	height: 540px;
+	height: 600px;
 	float: left;
 	margin-left: 5%;
 	margin-right: 5%;
@@ -69,7 +84,7 @@ body{
 }
 #saved{
 	width:38%;
-	height: 540px;
+	height: 600px;
 	float: left;
 	margin-left: 5%;
 	margin-right: 5%;
@@ -105,8 +120,14 @@ body{
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-top: 5px;
-	border-color: rgb(242, 242, 242);
+	border-color: var(--main-colour);
+	margin-top:15px;
+	transition: border-radius 0.75s, background-color 0.75s, color 0.75s;
+}
+#_go:hover{
 	border-radius: 25px;
+	background-color: var(--main-colour);
+	color:white;
 }
 .roading{
 	width:20%;
@@ -157,21 +178,22 @@ body{
 }
 
 #floating-panel {
-position: absolute;
-top: 128px;
-left: 5%;
-z-index: 5;
-background-color: #fff;
-padding: 5px;
-border: 1px solid #999;
-text-align: center;
-font-family: 'Roboto','sans-serif';
-line-height: 30px;
-padding-left: 10px;
-border:solid;
-width: 16%;
+	position: absolute;
+	top: 128px;
+	left: 5%;
+	z-index: 5;
+	background-color: #fff;
+	padding: 5px;
+	border: 1px solid #999;
+	text-align: center;
+	font-family: 'Roboto','sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+	border:solid;
+	width: 16%;
 
 	min-width: 230px;
+	height: 380px;
 }
 
 #start, #end{
@@ -179,7 +201,7 @@ width: 16%;
 }
 #routeinfo {
 	position: absolute;
-	top: 270px;
+	top: 560px;
 	left: 5%;
 	z-index: 5;
 	background-color: #fff;
@@ -250,4 +272,170 @@ width: 16%;
   	padding: 12px 0;
   	box-sizing: border-box;
 	border-top: 1px solid rgb(92,92,92);
+}
+input{
+	outline: none;
+}
+#button_set{
+	position: absolute;
+	top:156px;
+	left:64px;
+	border:solid;
+	width: 256px;
+	height: 340px;
+	background-color: var(--background-colour);
+	opacity: 0.95;
+	align-items: center;
+	text-align: center;
+}
+#button_set  button{
+	width:68%;
+	height: 64px;
+	margin-top:30px;
+	background-color: white;
+	font-weight: bold;
+	font-size:20px;
+	border:solid;
+	color:var(--background-colour);
+	border-color: var(--main-colour);
+	transition: background-color 0.75s, border-radius 0.75s, color 0.75s;
+
+}
+
+#button_set  button:hover{
+	background-color: var(--main-colour);
+	border-radius: 25px;
+	color:white;
+}
+#streetView{
+	margin-left: 10%;
+	margin-right: 10%;
+	width:80%;
+	height: 90vh;
+	min-width: 560px;
+	align-items: center;
+	align-self: center;
+
+}
+#viewmap, #pano{
+	height: 50%;
+	width:100%;
+	float:left;
+	border:solid;
+}
+#back_top{
+	position:absolute;
+	top:300%;
+	left:40%;
+}
+.backtotop{
+	width:100%;
+	height: 64px;
+	background-image: linear-gradient(to bottom right, var(--main-colour), var(--secondary-colour));
+	border:solid;
+	border-color: var(--main-colour);
+	text-align: center;
+	font-size: 54px;
+	color:white;
+}
+
+#counting{
+	background-image: url("../D (2).jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	width:100%;
+	height: 100vh;
+	color:white;
+	font-weight: bold;
+
+}
+#counting h1{
+	padding-top: 12px;
+	padding-left: 192px;
+	font-size:40px;
+}
+#counting p, #counting label{
+	padding-left: 192px;
+	font-size:20px;
+}
+#progress {
+	  width: 60%;
+	  margin-left: 192px;
+	  margin-top: 2%;
+	  background-color: var(--background-colour);
+	  border-radius: 20px;
+	  opacity: 0.9;
+}
+
+#bar{
+	width: 1%;
+  	height: 35px;
+  	background-color: white;
+  	border-radius: 25px;
+}
+#another_ride{
+	margin-top: 25%;
+}
+#another_ride > input{
+	margin-left: 192px;
+	height: 60px;
+	width: 15%;
+	font-size: 30px;
+	padding:0;
+	font-weight: bold;
+	border: none;
+	color: white;
+	background-color: transparent;
+	transition: color 2s, background-color 2s;
+}
+#another_ride > input:hover{
+
+	color: var(--background-colour);
+	background-color: white;
+}
+button{
+	outline:none;
+}
+
+#_origin, #_end{
+	border:none;
+	border-bottom: 2px solid var(--background-colour);
+	width:80%;
+	margin-top: 15px;
+	height: 30px;
+
+}
+
+
+
+#_originLabel{
+	position: absolute;
+	top: 19px;
+	left: 14%;
+	font-size: 21px;
+}
+
+#_endLabel{
+	position: absolute;
+	top: 62px;
+	left: 14%;
+	font-size: 21px;
+}
+
+#sub, #bst, #bsa, #savedd{
+	width:60%;
+	height: 50px;
+	font-weight: bold;
+	font-size:20px;
+	margin-top: 20px;
+	border:solid;
+	color:var(--background-colour);
+	border-color: var(--main-colour);
+	transition: background-color 0.75s, border-radius 0.75s, color 0.75s;
+}
+
+#sub:hover, #bst:hover, #bsa:hover, #savedd:hover{
+	background-color: var(--main-colour);
+	border-radius: 25px;
+	color:white;
 }
