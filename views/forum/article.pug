@@ -19,7 +19,7 @@ block content
 
         div(style= "padding: 10px") #{article.body}
         
-    
+        hr
         
         form(action=("/forum/" + article.articleNum) method="POST" class="createArticle")
             h2 Comments
@@ -31,17 +31,23 @@ block content
             each comment in article.comments
                 ul(style="padding: 10px;")
                     li(style="white-space: nowrap;")
-                        div.comment #{comment.commentBody}
-                        
-                        if (comment.commentAuthor == userName)
-                            a(href= '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit" style="display:inline-block; margin:0").button Edit
-                            form(action=("/forum/" + article.articleNum  + "/" + comment.commentNumber + "/delete") method="POST" style="display:inline-block; margin:0"  onsubmit="return confirm('Are you sure you want to delete your comment?');")
-                                input(type="submit" value="Delete" style="margin-bottom:0").button
-                                
-                        div(style="float:right; display: inline-block") #{article.time}
+                        p.comment(style="width: 80%; white-space:normal") #{comment.commentBody}
+
                         if (comment.author != "anonymous")
                             br(style="float:right;")
-                            a(href = "/users/" + comment.commentAuthor style="float:right; color: var(--background-colour); margin-top: -20px") From: #{comment.commentAuthor}
+                            a(href = "/users/" + comment.commentAuthor style="float:right; color: var(--background-colour); margin-top: -40px") From: #{comment.commentAuthor}
+                        
+                        
+
+                        div(style="float:right; display: inline-block; margin-top: -15px") #{article.time}
+
+                        
+                        if (comment.commentAuthor == userName)
+                            a(href= '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit" style="display:inline-block; margin:0; margin-top: -15px").button Edit
+                            form(action=("/forum/" + article.articleNum  + "/" + comment.commentNumber + "/delete") method="POST" style="display:inline-block; margin:0; margin-top: -15px"  onsubmit="return confirm('Are you sure you want to delete your comment?');")
+                                input(type="submit" value="Delete" style="margin-bottom:0").button
+                                
+                        
             
          
         

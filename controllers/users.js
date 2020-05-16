@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
             const _had = await User.findOne({"userName":req.body.userName});
             if(_had){
                 return res.render("error", {
-                    error: "Username not specified",
+                    error: "Username Taken",
                     redirect: "/login/register"
                 });
             }

@@ -1,12 +1,11 @@
 extends ../navbar
 
 block content
-    div.main
-    form(action= ("/forum/" + articleNum + "/edit") method="POST")
+    form(action= ("/forum/" + articleNum + "/edit") method="POST").createArticle
         div Title
-        input(type="text" name="title")
+        textarea(name="title" required style="width:100%;")= article.title
         br
         div Body
-        input(type="text" name="body")
+        textarea(name="body" required style="width:100%;")= article.body
         br
-        input(type="submit" value="Change")
+        input(type="submit" value="Change" style="margin-left:0").button

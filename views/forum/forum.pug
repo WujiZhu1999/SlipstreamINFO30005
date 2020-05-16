@@ -10,11 +10,12 @@ block content
                 ul
                     li
                         a(href = '/Forum/' + article.articleNum).articleButton
-                            div.title #{article.title}
+                            div.title(style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;max-width: 100%;") #{article.title}
                             div.author(style = "float: right") Posted: #{article.time}
                             div.author From: #{article.author}                            
                             div.author Comments: #{article.comments.length}
 
+    hr
 
     form(action="/forum" method="POST" class="createArticle")
         h2 Create a New Article!
