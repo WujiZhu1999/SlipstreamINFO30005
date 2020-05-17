@@ -5,11 +5,11 @@ block content
 
     //lists out all the tips in the system
     h2 List of Tips
-        div.table
-            ul.tipList(style="background-color: var(--white); padding-right: 0;")
-                each tip in current_tips    
-                    li 
-                        //list item 
-                        div.tipContainer
-                            div.title #{tip.title}
-                            div.tipsInfo #{tip.body}
+    div.table
+        ul.tipList(style="background-color: var(--white); padding-right: 0;")
+            each tip in current_tips    
+                li 
+                    //list item 
+                    div.tipContainer
+                        h2.title #{tip.title}
+                        div.tipsInfo #{tip.body}

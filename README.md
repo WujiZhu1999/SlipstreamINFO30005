@@ -15,10 +15,10 @@ Group Members:
         password: qwerty
         
         or you can make your own account
-        
+
         NOTE: we are still not hashing our passwords, and just storing them as plaintext, as it is not a core functionality. DO NOT use any passwords you use for other accounts
 
-
+To access any feature on our website, you must be logged in
 
 Functionality: A forum (where users can post articles) and tips (provided by the administrator) functionality
         -Forum

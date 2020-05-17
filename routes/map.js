@@ -3,9 +3,9 @@ const mapRouter = express.Router();
 const mapController = require("../controllers/map.js");
 const loginController = require("../controllers/login.js");
 
-mapRouter.get('/', async (req, res)=> mapController.localRoute(req,res));
+mapRouter.get('/', (req, res, next) => loginController.isLoggedIn(req, res, next), async (req, res)=> mapController.localRoute(req,res));
 //mapRouter.get('/', (req, res) => mapController.initialMap(req, res));
-mapRouter.post('/route', async (req, res)=> mapController.mapPlan(req,res));
+mapRouter.post('/route', (req, res, next) => loginController.isLoggedIn(req, res, next), async (req, res)=> mapController.mapPlan(req,res));
 
 
 

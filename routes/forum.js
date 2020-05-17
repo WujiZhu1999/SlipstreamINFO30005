@@ -10,10 +10,10 @@ const forumController = require("../controllers/forum.js");
 const loginController = require("../controllers/login.js");
 
 //gets the forum (titles of all the acticles)
-forumRouter.get("/", (req, res) => forumController.getForum(req, res));
+forumRouter.get("/", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getForum(req, res));
 
 //gets an article according tot he number
-forumRouter.get("/:articleNum", (req, res) => forumController.getArticle(req, res));
+forumRouter.get("/:articleNum", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.getArticle(req, res));
 
 //creates an article with a post request
 forumRouter.post("/", (req, res, next) => loginController.isLoggedIn(req, res, next), (req, res) => forumController.createArticle(req, res));
