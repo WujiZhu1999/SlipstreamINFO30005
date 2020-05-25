@@ -89,7 +89,7 @@ const createArticle = async (req, res) => {
 
     }catch(err){
         return res.render("error", {
-            error: "Server Error: Failed to create article",
+            error: "Server Error: Failed to create article " + err,
             redirect: "/forum"
         });
     }
