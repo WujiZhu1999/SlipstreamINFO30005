@@ -6,6 +6,16 @@ const getForum = async (req, res) => {
 
     try {
         const _articles = await Article.find();
+        var article;
+        for(article of _articles){
+            //console.log(Math.abs(new Date() - new Date(article["time"]))/(1000*3600));
+            //console.log(Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600)));
+            //console.log(Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600)) * 60);
+            //console.log(Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) * 60);
+            article["Hrs"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600));
+            article["Mins"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600)) * 60;
+            article["Secs"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) * 60;
+        }    
         return res.render('forum/forum.pug', {
             title:'Forum',
             active:"Forum",
