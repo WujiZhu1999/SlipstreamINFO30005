@@ -90,7 +90,7 @@ async function getLeaderboard(req, res) {
         for (user of _list){
             details.push(await User.findOne({"userName":user}));
         }
-
+        details.sort((a,b) => (b["data"]["totalDistance"] - a["data"]["totalDistance"]));
 
         return details;
 
@@ -101,7 +101,7 @@ async function getLeaderboard(req, res) {
         });
     }
 }
-
+//try nodemon
 /*
 
 //Ranks a user's friends and themselves on the totalDistance cycled

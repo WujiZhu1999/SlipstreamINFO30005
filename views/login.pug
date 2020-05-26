@@ -1,24 +1,38 @@
 extends default
-
+block styles
+	link(rel='stylesheet',href='/css/login.css')
 block content
-    //Log in page for users
-    div.loginBackground
-        div.login
-            h1
-                
-                div Welcome to Slipstream
-            h2
-                div Please Log In
-            br
-            form(action="/login" method="POST")
-                div Username
-                input(type="text" name="userName")
-                br
-                div Password
-                input(type="password" name="password")
-                br
-                input(type="submit" value="Login" style="font-size: 16px; margin-top: 15px;").button
-
-            br
-            br
-            a(href="/Login/Register").buttonDark Register
+	div(class="container" id ="container")
+		div(class="_form sign_up")
+			form(action="/login/register" method="POST" id = "sign_up_form")
+				h1 Create Account
+				input(type="text" placeholder="UserName" name = "userName")
+				input(type="text" placeholder="NickName" name = "name")
+				input(type="text" placeholder="Password" name = "password")
+				button(onclick="document.getElementById('sign_up_form').submit()") Sign up
+		div(class="_form sign_in")
+			form(action="/login" method="POST" id="sign_in_form")
+				h1 Sign in
+				input(type="text" placeholder="UserName" name="userName")
+				input(type="text" placeholder="Password" name="password")
+				button(onclick="document.getElementById('sign_in_form').submit()") Sign in
+		div(class="switch")
+			div(class="switching")
+				div(class="op ol")
+					h1 Welcome Back!
+					p To continue your journey on Slipstream login with your personal account 
+					button(class="biu" id="signIn") Sign In
+				div(class="op or")
+					h1 Hi, there!
+					p register your personal account and start journey with Slipstream
+					button(class="biu" id="signUp") Sign Up
+		script.
+			const signUpButton = document.getElementById('signUp');
+			const signInButton = document.getElementById('signIn');
+			const container = document.getElementById('container');
+			signUpButton.addEventListener('click', () => {
+				container.classList.add("rpa");
+			});
+			signInButton.addEventListener('click', () => {
+				container.classList.remove("rpa");
+			});
