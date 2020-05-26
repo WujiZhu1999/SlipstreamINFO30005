@@ -5,32 +5,79 @@
     --background-colour: #444444;
     --white: #F1F1F1;
 }
-
-
-body {
-    
-    font-family: Arial, Helvetica, sans-serif;
-    background-image: url("/login.jpg");
-    background-size: cover;
-    background-position: centre;
-    background-repeat: no-repeat;
-    color: white;
-    padding: 20px;
+@keyframes shang {
+  0% { transform: translate3d(0, 100%, 0); }
+  20% { transform: translate3d(0, 76%, 0); }
+  40% { transform: translate3d(0, 60%, 0); }
+  60% { transform: translate3d(0, 40%, 0); }
+  80% { transform: translate3d(0, 20%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
-
-a {
-    margin: 20px;
-    margin-top: 5px;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
+@keyframes xia {
+  0% { transform: translate3d(0, -100%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+.all {
+  height: 90vmin;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vmin;
+  background: transparent;
+}
+.all > div {
+  height: 50%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+.all > div div {
+  color:var(--white);
+  font-size: 4vmin;
+  padding: 2vmin 0;
+  position: absolute;
+}
+.all > div div span {
+  display: block;
+}
+.all > div.up {
+  border-bottom: 1vmin solid var(--secondary-colour);
+  top: 0;
+}
+.all > div.up div {
+  animation: shang 2s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  bottom: 0;
+  transform: translate(0, 100%);
+}
+.all > div.down{
+  bottom: 0;
+}
+.all > div.down div {
+  animation: xia 0.5s;
+  animation-delay: 2.75s;
+  animation-fill-mode: forwards;
+  top: 0;
+  transform: translate(0, -100%);
+  font-size: 14vmin;
+}
+body{
+    background-color: var(--background-colour);
+}
+#go{
+    text-align: center;
+    font-size:4vmin;
+    padding-bottom: 2px;
+    transition-duration: 2s;
+}
+#go:hover{
     background-color: var(--white);
-    border: none;
-    color: black;
-    text-decoration: none;
+    color:var(--background-colour);
+    border-radius: 20px;
 }
-
-a:hover {
-    background-color: var(--secondary-colour);
-    color: white;
-} 
+a{
+    text-decoration: none;
+    color:var(--white);
+}

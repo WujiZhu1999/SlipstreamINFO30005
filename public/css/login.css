@@ -1,0 +1,210 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+	background: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	margin:0;
+	background-image: url("../D (4).jpg");
+	background-size: 100% 100%;
+}
+
+h1{
+	font-weight: bold;
+	margin: 0;
+}
+
+h2{
+	text-align: center;
+}
+
+p{
+	font-size: 15px;
+	font-weight: 100;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	margin: 20px 0 30px;
+}
+
+button{
+	border-radius: 25px;
+	border: 1px solid var(--main-colour);
+	background-color: var(--main-colour);
+	color: var(--white);
+	font-size: 13px;
+	font-weight: bold;
+	padding: 13px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+button:active{
+	transform: scale(0.93);
+}
+
+button:focus{
+	outline: none;
+}
+
+button.biu{
+	background-color: transparent;
+	border-color: var(--white);
+}
+
+form{
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	height: 100%;
+	text-align: center;
+}
+
+input{
+	background-color: white;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+	border-bottom: var(--white) solid 3px;
+	outline: none;
+	font-size: 15px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+input:focus, input:not(:placeholder-shown){
+	border-bottom: var(--secondary-colour) solid 3px;
+}
+.container{
+	background-color: white;
+	border-radius: 10px;
+  	box-shadow: 0 13px 26px rgba(0,0,0,0.25), 0 11px 11px rgba(0,0,0,0.22);
+	position: relative;
+	overflow: hidden;
+	width: 768px;
+	max-width: 100%;
+	min-height: 480px;
+}
+
+._form{
+	position: absolute;
+	top: 0;
+	height: 100%;
+	transition: all 0.6s ease-in-out;
+}
+
+.sign_in{
+	left: 0;
+	width: 50%;
+	z-index: 2;
+}
+
+.container.rpa .sign_in{
+	transform: translateX(100%);
+}
+
+.sign_up{
+	left: 0;
+	width: 50%;
+	opacity: 0;
+	z-index: 1;
+}
+
+.container.rpa .sign_up{
+	transform: translateX(100%);
+	opacity: 1;
+	z-index: 5;
+	animation: show 0.6s;
+}
+
+@keyframes show{
+	0%, 49.99% {
+		opacity: 0;
+		z-index: 1;
+	}
+	
+	50%, 100%{
+		opacity: 1;
+		z-index: 5;
+	}
+}
+
+.switch{
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 50%;
+	height: 100%;
+	overflow: hidden;
+	transition: transform 0.6s ease-in-out;
+	z-index: 100;
+}
+
+.container.rpa .switch{
+	transform: translateX(-100%);
+}
+
+.switching{
+	background: var(--background-colour);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
+	color: white;
+	position: relative;
+	left: -100%;
+	height: 100%;
+	width: 200%;
+  	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+.container.rpa .switching{
+  	transform: translateX(50%);
+}
+
+.op{
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 40px;
+	text-align: center;
+	top: 0;
+	height: 100%;
+	width: 50%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+.ol{
+	transform: translateX(-20%);
+}
+
+.container.rpa .ol{
+	transform: translateX(0);
+}
+
+.or{
+	right: 0;
+	transform: translateX(0);
+}
+
+.container.rpa .or{
+	transform: translateX(20%);
+}
