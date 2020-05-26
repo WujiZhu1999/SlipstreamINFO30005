@@ -34,6 +34,8 @@ app.listen(process.env.PORT || 3000, () => {
   console.log('listening on port ' + (process.env.port || 3000));
 });
 
+module.exports = app;
+
 /* TODO
  * fake facebook API
  * additional dashboard features

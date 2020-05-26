@@ -25,6 +25,7 @@ const getForum = async (req, res) => {
 
     }
     catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Could not fetch articles from database",
             redirect: "/"
@@ -54,6 +55,7 @@ const getArticle = async (req, res) => {
             });
         }
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Could not fetch article from database",
             redirect: "/forum"
@@ -74,12 +76,14 @@ const createArticle = async (req, res) => {
 
     try{
         //finds the lowest avaliable article number
-        const lastArticle = await Article.find().sort({_id:-1}).limit(1);
+        var lastArticle = await Article.find()
+
+        lastArticle.sort((a, b) => (a.id < b.id) ? 1: -1)//    _id:-1}).limit(1);
+
         var num = 1;
         if(lastArticle[0]){
             num = lastArticle[0].articleNum + 1;
         }
-
         //finds the current date
         const d = new Date();
 
@@ -98,6 +102,7 @@ const createArticle = async (req, res) => {
         return res.redirect("/forum/" + num);
 
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Failed to create article " + err,
             redirect: "/forum"
@@ -132,6 +137,7 @@ const deleteArticle = async (req, res) => {
             });
         }
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Failed to when deleteing article",
             redirect: "/forum" + intended.articleNum
@@ -154,6 +160,7 @@ const getEditArticle = async (req,res) => {
         });
 
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Failed to get article to edit",
             redirect: "/forum/" + _article.articleNum
@@ -172,8 +179,9 @@ const changeArticle = async (req, res) => {
         });
     }else{
         try{
+            var enteredNumber = parseInt(req.params.articleNum, 10);
             //checks if the article exists
-            var _article = await Article.findOne({"articleNum":req.params.articleNum});
+            var _article = await Article.findOne({"articleNum":enteredNumber});
             
             if(!_article){
                 return res.render("error", {
@@ -186,7 +194,7 @@ const changeArticle = async (req, res) => {
             if(_article.author != req.session.user){
                 return res.render("error", {
                     error: "You are not authorised to change this article",
-                    redirect: "/forum/" + _article.articleNum
+                    redirect: "/forum/" + enteredNumber
                 });
 
             }
@@ -206,13 +214,14 @@ const changeArticle = async (req, res) => {
             _new["edit"] = true;
 
             //makes changes
-            await Article.findOneAndUpdate({"articleNum":req.params.articleNum}, _new);
-            return res.redirect("/forum/" + req.params.articleNum);
+            await Article.findOneAndUpdate({"articleNum":enteredNumber}, _new);
+            return res.redirect("/forum/" + enteredNumber);
             
         }catch(err){
+            console.log(err);
             return res.render("error", {
-                error: "Server Error: Failed to edit article. " + err,
-                redirect: "/forum/" + _article.articleNum
+                error: "Server Error: Failed to edit article. ",
+                redirect: "/forum/" + enteredNumber
             });
         }
     }
@@ -224,16 +233,20 @@ const createComment = async (req, res) => {
         
         //checks if an article number was specifed 
         if(!req.params.articleNum){
+            res.status(400);
             return res.render("error", {
                 error: "This article does not exist",
                 redirect: "/forum/"
             });
         }
 
-        const _article = await Article.findOne({"articleNum":req.params.articleNum});
+        var enteredNumber = parseInt(req.params.articleNum, 10);
+
+        const _article = await Article.findOne({"articleNum":enteredNumber});
 
         //checks if there is suffecient amout of data
         if(!req.body.commentBody){
+            res.status(400);
             return res.render("error", {
                 error: "Cannot make an empty comment",
                 redirect: "/forum/" + _article.articleNum
@@ -242,6 +255,7 @@ const createComment = async (req, res) => {
         
         //checks if the article exists
         if(!_article){
+            res.status(400);
             return res.render("error", {
                 error: "This article does not exist",
                 redirect: "/forum/"
@@ -269,14 +283,15 @@ const createComment = async (req, res) => {
 
             comments.push(_new);
 
-            const _update = await Article.findOneAndUpdate({"articleNum":req.params.articleNum},{"comments":comments});
-            return await res.redirect("/forum/" + req.params.articleNum);
+            const _update = await Article.findOneAndUpdate({"articleNum":enteredNumber},{"comments":comments});
+            return await res.redirect("/forum/" + enteredNumber);
 
         }
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Failed to make comment",
-            redirect: "/forum/" + req.params.articleNum
+            redirect: "/forum/" + enteredNumber
         });
     }
 }
@@ -287,7 +302,7 @@ const deleteComment = async (req, res) => {
     var articleNumber = parseInt(req.params.articleNum, 10);
 
     try{
-        const article = await Article.findOne({"articleNum":req.params.articleNum})
+        const article = await Article.findOne({"articleNum":articleNumber})
         
         //checks if article exists
         if(!article){
@@ -301,7 +316,6 @@ const deleteComment = async (req, res) => {
         //finds and deletes the comment specifed based off of comment number
         for(i in article.comments){
             if(enteredNumber == article.comments[i].commentNumber){
-                console.log(i)
                 if(article.comments[i].commentAuthor === req.session.user){
                     article.comments.splice(i,1);
                     flag = 1;
@@ -328,6 +342,7 @@ const deleteComment = async (req, res) => {
         }
         
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Failed to delete comment",
             redirect: "/forum/" + article.articleNum
@@ -338,8 +353,8 @@ const deleteComment = async (req, res) => {
 //Gets a page to edit a comment
 const getEditComment = async (req, res) => {
     try {
-        var enteredNumber = req.params.commentNumber;
-        var articleNumber = req.params.articleNum;
+        var enteredNumber = parseInt(req.params.commentNumber, 10);
+        var articleNumber = parseInt(req.params.articleNum, 10);
 
         const _article = await Article.findOne({"articleNum":articleNumber});
 
@@ -373,6 +388,7 @@ const getEditComment = async (req, res) => {
         });
 
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Failed to get comment to edit",
             redirect: "/forum"
@@ -389,8 +405,8 @@ const changeComment= async (req, res) => {
             redirect: "/forum/" + _article.articleNum
         });
     }
-    var enteredNumber = req.params.commentNumber;
-    var articleNumber = req.params.articleNum;
+    var enteredNumber = parseInt(req.params.commentNumber, 10);
+    var articleNumber = parseInt(req.params.articleNum, 10);
 
     try{
         const article = await Article.findOne({"articleNum":articleNumber});
@@ -439,9 +455,10 @@ const changeComment= async (req, res) => {
         }
         
     }catch(err){
+        console.log(err);
         return res.render("error", {
             error: "Server Error: Failed to edit comment",
-            redirect: "/forum/" + _article.articleNum
+            redirect: "/forum/" + articleNumber
         });
     }
 }
