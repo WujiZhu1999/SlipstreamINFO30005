@@ -8,7 +8,7 @@ useNewUrlParser: true,
 useCreateIndex: true,
 useUnifiedTopology: true,
 useFindAndModify: false,
-dbName: "Bike"
+dbName: "BikeTest"
 });
 const db = mongoose.connection;
 db.on("error", err => {
