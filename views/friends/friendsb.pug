@@ -1,4 +1,4 @@
-extends ../navbar
+extends ../navbarb
 
 block content
     <!-- This is the search bar for friends -->
@@ -6,6 +6,8 @@ block content
     form(action = "/Friends" method="POST")
         input(type="text" name="receiver")
         input(type="submit" value="Send").button
+    form.form-inline.my-2.my-md-0
+        input.form-control(type='text', placeholder='Search')
     hr 
 
     <!-- This is the list of friend request, consist of:-->
