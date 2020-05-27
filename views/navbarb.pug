@@ -16,7 +16,7 @@ block navbar
         ul.navbar-nav.mr-auto
             while num < links.length
                 li.nav-item.active
-                    a.nav-link(href='#') pageNames[num]
+                    a.nav-link(href=links[num] class="active")= pageNames[num]
                 - num++
         ul.navbar-nav.float-right
             li.nav-item.dropdown

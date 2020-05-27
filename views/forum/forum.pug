@@ -3,20 +3,19 @@ extends ../navbar
 block content
     //Displays or the current articles in the database and allows a user to create a new article
     div.table
-
         //Lists the articles currently in the database
         h2 List of Articles
         each article in current_articles
-                ul
-                    li
-                        a(href = '/Forum/' + article.articleNum).articleButton
-                            div.title(style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;max-width: 100%;") #{article.title}
-                            if (article.edit == true)
-                                 div.author(style = "float: right") Edited: #{article.time}
-                            if (article.edit == false)
-                                div.author(style = "float: right") Posted: #{article.time}
-                            div.author From: #{article.author}                            
-                            div.author Comments: #{article.comments.length}
+            ul
+                li
+                    a(href = '/Forum/' + article.articleNum).articleButton
+                        div.title(style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;max-width: 100%;") #{article.title}
+                        if (article.edit == true)
+                                div.author(style = "float: right") Edited: #{article.time}
+                        if (article.edit == false)
+                            div.author(style = "float: right") Posted: #{article.time}
+                        div.author From: #{article.author}                            
+                        div.author Comments: #{article.comments.length}
 
     hr
 
