@@ -1,31 +1,49 @@
 extends ../navbar
-
+block styles
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous")
+    link(rel='stylesheet',href='/css/onlybootstrap.css')
 block content
-    //Displays or the current articles in the database and allows a user to create a new article
-    div.table
-        //Lists the articles currently in the database
-        h2 List of Articles
-        each article in current_articles
-            ul
-                li
-                    a(href = '/Forum/' + article.articleNum).articleButton
-                        div.title(style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;max-width: 100%;") #{article.title}
-                        if (article.edit == true)
+    .jumbotron
+        .container
+            h1 Hello, biker!
+            p
+            |Here are contributors' articles on various interesting topic!
+    .container
+        div.table
+            h2 List of Articles
+            each article in current_articles
+                ul.article
+                    li
+                        //link each box to the huperlink
+                        a(href = '/Forum/' + article.articleNum).articleButton
+                            //title of the article
+                            div.title(style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;max-width: 100%;") #{article.title}
+                            
+                            //count day updating
+                            if (article.edit == true)
                                 div.author(style = "float: right") Edited: #{article.time}
-                        if (article.edit == false)
-                            div.author(style = "float: right") Posted: #{article.time}
-                        div.author From: #{article.author}                            
-                        div.author Comments: #{article.comments.length}
-
-    hr
+                            if (article.edit == false)
+                                div.author(style = "float: right") Posted: #{article.time}
+                            
+                            //posted day and comments counts
+                            div.author From: #{article.author}                            
+                            div.author Comments: #{article.comments.length}
+        hr
+    
 
     //Lets the user create an article
+    //form to create new article should it be a button to new article page????
     form(action="/forum" method="POST" class="createArticle")
-        h2 Create a New Article!
-        div Title
-        input(type="text" name="title" required)
-        br
-        div Body
-        textarea(name="body")
-        br
-        input(type="submit" value="Post" style="margin:0").button
+        .container
+            h2 Create a New Article!
+            br
+            //label(for="Title") Title
+            input.form-control(type="text" name = "title" require placeholder = "Title")
+            br
+            //label(for="Body") Content
+            |
+            textarea.form-control(type="text" name = "body" placeholder = "Content")
+            br
+            input(type="submit" value="Post" style="margin:0").button
+    br
+    br

@@ -3,52 +3,50 @@ extends ../navbar
 block content
     <!-- This is right side of the profile, consist of:-->
     <!-- The list of that user's posts which each link linked to the post to comment and edit-->
-    div(class = "col")
-        div(class = "rightS")
-            //Lists all the article posted by the user
-            h1 Articles Posted
-            hr
-            ul.arts
-                for article in articles
-                    a(href = '/Forum/' + article.articleNum).articleButton
-                        div.title #{article.title}
-                        
-    <!-- This is the left side of the profile, consist of:-->
-    <!-- The Users info:name, username and their  biking statistic-->
-    <!-- The form to editing the username and password-->
-    div(class = "col")                    
-        div(class = "leftS")
-            // Lists all the user information
-            h1 #{user.name} 
-            hr
-            p User Name: #{user.userName}
-            p Steak: #{user.data.streak}
-            //p Statistic
-            ul.stat
-                li Total distance rode: #{user.data.totalDistance}
-                li Total energy saved: #{user.data.energySaved}
-                li Total carbon saved: #{user.data.carbonSaved}
-            br
-            if (user.userName != userName)
-                form(action= ("/friends/") method="POST")
-                    input(type="submit" value="Send Friend Request"  style="margin-left:0").button
-                    input(type="text" name="receiver", value = user.userName, style = "visibility:hidden")
+    .container
+        .row               
+            <!-- This is the left side of the profile, consist of:-->
+            <!-- The Users info:name, username and their  biking statistic-->
+            <!-- The form to editing the username and password-->
+            .col-md-6           
+                // Lists all the user information
+                h1 #{user.name} 
+                hr
+                p User Name: #{user.userName}
+                p Steak: #{user.data.streak}
+                //p Statistic
+                ul.stat
+                    li Total distance rode: #{user.data.totalDistance}
+                    li Total energy saved: #{user.data.energySaved}
+                    li Total carbon saved: #{user.data.carbonSaved}
+                br
+                if (user.userName != userName)
+                    form(action= ("/friends/") method="POST")
+                        input(type="submit" value="Send Friend Request"  style="margin-left:0").button
+                        input(type="text" name="receiver", value = user.userName, style = "visibility:hidden")
 
-            if (user.userName == userName)
-                h2 Edit Profile
-                form(action= ("/users/" + userName) method="POST")
-                    p New Name
-                    input(type="text" name="name")
-                    p New Password
-                    input(type="text" name="password")
-                    br
-                    input(type="submit" value="Change Profile"  style="margin-left:0").button
-                    
-                    input(type="text" name="userName", value = userName, style = "visibility:hidden")
+                if (user.userName == userName)
+                    h2 Edit Profile
+                    form(action= ("/users/" + userName) method="POST").createArticle
+                        p New Name
+                        input.form-control(type="text" name="name")
+                        p New Password
+                        input.form-control(type="text" name="password")
+                        br
+                        input.form-control(type="submit" value="Change Profile"  style="margin-left:0").button
+                        input(type="text" name="userName", value = userName, style = "visibility:hidden")
 
-                form(action= ("/users/" + userName + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');")
-                    input(type="submit" value="Delete Account" style="margin-left:0").button
-                    input(type="text" name="userName", value = userName, style = "visibility:hidden")
+                    form(action= ("/users/" + userName + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');")
+                        input(type="submit" value="Delete Account" style="margin-left:0").button
+                        input(type="text" name="userName", value = userName, style = "visibility:hidden")
+            .col-md-6.float-right
+                //Lists all the article posted by the user
+                h1 Articles Posted
+                hr
+                ul.arts
+                    for article in articles
+                        a(href = '/Forum/' + article.articleNum).articleButton
+                            div.title #{article.title}
     
         
 
