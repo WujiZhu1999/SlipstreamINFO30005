@@ -1,28 +1,42 @@
 extends ../navbar
 
 block content
+    .jumbotron
+        .container
+            h1 Hello, biker!
+            p
+            |some quotes
+
     .container
         h2 List of Articles
-        .row
-            .col-md-8
-                each article in current_articles
-                    ul.article
-                        li
-                            //link each box to the huperlink
-                            a(href = '/Forum/' + article.articleNum).articleButton
-                                //title of the article
-                                div.title(style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;max-width: 100%;") #{article.title}
-                                
-                                //count day updating
-                                if (article.edit == true)
-                                    div.author(style = "float: right") Edited: #{article.time}
-                                if (article.edit == false)
-                                    div.author(style = "float: right") Posted: #{article.time}
-                                
-                                //posted day and comments counts
-                                div.author From: #{article.author}                            
-                                div.author Comments: #{article.comments.length}
+        each article in current_articles
+            ul.article
+                li
+                    //link each box to the huperlink
+                    a(href = '/Forum/' + article.articleNum).articleButton
+                        //title of the article
+                        div.title(style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;max-width: 100%;") #{article.title}
+                        
+                        //count day updating
+                        if (article.edit == true)
+                            div.author(style = "float: right") Edited: #{article.time}
+                        if (article.edit == false)
+                            div.author(style = "float: right") Posted: #{article.time}
+                        
+                        //posted day and comments counts
+                        div.author From: #{article.author}                            
+                        div.author Comments: #{article.comments.length}
     hr
 
     //Lets the user create an article
     //form to create new article should it be a button to new article page????
+    form(action="/forum" method="POST" class="createArticle")
+        h2 Create a New Article!
+        div Title
+        input(type="text" name="title" required)
+        br
+        div Body
+        textarea(name="body")
+        br
+        //why this only need one post
+        input(type="submit" value="Post" style="margin:0").button

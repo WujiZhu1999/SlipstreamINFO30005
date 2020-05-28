@@ -5,6 +5,11 @@ const Article = mongoose.model("article");
 const getForum = async (req, res) => {
 
     try {
+        //var current_page = 1;
+        //var perpage = 2;
+        //var str = (current_page-1)*perpage;
+        //var end = start+perpage;
+        //var current_page = req.params.page || 1;
         const _articles = await Article.find();
         var article;
         for(article of _articles){
@@ -15,7 +20,7 @@ const getForum = async (req, res) => {
             article["Hrs"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600));
             article["Mins"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600)) * 60;
             article["Secs"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) * 60;
-        }    
+        } 
         return res.render('forum/forum.pug', {
             title:'Forum',
             active:"Forum",
