@@ -8,13 +8,13 @@ block content
 				h1 Create Account
 				input(type="text" placeholder="UserName" name = "userName" required)
 				input(type="text" placeholder="NickName" name = "name" required)
-				input(type="text" placeholder="Password" name = "password" required)
+				input(type="password" placeholder="Password" name = "password" required)
 				button(onclick="document.getElementById('sign_up_form').submit()") Sign up
 		div(class="_form sign_in")
 			form(action="/login" method="POST" id="sign_in_form")
 				h1 Sign in
 				input(type="text" placeholder="UserName" name="userName" required)
-				input(type="text" placeholder="Password" name="password" required)
+				input(type="password" placeholder="Password" name="password" required)
 				button(onclick="document.getElementById('sign_in_form').submit()") Sign in
 		div(class="switch")
 			div(class="switching")

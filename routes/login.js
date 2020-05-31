@@ -15,7 +15,7 @@ loginRouter.get("/", (req, res) => loginController.getLogin(req, res));
 loginRouter.post("/", async (req, res) => loginController.postLogIn(req, res));
 
 //get the register page, where you make a new account
-loginRouter.get("/register", (req, res) => loginController.getRegistration(req, res));
+//loginRouter.get("/register", (req, res) => loginController.getRegistration(req, res));
 
 //create a new account
 loginRouter.post("/register", (req, res) => userController.createUser(req, res));
