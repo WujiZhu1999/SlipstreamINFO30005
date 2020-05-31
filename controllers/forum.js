@@ -5,7 +5,6 @@ const Article = mongoose.model("article");
 const getForum = async (req, res) => {
 
     try {
-        
         //var current_page = 1;
         //var perpage = 2;
         //var str = (current_page-1)*perpage;
@@ -21,10 +20,7 @@ const getForum = async (req, res) => {
             article["Hrs"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600));
             article["Mins"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600)) * 60;
             article["Secs"] = Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) * 60;
-
         } 
-
-
         return res.render('forum/forum.pug', {
             title:'Forum',
             active:"Forum",
@@ -51,23 +47,11 @@ const getArticle = async (req, res) => {
         const _article = await Article.findOne({"articleNum":number});
         
         if(_article){
-            
-            for(comment of _article.comments){
-                //console.log(Math.abs(new Date() - new Date(article["time"]))/(1000*3600));
-                //console.log(Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600)));
-                //console.log(Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*3600)) * 60);
-                //console.log(Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000)) - Math.floor(Math.abs(new Date() - new Date(article["time"]))/(1000*60)) * 60);
-                comment["Hrs"] = Math.floor(Math.abs(new Date() - new Date(comment["time"]))/(1000*3600));
-                comment["Mins"] = Math.floor(Math.abs(new Date() - new Date(comment["time"]))/(1000*60)) - Math.floor(Math.abs(new Date() - new Date(comment["time"]))/(1000*3600)) * 60;
-                comment["Secs"] = Math.floor(Math.abs(new Date() - new Date(comment["time"]))/(1000)) - Math.floor(Math.abs(new Date() - new Date(comment["time"]))/(1000*60)) * 60;
-    
-            } 
-
             return res.render("forum/article.pug", {
                 title: _article.title,
                 article: _article,
                 active:"Forum",
-                userName: req.session.user,
+                userName: req.session.user
             });
         }else{
             return res.render("error", {
