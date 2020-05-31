@@ -37,13 +37,37 @@ block content
                 ul(style="padding: 10px;")
                     li(style="white-space: nowrap;")
                         p.comment(style="width: 80%; white-space:normal") #{comment.commentBody}
-
+                        
                         if (comment.author != "anonymous")
                             br(style="float:right;")
                             a(href = "/users/" + comment.commentAuthor style="float:right; color: var(--background-colour); margin-top: -40px") From: #{comment.commentAuthor}
                         
-                        
-                        div(style="float:right; display: inline-block; margin-top: -15px") #{article.time}
+
+                        if (comment.edit == true)
+                                if (comment.Hrs < 24)
+                                    if(comment.Mins < 60)
+                                        if (comment.Secs < 60)
+                                            div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.Secs} seconds ago
+                                        else
+                                            div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.Mins} minutes ago
+                                    else
+                                        iv.author(style = "float: right") Edited: #{comment.Hrs} hours ago
+                                
+                                else
+                                    div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.time}
+                    
+                        if (comment.edit == false)
+                                if (comment.Hrs < 24)
+                                    if(comment.Mins < 60)
+                                        if (comment.Secs < 60)
+                                            div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Secs} seconds ago
+                                        else
+                                            div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Mins} minutes ago
+                                    else
+                                        div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Hrs} hours ago
+                                
+                                else
+                                    div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.time}
 
                         
                         if (comment.commentAuthor == userName)

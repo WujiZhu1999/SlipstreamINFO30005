@@ -69,19 +69,11 @@ form{
 }
 
 .jumbotron{
-	background-image: url("../D (3).jpg");
+	background-image: url("../D (4).jpg");
 	color: white;
-	background-position: left bottom;
-	background-size: cover;
+	
 }
-.jum-h1{
-	font-weight: bold;
-	font-size: 52px;
-}
-.jum-p{
-	font-weight: bold;
-	font-size: 26px;
-}
+
 form.createArticle input[name="title"] {
     width: 100%;
 }
@@ -143,11 +135,4 @@ div.table div.comment_author{
     font-size: 10px;
     color: grey;
 }
-
-
-
-
-
-
-
 
