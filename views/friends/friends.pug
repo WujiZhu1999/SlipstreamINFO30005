@@ -3,15 +3,18 @@ extends ../navbar
 block content
     .container
         <!-- This is the search bar for friends -->
+        br
         h2 User Search
         //form(action = "/Friends" method="POST")
             input(type="text" name="receiver")
             input(type="submit" value="Send").button
 
-        form.form-inline(action = "/Friends" method="POST" width="100%")
+        br
+        form(action = "/Friends" method="POST" width="100%" style="display:inline-block; margin:0; margin-top: -15px")
             input.form-control(type='text', placeholder='Search', name="receiver")
             //button.btn(class="btn-" type = "button") = Send
-            button.btn.btn-dark(type="submit")
+            br
+            input(type="submit"  style=" margin-left:0; margin-bottom: 30px").button
 
         hr 
 

@@ -10,6 +10,7 @@ block content
             <!-- The form to editing the username and password-->
             .col-md-6           
                 // Lists all the user information
+                br
                 h1 #{user.name} 
                 hr
                 p User Name: #{user.userName}
@@ -27,6 +28,7 @@ block content
 
                 if (user.userName == userName)
                     h2 Edit Profile
+                    br
                     form(action= ("/users/" + userName) method="POST" style="display:inline-block; margin:0; margin-top: -15px").createArticle
                         p New Name
                         input.form-control(type="text" name="name")
@@ -40,7 +42,9 @@ block content
                         input(type="submit" value="Delete Account" style="margin-left:0").button
                         input(type="text" name="userName", value = userName, style = "visibility:hidden")
             .col-md-6.float-right
+            
                 //Lists all the article posted by the user
+                br
                 h1 Articles Posted
                 hr
                 ul.arts
