@@ -29,5 +29,7 @@ block navbar
                     .dropdown-menu(id="navbarDropdown")
                         a.dropdown-item(href=`/Users/${userName}`) Settings
                         a.dropdown-item(href=`/Friends`) Friends
+                        //button.btn.btn-link(type="submit" value="Logout")
                         form.dropdown-item(action = "/Login/Logout" method = "POST")
-                            input(type="submit" value="Logout")
+                            //input(type="submit" value="Logout")
+                            button.btn.btn-link(type="submit" value="Logout") Logout
