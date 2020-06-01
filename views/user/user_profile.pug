@@ -27,7 +27,7 @@ block content
 
                 if (user.userName == userName)
                     h2 Edit Profile
-                    form(action= ("/users/" + userName) method="POST").createArticle
+                    form(action= ("/users/" + userName) method="POST" style="display:inline-block; margin:0; margin-top: -15px").createArticle
                         p New Name
                         input.form-control(type="text" name="name")
                         p New Password
@@ -36,7 +36,7 @@ block content
                         input.form-control(type="submit" value="Change Profile"  style="margin-left:0").button
                         input(type="text" name="userName", value = userName, style = "visibility:hidden")
 
-                    form(action= ("/users/" + userName + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');")
+                    form(action= ("/users/" + userName + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');" style="display:inline-block; margin:0; margin-top: -15px")
                         input(type="submit" value="Delete Account" style="margin-left:0").button
                         input(type="text" name="userName", value = userName, style = "visibility:hidden")
             .col-md-6.float-right
