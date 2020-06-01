@@ -22,7 +22,7 @@ block content
                             //count day updating
                             if (article.edit == true)
                                 if (article.Hrs < 24)
-                                    if(article.Mins < 60)
+                                    if (article.Mins < 60)
                                         if (article.Secs < 60)
                                             div.author(style = "float: right") Edited: #{article.Secs} seconds ago
                                         else
@@ -35,7 +35,7 @@ block content
                         
                             if (article.edit == false)
                                 if (article.Hrs < 24)
-                                    if(article.Mins < 60)
+                                    if (article.Mins < 60)
                                         if (article.Secs < 60)
                                             div.author(style = "float: right") Posted:: #{article.Secs} seconds ago
                                         else
