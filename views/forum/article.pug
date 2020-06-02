@@ -1,8 +1,16 @@
 extends ../navbar
 
 block content
-    //Displays an article and it's comments based on an article number, giving options to interact  with both comments and the article
-    .container
+        //Displays an article and it's comments based on an article number, giving options to interact  with both comments and the article
+
+
+        //shows a delete article button if the aritcle author views the article
+        if article.author == userName
+            a(href= "/forum/" + article.articleNum + "/edit" style="float:right;").button Edit Article
+            form(action=("/forum/" + article.articleNum + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your post?');")
+                input(type="submit" value="Delete Article" style="float:right;").button
+
+        
         //shows article title and links to author's profile
         h1 #{article.title}
         
@@ -12,70 +20,58 @@ block content
 
         div(style= "padding: 10px") #{article.body}
         
-        //shows a delete article button if the aritcle author views the article
-        if article.author == userName
-            .row
-                .col-md-5.float-left
-                    a(href= "/forum/" + article.articleNum + "/edit" style="float:right;").button Edit Article
-                .col-md-5.float-right
-                    form(action=("/forum/" + article.articleNum + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your post?');")
-                        input(type="submit" value="Delete Article" style="float:right;").button
         hr
         
         //Option to comment on an article
         form(action=("/forum/" + article.articleNum) method="POST" class="createArticle")
             h2 Comments
             //input(type="text" name="commentBody" required)
-            textarea.form-control(name="commentBody" required)
-            br
+            textarea(name="commentBody" required)
             input(type="submit" value="Post" style="font-size: 16px; display: block; margin-left: 0;").button
-        
-        br
+       
         div.table
             //shows all the comments on the article and gives option to edit or delete if the author of the comment is viewing the article
             each comment in article.comments
                 ul(style="padding: 10px;")
                     li(style="white-space: nowrap;")
                         p.comment(style="width: 80%; white-space:normal") #{comment.commentBody}
-                        
+
                         if (comment.author != "anonymous")
                             br(style="float:right;")
                             a(href = "/users/" + comment.commentAuthor style="float:right; color: var(--background-colour); margin-top: -40px") From: #{comment.commentAuthor}
                         
-
+                        
+                        -//div(style="float:right; display: inline-block; margin-top: -15px") #{article.time}
                         if (comment.edit == true)
-                                if (comment.Hrs < 24)
-                                    if(comment.Mins < 60)
-                                        if (comment.Secs < 60)
-                                            div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.Secs} seconds ago
-                                        else
-                                            div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.Mins} minutes ago
+                            if (comment.Hrs < 24)
+                                if (comment.Mins < 60)
+                                    if (comment.Secs < 60)
+                                        div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.Secs} seconds ago
                                     else
-                                        iv.author(style = "float: right") Edited: #{comment.Hrs} hours ago
-                                
+                                        div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.Mins} minutes ago
                                 else
-                                    div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.time}
-                    
+                                    iv.author(style = "float: right") Edited: #{comment.Hrs} hours ago
+                            
+                            else
+                                div(style="float:right; display: inline-block; margin-top: -15px") Edited: #{comment.time}
+                
                         if (comment.edit == false)
-                                if (comment.Hrs < 24)
-                                    if(comment.Mins < 60)
-                                        if (comment.Secs < 60)
-                                            div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Secs} seconds ago
-                                        else
-                                            div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Mins} minutes ago
+                            if (comment.Hrs < 24)
+                                if (comment.Mins < 60)
+                                    if (comment.Secs < 60)
+                                        div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Secs} seconds ago
                                     else
-                                        div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Hrs} hours ago
-                                
+                                        div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Mins} minutes ago
                                 else
-                                    div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.time}
-
+                                    div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.Hrs} hours ago
+                            
+                            else
+                                div(style="float:right; display: inline-block; margin-top: -15px") Posted: #{comment.time}
                         
                         if (comment.commentAuthor == userName)
                             a(href= '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit" style="display:inline-block; margin:0; margin-top: -15px").button Edit
                             form(action=("/forum/" + article.articleNum  + "/" + comment.commentNumber + "/delete") method="POST" style="display:inline-block; margin:0; margin-top: -15px"  onsubmit="return confirm('Are you sure you want to delete your comment?');")
                                 input(type="submit" value="Delete" style="margin-bottom:0").button
-        br
-        br
                                 
                         
             

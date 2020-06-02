@@ -2,14 +2,13 @@ extends ../navbar
 
 block content
     // a page used to enter the edits for an article
+
     //Connects to a post request to edit an article
     form(action= ("/forum/" + articleNum + "/edit") method="POST").createArticle
-        .container
-            div Title
-            textarea.form-control(name="title" required style="width:100%;")= article.title
-            br
-            div Body
-            textarea.form-control(name="body" required style="width:100%;")= article.body
-            br
-            input(type="submit" value="Change" style="margin-left:0").button
-
+        div Title
+        textarea(name="title" required style="width:100%;")= article.title
+        br
+        div Body
+        textarea(name="body" required style="width:100%;")= article.body
+        br
+        input(type="submit" value="Change" style="margin-left:0").button
