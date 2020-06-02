@@ -81,8 +81,10 @@ body{
 	min-width: 450px;
 	margin-top: 5%;
 	background-color: white;
+	border:solid var(--secondary-colour);
 }
 #saved{
+	border:solid var(--secondary-colour);
 	width:38%;
 	height: 600px;
 	float: left;
@@ -98,7 +100,7 @@ body{
 }
 #origin, #destination {
 
-	padding-top: 14%;
+	padding-top: 40px;
     background: transparent;
     border: none;
     border-bottom: 1px solid #000000;

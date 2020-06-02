@@ -62,7 +62,7 @@ block content
 				each route in routes
 					li(class="roadli")
 						img(class="roading" src="/logo.jpg")
-						div(class="roading_info" style="height:100%;width:60%;float:left;"  onclick="insertRoad(this)")
+						div(class="roading_info" style="height:100%;width:60%;float:left;border"  onclick="insertRoad(this)")
 							if route["destination"] == "---"
 								h3(class="roadh3") Waiting for your exploration
 							else

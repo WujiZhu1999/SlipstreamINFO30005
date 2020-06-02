@@ -27,8 +27,7 @@ block styles
 	the third script is when you click the load data from saved route panel
 	the fourth script is for delete data button linkage
 block content
-	div(id="mapcontainer")
-		div(id="map")
+	
 	div(id="floating-panel")
 		div(id="magic")
 			form(action="/Map/start" method="post")
@@ -49,7 +48,8 @@ block content
 
 			input(type="submit" id="sub" value = "Search Route")
 			button(type="submit" id="savedd" onclick="window.location.href='#savedRoute'") Saved
-
+	div(id="mapcontainer")
+		div(id="map")
 	div(id="routeinfo")
 		h1 Route Info
 		p(id="route info") Distance

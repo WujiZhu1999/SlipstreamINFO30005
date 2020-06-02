@@ -35,16 +35,24 @@ const localRoute = async (req, res) =>{
     }else{
         //return the 6 mostly visited route
         //if has less than 6 in record. use --- for replace which front end will reckon as empty
-        
+        var i=0;
         const routes = await Route.find({"user":req.session.user})
         var _route  = [];
         for(route of routes){
             if(route["status"][route["totalTrial"]-1] =="WAIT"){
                 _route.push(route);
+                i+=1;
             }
         }
 
-
+        while(i<6){
+            _route.push({
+                origin:"---",
+                destination:"---",
+                totalTrial:0
+            });
+            i+=1;
+        }
 
 
 
