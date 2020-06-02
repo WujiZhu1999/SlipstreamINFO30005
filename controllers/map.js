@@ -35,6 +35,23 @@ const localRoute = async (req, res) =>{
     }else{
         //return the 6 mostly visited route
         //if has less than 6 in record. use --- for replace which front end will reckon as empty
+        
+        const routes = await Route.find({"user":req.session.user})
+        var _route  = [];
+        for(route of routes){
+            if(route["status"][route["totalTrial"]-1] =="WAIT"){
+                _route.push(route);
+            }
+        }
+
+
+
+
+
+
+
+        /*
+
         const _routes = await historicalRoute(req, res);
         if(_routes.length <=6){
             var i = _routes.length;
@@ -47,7 +64,9 @@ const localRoute = async (req, res) =>{
                 i++;
             }
         }
-        return res.render("map/maphome",{userName:req.session.user,routes:_routes});
+        */
+
+        return res.render("map/maphome",{userName:req.session.user,routes:_route});
     }
 }
 
@@ -71,11 +90,11 @@ const historicalRoute = async (req,res)=>{
 //as waiting for later use. But the user want to delete what they have saved.
 const deleteRoute = async (req, res) =>{
     try{
-        if(!req.body._origin || !req.body._end){
+        if(!req.body.origin || !req.body.destination){
             return res.send("Missing argument when deleting.");
         }
         //find the route that user want's to clean the wait flag
-        var route = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
+        var route = await Route.findOne({"user":req.session.user,"origin":req.body.origin,"destination":req.body.destination});
         if(!route){
             return res.redirect("/");
         }else{
@@ -90,9 +109,9 @@ const deleteRoute = async (req, res) =>{
             //if the route only has one record and that's the saved one(i.e the user only save this route and
             //never tried this route before and delete the save status will delete the route.)
             if(route["totalTrial"] != 0){
-                const ret = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end},route);
+                const ret = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body.origin,"destination":req.body.destination},route);
             }else{
-                const ret = await Route.findOneAndDelete({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
+                const ret = await Route.findOneAndDelete({"user":req.session.user,"origin":req.body.origin,"destination":req.body.destination});
             }
             
             const routes = await Route.find({"user":req.session.user})
@@ -103,10 +122,10 @@ const deleteRoute = async (req, res) =>{
                 }
             }
             var out = {};
-            out["route"] = _route;
+            out["routes"] = _route;
             
             out["userName"] = req.session.user;
-            return res.render("map/map",out);
+            return res.render("map/maphome",out);
 
         }
     }catch(err){
@@ -354,14 +373,7 @@ const mapPlan = async (req,res)=>{
             out["destination"] = req.body.destination;   
         }
 
-        const routes = await Route.find({"user":req.session.user})
-        var _route  = [];
-        for(route of routes){
-            if(route["status"][route["totalTrial"]-1] =="WAIT"){
-                _route.push(route);
-            }
-        }
-        out["route"] = _route;
+        
         out["userName"] = req.session.user;
         return res.render("map/map",out);
     }else{

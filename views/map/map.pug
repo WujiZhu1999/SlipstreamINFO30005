@@ -57,17 +57,18 @@ block content
 		p(id="route info3") Turns
 	if(alertt)
 		p(id="shout" styles="display:none") The route can't be find.
-	div(id="savedRoute")
-		if(route)
-			ol(style=" list-style-type: none;")
-				each r in route
-					li(class= r["origin"] + r["destination"])
-						p(class= r["origin"] + r["destination"]+"1") From #{r["origin"]}
-						p(class= r["origin"] + r["destination"]+"2") To #{r["destination"]}
-						p(class= r["origin"] + r["destination"]+"3") With #{(r["distance"] * 0.001).toFixed(3)} kms
-						p(class= r["origin"] + r["destination"]+"4") About #{(r["duration"] * (1/60)).toFixed(3)} mins
-						button(id = "O" class=r["origin"] + r["destination"] onclick="loadDATA(this)") O 
-						button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") X 
+	//-
+		div(id="savedRoute")
+			if(route)
+				ol(style=" list-style-type: none;")
+					each r in route
+						li(class= r["origin"] + r["destination"])
+							p(class= r["origin"] + r["destination"]+"1") From #{r["origin"]}
+							p(class= r["origin"] + r["destination"]+"2") To #{r["destination"]}
+							p(class= r["origin"] + r["destination"]+"3") With #{(r["distance"] * 0.001).toFixed(3)} kms
+							p(class= r["origin"] + r["destination"]+"4") About #{(r["duration"] * (1/60)).toFixed(3)} mins
+							button(id = "O" class=r["origin"] + r["destination"] onclick="loadDATA(this)") O 
+							button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") X 
 	script.
 		if(document.getElementById("shout")){
 			alert(document.getElementById("shout").innerHTML);

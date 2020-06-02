@@ -2,14 +2,15 @@ extends ../navbar
 
 block content
     // a page used to enter the changes to a comment
+
     // gives an option to change an comment
     if ([article.comments[commentIndex]].commentAuthor == useName)
         form(action= ("/forum/" + articleNum + "/" + commentNumber + "/edit") method="POST").createArticle
-            .container
-                div Edit comment
-                br
-                textarea.form-control(name="commentBody" required)= article.comments[commentIndex].commentBody
-                br
-                input(type="submit" value="Edit Comment" style="margin:0").button
+            div Edit comment
+            textarea(name="commentBody" required)= article.comments[commentIndex].commentBody
+            br
+            input(type="submit" value="Edit Comment" style="margin-left:0").button
         
         
+            
+    

@@ -1,35 +1,35 @@
-extends defaultb
+extends default
 block navbar
     // the navigation bar 
     - var links = ["/", "/Forum", "/Tips", "/Map"]
     - var pageNames = ["Home", "Forum", "Tips", "Map"]
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
-        //logos
-        img(src="/logo.jpg").logo
+    nav
+        ul
+            li
+                img(src="/logo.jpg").logo
+            li
+                div(style="margin:30px;")
 
-        //list of options
-        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
-            //span.navbar-toggler-icon
-        .collapse.navbar-collapse(id='navbarSupportedContent')
-            ul.navbar-nav.mr-auto
-                - var num = 0
-                while num < links.length
-                    li.nav-item
-                        if active == pageNames[num]
-                            a.nav-link(href=links[num] class="active")= pageNames[num]
-                        else
-                            a.nav-link(href=links[num])= pageNames[num]  
-                    - num++
-            ul.navbar-nav.float-right
-                li.nav-item.dropdown
-                    //button.btn.btn-secondary.dropdown-toggle(type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")=userName
-                    //.dropdown-menu(aria-labelledby="dropdownMenuButton")
-                    a.nav-link.dropdown-toggle(id="navbarDropdown" role="button" data-toggle="dropdown")=userName
-                        //span.caret
-                    .dropdown-menu(id="navbarDropdown")
-                        a.dropdown-item(href=`/Users/${userName}`) Settings
-                        a.dropdown-item(href=`/Friends`) Friends
-                        //button.btn.btn-link(type="submit" value="Logout")
-                        form.dropdown-item(action = "/Login/Logout" method = "POST")
-                            //input(type="submit" value="Logout")
-                            button.btn.btn-link(type="submit" value="Logout") Logout
+            - var num = 0
+            while num < links.length
+                li
+                    if active == pageNames[num]
+                        a(href=links[num] class="active")= pageNames[num]
+                    else
+                        a(href=links[num])= pageNames[num]  
+                - num++
+
+            li(style="float:right;" class="dropDown")
+                if userName
+                    a(class="dropDownButton")= userName
+                    div(class="dropDownContent")
+                        a(href=`/Users/${userName}`) Settings
+                        a(href=`/Friends`) Friends
+                        form(action = "/Login/Logout" method = "POST")
+                                input(type="submit" value="Logout")
+
+                else
+                    a(href="/Login") Login
+            
+
+    div(style="margin:0px;")

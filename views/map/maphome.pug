@@ -48,26 +48,30 @@ block content
 	div(id="start")
 		img(id="start_img" src = "../start.jpg")
 		div(id = "go")
-			form(action="/Map/route" method="POST")
+			form(action="/Map/route" method="POST" id="start_form")
 				input(type="text" id="origin" name="origin" placeholder="Origin")
 				input(type="text" id="destination" name="destination" placeholder="Destination")
 				br
 				br
 				input(type="submit" value="GO" id = "_go")
+				input(type="submit" formaction="/Map/deleteRoute" style="display:none;" id="_deletee")
 	div(id="saved")
 		img(id = "plan_img" src="../plan.jpg")
 		div(id="containroute")
 			ul(class="roads")
 				each route in routes
-					li(class="roadli" onclick="insertRoad(this)")
+					li(class="roadli")
 						img(class="roading" src="/logo.jpg")
-						if route["destination"] == "---"
-							h3(class="roadh3") Waiting for your exploration
-						else
-							h3(class="roadh3") #{route["destination"]}
-						p(class="roadp") Origin: #{route["origin"]} 
-						p(class="roadp") Destination: #{route["destination"]}
-						p(class="roadp") Total Trial: #{route["totalTrial"]}
+						div(class="roading_info" style="height:100%;width:60%;float:left;"  onclick="insertRoad(this)")
+							if route["destination"] == "---"
+								h3(class="roadh3") Waiting for your exploration
+							else
+								h3(class="roadh3") #{route["destination"]}
+							p(class="roadp") Origin: #{route["origin"]} 
+							p(class="roadp") Destination: #{route["destination"]}
+							p(class="roadp") Total Trial: #{route["totalTrial"]}
+						button(class="_delete" onclick="delete_route(this)") X
+						
 	
 	script.
 		var slideIndex = 0;
@@ -106,10 +110,21 @@ block content
 			dots[slideIndex-1].className += " active";
 		}
 		function insertRoad(ele){
-			const ori = ele.childNodes[2].innerHTML.slice(8).trim();
-			const des = ele.childNodes[3].innerHTML.slice(13).trim();
+			const ori = ele.childNodes[1].innerHTML.slice(8).trim();
+			const des = ele.childNodes[2].innerHTML.slice(13).trim();
 			if(ori != "---"){
 				document.getElementById("origin").value = ori;
 				document.getElementById("destination").value = des;
+			}
+			document.getElementById("_go").click();
+		}
+
+		function delete_route(ele){
+			const ori = ele.parentElement.childNodes[1].childNodes[1].innerHTML.slice(8).trim();
+			const des = ele.parentElement.childNodes[1].childNodes[2].innerHTML.slice(13).trim();
+			if(ori !="---"){
+				document.getElementById("origin").value = ori;
+				document.getElementById("destination").value = des;
+				document.getElementById("_deletee").click();
 			}
 		}
