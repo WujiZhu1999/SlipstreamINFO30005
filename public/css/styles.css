@@ -272,10 +272,11 @@ div.login form input[type="submit"]:hover {
 
 .main {
     display: flex;
-    flex-direction: row;
+    /*flex-direction: row;*/
+    flex-direction: column;
     width: 100%;
     box-sizing: border-box;
-    padding: 150px 20px 20px;
+    padding: 10px 20px 20px;
     text-align: center;
 }
 .left {
@@ -289,13 +290,15 @@ div.login form input[type="submit"]:hover {
 }
 .left,.right {
     border-radius:  16px;
-    border: 1px solid #000;
+   /* border: 1px solid #000;*/
 }
 .desImg {
     flex:2;
-    border: 1px solid #000;
+    /*border: 1px solid #000;*/
+    box-shadow:0 8px 20px 0 rgba(0,0,0,.2);
     margin:0 15px;
     border-radius: 16px;
+     background-color:#fff;
 }
 .desLeft,.desRight {
     display: flex;
@@ -304,15 +307,22 @@ div.login form input[type="submit"]:hover {
 }
 .desLeft>div,.desRight>div,.rankItem {
     padding: 20px 10px;
-    border: 1px solid #000;
+    /*border: 1px solid #000;*/
+   /* width: 100%;*/
     border-radius: 4px;
     margin-bottom: 10px;
+    box-shadow:0 8px 20px 0 rgba(0,0,0,.2);
+    background-color:#fff;
 }
+
 .desLeft>div,.desRight>div{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.desRight>div{
+    width: 100%;
 }
 .desRight {
     align-items: flex-start;
@@ -332,9 +342,12 @@ div.login form input[type="submit"]:hover {
 }
 .rankItem>div {
     display: flex;
-    flex-direction: column;
+   /* flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center;*/
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 .rankNumber {
     flex:1
@@ -466,3 +479,15 @@ ul.stat{
     text-align: left;
 }
 
+.container{
+    width: 50% !important;
+    min-width: 500px;
+   
+}
+.top>h2{
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    width: 100%;
+    margin: 0 auto;
+}
