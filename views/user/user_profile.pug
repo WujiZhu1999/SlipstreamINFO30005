@@ -1,23 +1,12 @@
 extends ../navbar
 
 block content
-    <!-- This is right side of the profile, consist of:-->
-    <!-- The list of that user's posts which each link linked to the post to comment and edit-->
-    div(class = "col")
-        div(class = "rightS")
-            //Lists all the article posted by the user
-            h1 Articles Posted
-            hr
-            ul.arts
-                for article in articles
-                    a(href = '/Forum/' + article.articleNum).articleButton
-                        div.title #{article.title}
+    div.flexSettings
                         
-    <!-- This is the left side of the profile, consist of:-->
-    <!-- The Users info:name, username and their  biking statistic-->
-    <!-- The form to editing the username and password-->
-    div(class = "col")                    
-        div(class = "leftS")
+        <!-- This is the left side of the profile, consist of:-->
+        <!-- The Users info:name, username and their  biking statistic-->
+        <!-- The form to editing the username and password-->
+        div(class = "settings")
             // Lists all the user information
             h1 #{user.name} 
             hr
@@ -49,6 +38,18 @@ block content
                 form(action= ("/users/" + userName + "/delete") method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');")
                     input(type="submit" value="Delete Account" style="margin-left:0").button
                     input(type="text" name="userName", value = userName, style = "visibility:hidden")
+
+                        
+        <!-- This is right side of the profile, consist of:-->
+        <!-- The list of that user's posts which each link linked to the post to comment and edit-->
+        div(class = "settings")
+            //Lists all the article posted by the user
+            h1 Articles Posted
+            hr
+            ul.arts
+                for article in articles
+                    a(href = '/Forum/' + article.articleNum).articleButton
+                        div.title #{article.title}
     
         
 
