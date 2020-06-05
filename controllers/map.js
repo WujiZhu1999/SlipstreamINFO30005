@@ -68,7 +68,7 @@ const localRoute = async (req, res) =>{
             }
         }
         */
-        return res.render("map/maphome2",{userName:req.session.user,routes:_route});
+        return res.render("map/maphome2",{userName:req.session.user,routes:list_route});
     }
 }
 
