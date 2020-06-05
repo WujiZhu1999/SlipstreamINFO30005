@@ -114,7 +114,7 @@ body{
 #go > form {
 	text-align: center;
 }
-#_go,._delete {
+#_go,.delete {
 	text-align: center;
 	font-size: 30px;
 	border: solid;
@@ -126,7 +126,7 @@ body{
 	margin-top:15px;
 	transition: border-radius 0.75s, background-color 0.75s, color 0.75s;
 }
-#_go:hover, ._delete:hover{
+#_go:hover, .delete:hover{
 	border-radius: 25px;
 	background-color: var(--main-colour);
 	color:white;
@@ -405,7 +405,7 @@ input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
-._delete{
+.delete{
 	float: left;
 	width: 10%;
 	padding: 0;
