@@ -247,6 +247,7 @@ div.login form input[type="submit"]:hover {
     border: none;
     color: black;
     text-decoration: none;
+    -webkit-appearance: none;
 }
 
 .button:hover {
