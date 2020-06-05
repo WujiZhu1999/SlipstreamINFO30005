@@ -30,6 +30,8 @@ block content
 	
 	div(id="floating-panel")
 		div(id="magic")
+		
+			input(type="submit" id="sub" value = "Search Route").button
 			form(action="/Map/start" method="post")
 				
 				if(origin && origin!="---")
@@ -41,13 +43,13 @@ block content
 				else
 					input(type="text" id="_end" name="_end" required placeholder = "Destination")
 				br
-				input(type="submit" value="Start Route" id = "bst")
 				br
-				input(type="submit" value="Save Route" formaction = "/Map/saveRoute" id = "bsa")
-				input(type="submit" value="deleteRoute" id= "deleteSaved" formaction = "/Map/deleteRoute" style="display:none")
 
-			input(type="submit" id="sub" value = "Search Route")
-			button(type="submit" id="savedd" onclick="window.location.href='#savedRoute'") Saved
+				input(type="submit" value="Start Route" id = "bst").button
+				br
+				input(type="submit" value="Save Route" formaction = "/Map/saveRoute" id = "bsa").button
+				input(type="submit" value="deleteRoute" id= "deleteSaved" formaction = "/Map/deleteRoute" style="display:none")
+			
 	div(id="mapcontainer")
 		div(id="map")
 	div(id="routeinfo")
