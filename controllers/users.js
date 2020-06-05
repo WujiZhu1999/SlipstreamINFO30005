@@ -15,6 +15,7 @@ const createUser = async (req, res) => {
     //if the form is incomplete, send an error
     try{
         if (req.body.name && req.body.userName && req.body.password){
+            //if user name being taken by somebody else
             const _had = await User.findOne({"userName":req.body.userName});
             if(_had){
                 return res.render("error", {
@@ -64,8 +65,11 @@ const deleteUser = async (req, res) => {
             redirect: "/users/" + req.params.userName
         });
     }
+
     try{
+        //if the username not provided
         if(!req.params.userName){
+            
             return res.render("error", {
                  error: "Username not specified",
                  redirect: "/users/" + req.params.userName
@@ -90,22 +94,24 @@ const deleteUser = async (req, res) => {
 
 //fetch a users information, but not all the information (ie not password)
 const getUser = async (req, res) => {
-    try{ 
+    try{
+        //find user on mongoDB
         const user = await User.findOne({"userName":req.params.userName});
         
         if(user){
 
             var articles = []
+            //gett all articles from mongoDB
+            const get_articles = await Article.find();
 
-            const _articles = await Article.find();
-
-            for(i in _articles){
-                if(user.userName == _articles[i].author){
-                    articles.push(_articles[i])
+            //sort out the article from log in user
+            for(i in get_articles){
+                if(user.userName == get_articles[i].author){
+                    articles.push(get_articles[i])
                 }
                 
             }
-
+            //render info
             return await res.render("user/user_profile.pug", {
                 user: user,
                 articles: articles,
@@ -114,7 +120,7 @@ const getUser = async (req, res) => {
             });
         
     
-        }
+        }//not found the user
         else{
             return res.render("error", {
                 error: "User does not exist",
@@ -131,27 +137,33 @@ const getUser = async (req, res) => {
 
 //edit a user, if they change their information
 const changeUser = async (req, res) => {
-    try{
+    try{//if there no username provided
         if(!req.body.userName){res.status(400);return res.render("error", {
             error: "Username was not given",
             redirect: "/" 
         });;}
+        //if username is not the curren log in user (ex:try to change someone else info)
         if(req.body.userName!=req.session.user){res.status(403); return res.render("error", {
             error: "You are not authorsied to change this user",
             redirect: "/users" + req.body.userName 
         });;}
+        //find user on mongoDB
         const user = await User.findOne({"userName":req.body.userName});
+        //if not found on on mongoDB ->error
         if(!user){
             return res.render("error", {
                 error: "User " + req.body.userName +" does not exist ",
                 redirect: "/"
            });
         }
-
-        var _new = {};
-        if(req.body.name){_new["name"] = req.body.name};
-        if(req.body.password){_new["password"] = req.body.password};
-        const update = await User.findOneAndUpdate({"userName":req.body.userName},_new);
+        //if found user
+        var info_new = {};
+        //if put in new name ->change name
+        if(req.body.name){info_new["name"] = req.body.name};
+        //if put in new password ->change password
+        if(req.body.password){info_new["password"] = req.body.password};
+        //update all the info on mongoDB
+        const update = await User.findOneAndUpdate({"userName":req.body.userName},info_new);
         return res.redirect("/users/" + req.body.userName); 
     }catch(err){
         return res.render("error", {

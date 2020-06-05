@@ -5,7 +5,7 @@
     --background-colour: #444444;
     --white: #F1F1F1;
 }
-img.logo{
+nav img.logo{
     width: 64px;
 
     height: 65px;
@@ -27,6 +27,10 @@ nav {
     box-shadow: 0 10px 20px 0  rgba(0,0,0,0.3);
 }
 
+nav .separator {
+    margin: 30px;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -45,8 +49,8 @@ nav li a {
     text-align: center;
     width: 60px;
     display: block;
-    padding-top: 18px;
-    padding-bottom: 28px;
+    padding-top: 23px;
+    padding-bottom: 23px;
     min-width: 90px;
     background-color: var(--main-colour);
     color: white;
@@ -63,17 +67,18 @@ nav li a:hover {
     color: black;
     background-color: var(--highlite-colour);
 }
+
 nav li.dropDown {
     display: inline-block;
 }
 
 nav .dropDownContent {
-    margin-right: 20px;
+    margin-right: 0;
     display: none;
     position: absolute;
-    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
     z-index: 1;
+    right: 0;
 }
 
 nav .dropDownContent a {
@@ -108,6 +113,9 @@ nav .dropDownContent input[type="submit"]:hover {
 img {
     vertical-align: middle;
 }
+
+
+
 div.loginBackground {
     display: block;
     position: fixed;
@@ -129,7 +137,7 @@ body {
     display: block;
     height: 100%;
     margin: 0 auto;
-    margin-top: 80px;
+    margin-top: 100px;
 }
 
 div.table {
@@ -379,43 +387,32 @@ padding-left: 10px;
 
 /* Tip页 */
 
-.tipList {
+.flextable {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
 }
-.tipList .tipContainer {
+
+.tipContainer {
     text-align: top;
-    
     box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
     align-items: center;
     text-decoration: none;
+
     padding:15px;
-    height: 150px;
+    margin: 20px;
+
+    height: 170px;
+    width: 120px;
     background-color: #fff;
 
     
 }
 
-.tipList .tipContainer:hover {
+.tipContainer:hover {
     transform: scale(1.1);
     
     transition: all 1s;
-}
-
-.tipList li:nth-child(3n){
-    margin-right: 0;
-}
-.tipList .title {
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 8px;
-}
-.tipList .tipsInfo {
-    font-size: 16px;
-    text-align: center;
 }
 
 hr {
@@ -490,4 +487,72 @@ ul.stat{
     font-weight: 600;
     width: 100%;
     margin: 0 auto;
+}
+
+.flexSettings {
+    display: flex;
+    
+    justify-content: center;
+}
+
+
+@media screen and (max-width: 600px) {
+    nav ul {
+        background-color: var(--main-colour);
+    }
+
+    nav img.logo {
+        visibility: hidden;
+        width: 0px;
+    }
+
+    nav li a {
+        min-width: 60px;
+    }
+
+    nav .separator {
+        margin: 0;
+    }
+
+    body {
+        min-width: 0px;
+        width: 95%;
+        font-size: 15px;
+    }
+
+    nav li a:hover {
+        color: white;
+        background-color: var(--main-colour);
+    }
+
+    nav .dropDownContent input[type="submit"]:hover {
+        color: white;
+        background-color: var(--main-colour);
+    }
+
+    form.createArticle input[name="title"]{
+        width: 100%;
+    }
+
+    form.createArticle textarea {
+        width: 100%;
+    }
+
+    .tipContainer {
+        margin: 10px;
+    }
+
+    nav .dropDownContent input[type="submit"] {
+        font-size: 15px;
+    }
+
+    .button {
+        font-size: 15px;
+    }
+
+    .flexSettings {   
+        margin-bottom: 10px;
+        flex-direction: column;
+    }
+
 }

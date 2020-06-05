@@ -4,13 +4,9 @@ block content
     //displays a list of all the tips in the system
 
     //lists out all the tips in the system
-    .container
-        h2 List of Tips
-        div.table
-            ul.tipList(style="background-color: var(--white); padding-right: 0;")
-                each tip in current_tips    
-                    li 
-                        //list item 
-                        div.tipContainer
-                            h2.title #{tip.title}
-                            div.tipsInfo #{tip.body}
+    h2 List of Tips
+    div.flextable
+        each tip in current_tips    
+            div.tipContainer
+                h2.title #{tip.title}
+                div.tipsInfo #{tip.body}
