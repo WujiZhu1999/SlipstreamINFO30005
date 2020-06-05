@@ -15,14 +15,14 @@ block styles
 	script:
 		first 2 are for route display, then the 2 are for street view display
 block content
-	div(id="mapcontainer")
+	div(id="mapcontainer").rideMap
 		div(id="map")
 		div(id="button_set")
-			button(id="HALT" onclick="document.getElementById('hr').click()") HALT
+			button(id="abort" onclick="document.getElementById('hr').click()").button Abort
 			br
-			button(id="HALT" onclick="document.getElementById('er').click()") FINISH
+			button(id="finish" onclick="document.getElementById('er').click()").button Finish
 			br
-			button(id="street_view_trigger" onclick="window.location.href = '#streetView'") View Destination
+			button(id="street_view_trigger" onclick="window.location.href = '#streetView'").button View Destination
 	
 	div(id = "streetView")
 		img(id="start_img" src = "../view.jpg" style="border:solid" onclick="window.location.href = '#mapcontainer' ")

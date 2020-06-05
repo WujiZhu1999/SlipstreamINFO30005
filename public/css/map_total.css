@@ -186,16 +186,15 @@ body{
 	z-index: 5;
 	background-color: #fff;
 	padding: 5px;
-	border: 1px solid #999;
 	text-align: center;
 	font-family: 'Roboto','sans-serif';
 	line-height: 30px;
 	padding-left: 10px;
-	border:solid;
 	width: 16%;
 
 	min-width: 230px;
-	height: 380px;
+	height: 320px;
+	box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
 }
 
 #start, #end{
@@ -203,19 +202,19 @@ body{
 }
 #routeinfo {
 	position: absolute;
-	top: 560px;
+	top: 520px;
 	left: 5%;
 	z-index: 5;
 	background-color: #fff;
 	padding: 5px;
-	border: 1px solid #999;
 	text-align: center;
 	font-family: 'Roboto','sans-serif';
 	line-height: 30px;
 	padding-left: 10px;
-	border:solid;
 	width: 16%;
 	min-width: 230px;
+	
+	box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
 }
 #savedRoute{
 	width:100%;
@@ -286,33 +285,17 @@ input{
 	position: absolute;
 	top:156px;
 	left:64px;
-	border:solid;
 	width: 256px;
 	height: 340px;
-	background-color: var(--background-colour);
+	background-color: white;
 	opacity: 0.95;
 	align-items: center;
 	text-align: center;
-}
-#button_set  button{
-	width:68%;
-	height: 64px;
-	margin-top:30px;
-	background-color: white;
-	font-weight: bold;
-	font-size:20px;
-	border:solid;
-	color:var(--background-colour);
-	border-color: var(--main-colour);
-	transition: background-color 0.75s, border-radius 0.75s, color 0.75s;
-
+	
+	box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
 }
 
-#button_set  button:hover{
-	background-color: var(--main-colour);
-	border-radius: 25px;
-	color:white;
-}
+
 #streetView{
 	margin-left: 10%;
 	margin-right: 10%;
@@ -412,23 +395,8 @@ button{
 
 }
 
-#sub, #bst, #bsa, #savedd{
-	width:60%;
-	height: 50px;
-	font-weight: bold;
-	font-size:20px;
-	margin-top: 20px;
-	border:solid;
-	color:var(--background-colour);
-	border-color: var(--main-colour);
-	transition: background-color 0.75s, border-radius 0.75s, color 0.75s;
-}
 
-#sub:hover, #bst:hover, #bsa:hover, #savedd:hover{
-	background-color: var(--main-colour);
-	border-radius: 25px;
-	color:white;
-}
+
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -442,4 +410,86 @@ input:-webkit-autofill:active  {
 	width: 10%;
 	padding: 0;
 	margin-top: 7%;
+}
+
+@media screen and (max-width: 600px) {
+	#mapcontainer{
+		height: 66vh;
+		bottom: 0;
+	}
+
+	#floating-panel, #button_set {
+		position: static;
+		width: 100vw;
+		height: 23vh;
+		padding: 0;
+		padding-bottom: 10px;
+	}
+
+	#magic form input {
+		width: 40%;
+		margin: 4px;
+	}
+
+	#routeinfo {
+		visibility: hidden;
+	}
+
+	#bsa {
+		position: absolute;
+		top: 25vh;
+		left: 6vw;
+	}
+
+	#bst {
+		position: absolute;
+		top: 18vh;
+		right: 6vw;
+	}
+
+	#sub {
+		
+		width: 40%;
+		margin: 4px;
+		position: absolute;
+		top: 18vh;
+		left: 6vw;
+	}
+
+	#streetView {
+		position: absolute;
+		display: none;
+		visibility: hidden;
+		width: 0;
+		height: 0;
+	}
+
+	#street_view_trigger {
+		display: none;
+	}
+
+	#button_set{
+		height: 15vh;
+		bottom: 0px;
+	}
+
+	#abort {
+		position: absolute;
+		left: 16vw;
+		top: 87vh;
+	}
+
+	#finish {
+		position: absolute;
+		right: 16vw;
+		top: 87vh;
+	}
+
+
+	.rideMap{
+		height: 74vh !important;
+	}
+
+
+
 }

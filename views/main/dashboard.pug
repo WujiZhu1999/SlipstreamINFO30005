@@ -2,8 +2,9 @@ extends ../navbar
 
 block content
     
-        div(class="top" ) 
-            h2 Hi Biker！Welcome to the Dashboard！
+        div(class="top" )
+            h2 Hi #{userName}! Welcome to the Dashboard！
+            br
         div(class="leida" style="width:99%;text-align:center")
             h2 Personal Record
             canvas(id="radarChart")
@@ -35,7 +36,6 @@ block content
                         div 
                             span Total Distance Cycled
                             span #{(user.data.totalDistance/1000).toFixed(3)}KM !
-
             div(class="right")
                 div(class="ranksWrap")
                     div(class="ranks")
@@ -45,9 +45,9 @@ block content
                                 div(class="rankItem")
                                     div(class="rankNumber") #{i + 1}.
                                     div(class="rankDes")
-                                        span #{leaderboard[i].name}
-                                        span #{(leaderboard[i].data.totalDistance/1000).toFixed(3)}KM Cycled
-                                        span #{(leaderboard[i].data.carbonSaved/1000).toFixed(3)}KG Carbon Saved
+                                        a(href= "/users/" + leaderboard[i].userName + "/" style="float:right;") #{leaderboard[i].name}
+                                        span #{(leaderboard[i].data.totalDistance/1000).toFixed(2)}KM Cycled
+                                        span #{(leaderboard[i].data.carbonSaved/1000).toFixed(2)}KG Carbon Saved
         div(class="infoHolder" id="infoHolder" style="display:none")
             p #{(user.data.energySaved).toFixed(3)}
             p #{(user.data.totalDistance/1000).toFixed(3)}
@@ -74,7 +74,7 @@ block content
             var myRadarChart = new Chart(ctxR, {
                 type: 'radar',
                 data: {
-                    labels: ["EnergySaved(MAX 500000KJ) "+(a*5000), "TotalDistance(MAX 400KM) "+(b*40/10).toFixed(3), "RouteAmount(MAX 200Trial) "+(c*10/5), "AverageDistance(MAX 10KM/Route) "+(d/10).toFixed(3), "Success Rate "+e +"%"],
+                    labels: ["EnergySaved "+(a*5000), "TotalDistance "+(b*40/10).toFixed(3), "RouteAmount "+(c*10/5), "AverageDistance "+(d/10).toFixed(3), "Success Rate "+e +"%"],
                     datasets: [{
                         label: "Your Personal Record",
                         data: [a,b,c,d,e],

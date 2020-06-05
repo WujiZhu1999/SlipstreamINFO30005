@@ -373,19 +373,6 @@ div.login form input[type="submit"]:hover {
 /* Optional: Makes the sample page fill the window. */
 
 
-#floating-panel {
-position: absolute;
-top: 10px;
-left: 25%;
-z-index: 5;
-background-color: #fff;
-padding: 5px;
-border: 1px solid #999;
-text-align: center;
-font-family: 'Roboto','sans-serif';
-line-height: 30px;
-padding-left: 10px;
-}
 
 /* Tip页 */
 
@@ -557,5 +544,11 @@ ul.stat{
         flex-direction: column;
     }
 
+<<<<<<< HEAD
 }
 
+=======
+
+
+}
+>>>>>>> 297e8d9ff92f68e9ee0504460155f08b7383eb86
