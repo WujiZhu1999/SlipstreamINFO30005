@@ -2,8 +2,9 @@ extends ../navbar
 
 block content
     
-        div(class="top" ) 
-            h2 Hi Biker！Welcome to the Dashboard！
+        div(class="top" )
+            h2 Hi #{userName}! Welcome to the Dashboard！
+            br
         div(class="leida" style="width:99%;text-align:center")
             h2 Personal Record
             canvas(id="radarChart")
@@ -35,7 +36,6 @@ block content
                         div 
                             span Total Distance Cycled
                             span #{(user.data.totalDistance/1000).toFixed(3)}KM !
-
             div(class="right")
                 div(class="ranksWrap")
                     div(class="ranks")
@@ -45,9 +45,9 @@ block content
                                 div(class="rankItem")
                                     div(class="rankNumber") #{i + 1}.
                                     div(class="rankDes")
-                                        span #{leaderboard[i].name}
-                                        span #{(leaderboard[i].data.totalDistance/1000).toFixed(3)}KM Cycled
-                                        span #{(leaderboard[i].data.carbonSaved/1000).toFixed(3)}KG Carbon Saved
+                                        a(href= "/users/" + leaderboard[i].userName + "/" style="float:right;") #{leaderboard[i].name}
+                                        span #{(leaderboard[i].data.totalDistance/1000).toFixed(2)}KM Cycled
+                                        span #{(leaderboard[i].data.carbonSaved/1000).toFixed(2)}KG Carbon Saved
         div(class="infoHolder" id="infoHolder" style="display:none")
             p #{(user.data.energySaved).toFixed(3)}
             p #{(user.data.totalDistance/1000).toFixed(3)}
@@ -74,7 +74,7 @@ block content
             var myRadarChart = new Chart(ctxR, {
                 type: 'radar',
                 data: {
-                    labels: ["EnergySaved(MAX 500000KJ) "+(a*5000), "TotalDistance(MAX 400KM) "+(b*40/10).toFixed(3), "RouteAmount(MAX 200Trial) "+(c*10/5), "AverageDistance(MAX 10KM/Route) "+(d/10).toFixed(3), "Success Rate "+e +"%"],
+                    labels: ["EnergySaved "+(a*5000), "TotalDistance "+(b*40/10).toFixed(3), "RouteAmount "+(c*10/5), "AverageDistance "+(d/10).toFixed(3), "Success Rate "+e +"%"],
                     datasets: [{
                         label: "Your Personal Record",
                         data: [a,b,c,d,e],
@@ -98,15 +98,15 @@ block content
 
             });
         script.
-            var _aao = document.getElementById("infoHolder").childNodes[5].innerHTML;
-            var _bbo = document.getElementById("infoHolder").childNodes[6].innerHTML;
-            var _cco = document.getElementById("infoHolder").childNodes[7].innerHTML;
-            var _ddo = document.getElementById("infoHolder").childNodes[8].innerHTML;
+            var aao = document.getElementById("infoHolder").childNodes[5].innerHTML;
+            var bbo = document.getElementById("infoHolder").childNodes[6].innerHTML;
+            var cco = document.getElementById("infoHolder").childNodes[7].innerHTML;
+            var ddo = document.getElementById("infoHolder").childNodes[8].innerHTML;
 
-            var _aax = document.getElementById("infoHolder").childNodes[9].innerHTML;
-            var _bbx = document.getElementById("infoHolder").childNodes[10].innerHTML;
-            var _ccx = document.getElementById("infoHolder").childNodes[11].innerHTML;
-            var _ddx = document.getElementById("infoHolder").childNodes[12].innerHTML;
+            var aax = document.getElementById("infoHolder").childNodes[9].innerHTML;
+            var bbx = document.getElementById("infoHolder").childNodes[10].innerHTML;
+            var ccx = document.getElementById("infoHolder").childNodes[11].innerHTML;
+            var ddx = document.getElementById("infoHolder").childNodes[12].innerHTML;
             
             var ctxL = document.getElementById("lineChart").getContext('2d');
             var myLineChart = new Chart(ctxL, {
@@ -115,14 +115,14 @@ block content
                     labels: ["3 week ago","2 week ago","1 week ago","within 1 week"],
                     datasets: [{
                         label: "Total Distance",
-                        data: [_aao,_bbo,_cco,_ddo],
+                        data: [aao,bbo,cco,ddo],
                         backgroundColor: ['rgba(69, 199, 112, .2)',],
                         borderColor: ['rgba(55, 119, 80, .7)',],
                         borderWidth: 2
                     },
                     {
                         label: "Average Distance per Route",
-                        data: [(_aao/_aax).toFixed(2),(_bbo/_bbx).toFixed(2),(_cco/_ccx).toFixed(2),(_ddo/_ddx).toFixed(2)],
+                        data: [(aao/aax).toFixed(2),(bbo/bbx).toFixed(2),(cco/ccx).toFixed(2),(ddo/ddx).toFixed(2)],
                         backgroundColor: ['rgba(68, 68, 68, .2)',],
                         borderColor: ['rgba(0，0，0, .7)',],
                         borderWidth: 2

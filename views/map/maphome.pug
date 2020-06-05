@@ -53,8 +53,8 @@ block content
 				input(type="text" id="destination" name="destination" placeholder="Destination")
 				br
 				br
-				input(type="submit" value="GO" id = "_go")
-				input(type="submit" formaction="/Map/deleteRoute" style="display:none;" id="_deletee")
+				input(type="submit" value="GO" id = "a_go")
+				input(type="submit" formaction="/Map/deleteRoute" style="display:none;" id="a_deletee")
 	div(id="saved")
 		img(id = "plan_img" src="../plan.jpg")
 		div(id="containroute")
@@ -71,7 +71,6 @@ block content
 							p(class="roadp") Destination: #{route["destination"]}
 							p(class="roadp") Total Trial: #{route["totalTrial"]}
 						button(class="_delete" onclick="delete_route(this)") X
-				
 						
 	
 	script.
@@ -117,7 +116,7 @@ block content
 				document.getElementById("origin").value = ori;
 				document.getElementById("destination").value = des;
 			}
-			document.getElementById("_go").click();
+			document.getElementById("a_go").click();
 		}
 
 		function delete_route(ele){
@@ -126,6 +125,6 @@ block content
 			if(ori !="---"){
 				document.getElementById("origin").value = ori;
 				document.getElementById("destination").value = des;
-				document.getElementById("_deletee").click();
+				document.getElementById("a_deletee").click();
 			}
 		}

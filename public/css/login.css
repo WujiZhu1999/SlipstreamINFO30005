@@ -103,7 +103,7 @@ input:focus, input:not(:placeholder-shown){
 	min-height: 480px;
 }
 
-._form{
+.form{
 	position: absolute;
 	top: 0;
 	height: 100%;

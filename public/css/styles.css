@@ -145,7 +145,7 @@ div.table {
 }
 
 div.table ul {
-    margin: 4px;
+    margin: 5px;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0px;
@@ -183,12 +183,13 @@ div.table div.comment_author{
 
 form.createArticle input[name="title"] {
     border: 1px solid grey;
-    width: 45%;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 form.createArticle textarea {
     border: 1px solid grey;
-    width: 45%;
+    width: 100%;
     height: 100px;
     box-sizing: border-box;
     resize: none;
@@ -247,6 +248,13 @@ div.login form input[type="submit"]:hover {
     border: none;
     color: black;
     text-decoration: none;
+    -webkit-appearance: none;
+    transition: transform 80ms ease-in;
+    border-radius: 3px;
+}
+
+.button:active{
+	transform: scale(0.93);
 }
 
 .button:hover {
@@ -371,19 +379,6 @@ div.login form input[type="submit"]:hover {
 /* Optional: Makes the sample page fill the window. */
 
 
-#floating-panel {
-position: absolute;
-top: 10px;
-left: 25%;
-z-index: 5;
-background-color: #fff;
-padding: 5px;
-border: 1px solid #999;
-text-align: center;
-font-family: 'Roboto','sans-serif';
-line-height: 30px;
-padding-left: 10px;
-}
 
 /* Tip页 */
 
@@ -554,5 +549,19 @@ ul.stat{
         margin-bottom: 10px;
         flex-direction: column;
     }
+
+<<<<<<< HEAD
+    .table ul li p{
+        margin-bottom: 20px;
+    }
+
+    .table ul li div{
+        margin-top: -25px !important;
+    }
+
+    .table ul li a{
+        margin-top: -45px !important;
+    }
+
 
 }
