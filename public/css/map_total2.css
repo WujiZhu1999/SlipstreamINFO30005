@@ -25,6 +25,7 @@ body{
 	height: 50%;
 	text-align: center;
 	background-color: var(--white);
+	overflow: hidden;
 }
 #saved_button{
 	background-color: var(--main-colour);
@@ -112,6 +113,8 @@ img{
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	height: auto;
+	z-index: 1;
 }
 #saved_list{
 	height:90%;
@@ -144,4 +147,10 @@ img{
 #logo{
 	position: relative;
 	width: 100%;
+}
+
+@media (max-width: 600px){
+	#aaabbb{
+		display: none;
+	}
 }
