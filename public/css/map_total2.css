@@ -15,7 +15,7 @@ body{
 }
 #box{
 	height: 100%;
-	width: 480px;
+	width: 30%;
 	margin:auto;
 	position: relative;
 }
@@ -31,17 +31,17 @@ body{
 }
 #ic1, #ic2{
 	transition-duration: 0.75s;
-	font-size: 128px;
-	margin-top: 25px;
+	font-size: 840%;
+	margin-top: 5%;
 }
 #icp1, #icp2{
 	transition-duration: 0.75s;
-	font-size: 48px;
+	font-size: 240%;
 }
 
 #go_button:hover > #ic1, #saved_button:hover > #ic2{
-	margin-top: 40px;
-	font-size: 156px;
+	margin-top: 8%;
+	font-size: 960%;
 }
 #go_button:hover > #icp1, #saved_button:hover > #icp2{
 	font-size: 0px;
