@@ -55,39 +55,39 @@ async function getLeaderboard(req, res) {
 
     try {
         friends = []
-        var _friends = await Friend.find({
+        var found_friends = await Friend.find({
             "sender": req.session.user,
             "status": "ACCEPTED"
         });
 
-        for (i of _friends){
+        for (i of found_friends){
             friends.push(i)
         }
 
-        _friends = await Friend.find({
+        found_friends = await Friend.find({
             "receiver": req.session.user,
             "status": "ACCEPTED"
         });
 
-        for (i of _friends){
+        for (i of found_friends){
             friends.push(i)
         }
 
 
-        var _list = [];
+        var friend_list = [];
         for(user of friends){
             if (user.sender == req.session.user){
-                _list.push(user.receiver);
+                friend_list.push(user.receiver);
             } else {
-                _list.push(user.sender);
+                friend_list.push(user.sender);
             }
         }
 
-        _list.push(req.session.user)
+        friend_list.push(req.session.user)
 
 
         details = []
-        for (user of _list){
+        for (user of friend_list){
             details.push(await User.findOne({"userName":user}));
         }
         details.sort((a,b) => (b["data"]["totalDistance"] - a["data"]["totalDistance"]));
