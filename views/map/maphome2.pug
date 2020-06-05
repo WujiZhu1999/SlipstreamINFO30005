@@ -1,10 +1,17 @@
 extends ../navbar
 block styles
 	link(rel='stylesheet', href='/css/map_total2.css')
+	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
 block content
 	div(id = "map" style="height:100vh;")
 	div(id = "pannel")
 		div(id="box")
+			div(id="go_button")
+				i(class="fa fa-bicycle" id="ic1")
+				p(id="icp1") Search Route
+			div(id="saved_button")
+				i(class="fa fa-cloud" id="ic2")
+				p(id="icp2") Saved Route
 	script.
 		function initMap() {
 		var map = new google.maps.Map(document.getElementById('map'), {

@@ -11,11 +11,36 @@ body{
 	top:20vh;
 	height: 500px;
 	width: 98%;
-	border: red solid;
 	margin-left: 1%;
 }
 #box{
-	border:solid blue;
 	height: 100%;
 	width: 480px;
+	margin:auto;
+	position: relative;
+}
+#go_button, #saved_button{
+	width: 100%;
+	height: 50%;
+	text-align: center;
+	background-color: var(--white);
+}
+#saved_button{
+	background-color: var(--main-colour);
+	color: var(--white);	
+}
+#ic1, #ic2{
+	font-size: 128px;
+	margin-top: 25px;
+}
+#icp1, #icp2{
+	font-size: 48px;
+}
+
+#go_button:hover > #ic1, #saved_button:hover > #ic2{
+	margin-top: 40px;
+	font-size: 156px;
+}
+#go_button:hover > #icp1, #saved_button:hover > #icp2{
+	font-size: 0px;
 }
