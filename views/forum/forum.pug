@@ -1,8 +1,13 @@
 extends ../navbar
 
 block content
+    div(class="top" ) 
+        h2 Bikers' stories 
     div.table
-        h2 List of Articles
+        div(class="leida" style="width:100%;text-align:center")
+            h2 List of Articles
+        //h2 List of Articles
+        br
         each article in current_articles
             ul
                 li
@@ -49,11 +54,14 @@ block content
     //Lets the user create an article
     //form to create new article should it be a button to new article page????
     form(action="/forum" method="POST" class="createArticle")
-            h2 Create a New Article!
-            div Title
+            //h2 Create a New Article!
+            div(class="leida" style="width:100%;text-align:center")
+                h2 Create your own article
+            br
+            //div Title
             input(type="text" name = "title" require placeholder = "Title")
             br
-            div Body
+            //div Body
             textarea(type="text" name = "body" placeholder = "Content")
             br
             input(type="submit" value="Post" style="margin:0").button

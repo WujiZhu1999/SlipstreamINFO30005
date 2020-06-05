@@ -2,11 +2,13 @@ extends ../navbar
 
 block content
     // a page used to enter the changes to a comment
-
+    div(class="leida" style="width:100%;text-align:center")
+        h2 Editing comment
     // gives an option to change an comment
     if ([article.comments[commentIndex]].commentAuthor == useName)
         form(action= ("/forum/" + articleNum + "/" + commentNumber + "/edit") method="POST").createArticle
-            div Edit comment
+            //div Edit comment
+            br
             textarea(name="commentBody" required)= article.comments[commentIndex].commentBody
             br
             input(type="submit" value="Edit Comment" style="margin-left:0").button
