@@ -35,13 +35,13 @@ block content
 			form(action="/Map/start" method="post")
 				
 				if(origin && origin!="---")
-					input(type="text" id="_origin" name="_origin" required value = origin placeholder = "Origin")
+					input(type="text" id="a_origin" name="a_origin" required value = origin placeholder = "Origin")
 				else
-					input(type="text" id="_origin" name="_origin" required placeholder = "Origin")
+					input(type="text" id="a_origin" name="a_origin" required placeholder = "Origin")
 				if(destination && destination!="---")
-					input(type="text" id="_end" name="_end" required value = destination)
+					input(type="text" id="a_end" name="a_end" required value = destination)
 				else
-					input(type="text" id="_end" name="_end" required placeholder = "Destination")
+					input(type="text" id="a_end" name="a_end" required placeholder = "Destination")
 				br
 				br
 
@@ -89,15 +89,15 @@ block content
 			document.getElementById('sub').addEventListener('click', function() {
 				calculateAndDisplayRoute(directionsService, directionsRenderer);
 			});
-			if(document.getElementById('_origin').value && document.getElementById('_origin').value !='---' &&document.getElementById('_end').value && document.getElementById('_end').value !='---'){
+			if(document.getElementById('a_origin').value && document.getElementById('a_origin').value !='---' &&document.getElementById('a_end').value && document.getElementById('a_end').value !='---'){
 				
 				calculateAndDisplayRoute(directionsService, directionsRenderer);
 			}
 		}
 		function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 		directionsService.route({
-			origin: {query: document.getElementById('_origin').value},
-			destination: {query: document.getElementById('_end').value},
+			origin: {query: document.getElementById('a_origin').value},
+			destination: {query: document.getElementById('a_end').value},
 			travelMode: 'BICYCLING'
 		},
 			function(response, status) {
@@ -116,8 +116,8 @@ block content
 	script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&callback=initMap").
 	script.
 		function loadDATA(ele){
-			document.getElementById("_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML.slice(5).trim();
-			document.getElementById("_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML.slice(3).trim();
+			document.getElementById("a_origin").value = document.getElementsByClassName(ele.className+"1")[0].innerHTML.slice(5).trim();
+			document.getElementById("a_end").value = document.getElementsByClassName(ele.className+"2")[0].innerHTML.slice(3).trim();
 			window.location.href = "#mapcontainer";
 		}
 

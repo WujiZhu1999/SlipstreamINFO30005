@@ -2,8 +2,6 @@ extends ../navbar
 
 block content
         //Displays an article and it's comments based on an article number, giving options to interact  with both comments and the article
-
-
         //shows a delete article button if the aritcle author views the article
         if article.author == userName
             a(href= "/forum/" + article.articleNum + "/edit" style="float:right;").button Edit Article
@@ -72,7 +70,8 @@ block content
                             a(href= '/forum/' + article.articleNum + "/" + comment.commentNumber + "/edit" style="display:inline-block; margin:0; margin-top: -15px").button Edit
                             form(action=("/forum/" + article.articleNum  + "/" + comment.commentNumber + "/delete") method="POST" style="display:inline-block; margin:0; margin-top: -15px"  onsubmit="return confirm('Are you sure you want to delete your comment?');")
                                 input(type="submit" value="Delete" style="margin-bottom:0").button
-                                
+        br                        
+        br
                         
             
          

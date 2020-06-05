@@ -4,6 +4,7 @@ const Friend = mongoose.model("friends");
 const Route = mongoose.model("route");
 const Tips = mongoose.model("tips");
 
+//render the home page- dashboard
 const getHomepage = async (req, res) => {
 
     try {
@@ -78,6 +79,7 @@ const getHomepage = async (req, res) => {
     }
 }
 
+//support function to dashboard - to get route
 async function getRoute(req, res) {
     try{
         const data = await Route.find({
@@ -93,6 +95,7 @@ async function getRoute(req, res) {
     }
 }
 
+//support function to get user data
 async function getStats(req, res) {
     try {
         const user = await User.findOne({
@@ -109,10 +112,11 @@ async function getStats(req, res) {
     }
 };
 
-
+//support function to create the leader board
 async function getLeaderboard(req, res) {
 
     try {
+        //found all the friends of user
         friends = []
         var found_friends = await Friend.find({
             "sender": req.session.user,
@@ -144,7 +148,7 @@ async function getLeaderboard(req, res) {
 
         friend_list.push(req.session.user)
 
-
+        //from the friends found, sort their achievement in biking
         details = []
         for (user of friend_list){
             details.push(await User.findOne({"userName":user}));
