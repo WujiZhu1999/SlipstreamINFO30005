@@ -15,15 +15,17 @@ body{
 }
 #box{
 	height: 100%;
-	width: 480px;
+	width: 30%;
 	margin:auto;
 	position: relative;
+	min-width: 320px;
 }
 #go_button, #saved_button{
 	width: 100%;
 	height: 50%;
 	text-align: center;
 	background-color: var(--white);
+	overflow: hidden;
 }
 #saved_button{
 	background-color: var(--main-colour);
@@ -31,17 +33,17 @@ body{
 }
 #ic1, #ic2{
 	transition-duration: 0.75s;
-	font-size: 128px;
-	margin-top: 25px;
+	font-size: 840%;
+	margin-top: 5%;
 }
 #icp1, #icp2{
 	transition-duration: 0.75s;
-	font-size: 48px;
+	font-size: 240%;
 }
 
 #go_button:hover > #ic1, #saved_button:hover > #ic2{
-	margin-top: 40px;
-	font-size: 156px;
+	margin-top: 8%;
+	font-size: 960%;
 }
 #go_button:hover > #icp1, #saved_button:hover > #icp2{
 	font-size: 0px;
@@ -111,6 +113,8 @@ img{
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	height: auto;
+	z-index: 1;
 }
 #saved_list{
 	height:90%;
@@ -143,4 +147,10 @@ img{
 #logo{
 	position: relative;
 	width: 100%;
+}
+
+@media (max-width: 600px){
+	#aaabbb{
+		display: none;
+	}
 }

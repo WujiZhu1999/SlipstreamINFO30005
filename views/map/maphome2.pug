@@ -16,14 +16,14 @@ block content
 				div(class="X")
 					i(onclick="back()" class="fa fa-times")
 				h2(style="margin-left:10%;font-size:30px;") Where To
-				form(action="/Map/route" method="POST" id="start_form")
+				form(action="/Map/route" method="POST" id="start_form" style="z-index:5")
 					input(type="text" id="origin" name="origin" placeholder="Origin")
 					input(type="text" id="destination" name="destination" placeholder="Destination")
 					br
 					br
 					input(type="submit" value="LET'S GO" id = "go_go")
 					input(type="submit" formaction="/Map/deleteRoute" style="display:none;" id="dd_deletee")
-				img(src = "../D (1).jpg")
+				img(src = "../D (1).jpg" id ="aaabbb")
 			div(id="saved_route")
 				div(class="X")
 					i(onclick="back()" class="fa fa-times")
