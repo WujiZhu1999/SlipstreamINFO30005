@@ -14,9 +14,9 @@ block content
             p Steak: #{user.data.streak}
             //p Statistic
             ul.stat
-                li Total distance rode: #{user.data.totalDistance}
-                li Total energy saved: #{user.data.energySaved}
-                li Total carbon saved: #{user.data.carbonSaved}
+                li Total distance rode: #{(user.data.totalDistance/1000).toFixed(2)}KM Cycled
+                li Total energy saved: #{(user.data.energySaved/1000).toFixed(2)}KJ Energy Saved
+                li Total carbon saved: #{(user.data.carbonSaved/1000).toFixed(2)}KG Carbon Saved
             br
             if (user.userName != userName)
                 form(action= ("/friends/") method="POST")
