@@ -47,8 +47,8 @@ block content
                                     div(class="rankNumber") #{i + 1}.
                                     div(class="rankDes")
                                         a(href= "/users/" + leaderboard[i].userName + "/" style="float:right;") #{leaderboard[i].name}
-                                        span #{(leaderboard[i].data.totalDistance/1000).toFixed(3)}KM Cycled
-                                        span #{(leaderboard[i].data.carbonSaved/1000).toFixed(3)}KG Carbon Saved
+                                        span #{(leaderboard[i].data.totalDistance/1000).toFixed(2)}KM Cycled
+                                        span #{(leaderboard[i].data.carbonSaved/1000).toFixed(2)}KG Carbon Saved
         div(class="infoHolder" id="infoHolder" style="display:none")
             p #{(user.data.energySaved).toFixed(3)}
             p #{(user.data.totalDistance/1000).toFixed(3)}
