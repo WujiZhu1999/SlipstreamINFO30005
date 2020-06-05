@@ -68,7 +68,7 @@ block content
 							p(class= r["origin"] + r["destination"]+"3") With #{(r["distance"] * 0.001).toFixed(3)} kms
 							p(class= r["origin"] + r["destination"]+"4") About #{(r["duration"] * (1/60)).toFixed(3)} mins
 							button(id = "O" class=r["origin"] + r["destination"] onclick="loadDATA(this)") O 
-							button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") X 
+							button(class=r["origin"] + r["destination"] onclick="deleteRoute(this)") X
 	script.
 		if(document.getElementById("shout")){
 			alert(document.getElementById("shout").innerHTML);

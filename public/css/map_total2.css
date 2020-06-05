@@ -30,10 +30,12 @@ body{
 	color: var(--white);	
 }
 #ic1, #ic2{
+	transition-duration: 0.75s;
 	font-size: 128px;
 	margin-top: 25px;
 }
 #icp1, #icp2{
+	transition-duration: 0.75s;
 	font-size: 48px;
 }
 
@@ -43,4 +45,102 @@ body{
 }
 #go_button:hover > #icp1, #saved_button:hover > #icp2{
 	font-size: 0px;
+	color: var(--white);
+}
+#saved_button:hover > #icp2{
+	color: var(--main-colour);
+}
+#input_form,#saved_route{
+	background-color: var(--white);
+	height:100%;
+	width: 100%;
+	display: none;
+}
+.X{
+	text-align: right;
+	padding-right: 6px;
+	font-size:40px;
+}
+input{
+	background-color: var(--white);
+	border: none;
+	margin-left:10%;
+	width: 80%;
+	border-bottom: var(--background-colour) solid 3px;
+	outline: none;
+	font-size: 15px;
+	height: 40px;
+	margin-top: 10px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+}
+
+input:focus, input:not(:placeholder-shown){
+	border-bottom: var(--secondary-colour) solid 3px;
+}
+#go_go{
+	border:none;
+}
+
+#go_go{
+	border-radius: 25px;
+	border: 1px solid var(--main-colour);
+	background-color: var(--main-colour);
+	color: var(--white);
+	font-size: 13px;
+	font-weight: bold;
+	padding: 13px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+#go_go:active{
+	transform: scale(0.93);
+}
+
+#go_go:focus{
+	outline: none;
+}
+img{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+#saved_list{
+	height:90%;
+	overflow:scroll;
+	overflow-x: hidden;
+	text-align: center;
+}
+.delete_button{
+	background-color: var(--white);
+	color:var(--background-colour);
+	font-size: 24px;
+	padding-left:3px;
+	padding-right:3px;
+	border: none;
+}
+.roadli:hover, .delete_button:hover{
+	background-color: white;
+}
+.roadli{
+	width: 80%;
+	float: left;
+	height:80px;
+}
+.delete_button_container{
+	height: 80px;
+	width: 19%;
+	float:left;
+	padding-top:25px;
+}
+#logo{
+	position: relative;
+	width: 100%;
 }

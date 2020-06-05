@@ -6,12 +6,66 @@ block content
 	div(id = "map" style="height:100vh;")
 	div(id = "pannel")
 		div(id="box")
-			div(id="go_button")
+			div(id="go_button" onclick="show_form()")
 				i(class="fa fa-bicycle" id="ic1")
 				p(id="icp1") Search Route
-			div(id="saved_button")
+			div(id="saved_button" onclick="show_saved()")
 				i(class="fa fa-cloud" id="ic2")
 				p(id="icp2") Saved Route
+			div(id="input_form")
+				div(class="X")
+					i(onclick="back()" class="fa fa-times")
+				h2(style="margin-left:10%;font-size:30px;") Where To
+				form(action="/Map/route" method="POST" id="start_form")
+					input(type="text" id="origin" name="origin" placeholder="Origin")
+					input(type="text" id="destination" name="destination" placeholder="Destination")
+					br
+					br
+					input(type="submit" value="LET'S GO" id = "go_go")
+					input(type="submit" formaction="/Map/deleteRoute" style="display:none;" id="dd_deletee")
+				img(src = "../D (1).jpg")
+			div(id="saved_route")
+				div(class="X")
+					i(onclick="back()" class="fa fa-times")
+				div(id="saved_list")
+					ul
+						each route in routes
+							li(style="list-style-type: none;")
+								div(class="roadli" onclick="insert_and_go(this)" )
+									if route["destination"] == "---"
+										h3 Waiting for your exploration
+									else
+										h3 #{route["destination"]}
+									p Origin: #{route["origin"]} 
+									p Destination: #{route["destination"]}
+									p Total Trial: #{route["totalTrial"]}
+								div(class="delete_button_container")
+									button(class="delete_button" onclick="delete_route(this)")
+										i(class="fa fa-times")
+					
+					img(id = "logo" src="../logo.jpg")
+	script.
+		function insert_and_go(ele){
+			const ori = ele.childNodes[1].innerHTML.slice(8).trim();
+			const des = ele.childNodes[2].innerHTML.slice(13).trim();
+			if(ori != "---"){
+				document.getElementById("origin").value = ori;
+				document.getElementById("destination").value = des;
+			}
+			document.getElementById("go_go").click();
+		}
+		function delete_route(ele){
+			const ori = ele.parentElement.parentElement.childNodes[0].childNodes[1].innerHTML.slice(8).trim();
+			const des = ele.parentElement.parentElement.childNodes[0].childNodes[2].innerHTML.slice(13).trim();
+			if(ori != "---"){
+				
+				document.getElementById("origin").value = ori;
+				document.getElementById("destination").value = des;
+				
+				document.getElementById("dd_deletee").click();
+			
+			}
+		}
 	script.
 		function initMap() {
 		var map = new google.maps.Map(document.getElementById('map'), {
@@ -198,3 +252,20 @@ block content
 			});
 		}
 	script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&callback=initMap").
+	script.
+		function show_form(){
+			document.getElementById("go_button").style.display="none";
+			document.getElementById("saved_button").style.display="none";
+			document.getElementById("input_form").style.display="block";
+		}
+		function show_saved(){
+			document.getElementById("go_button").style.display="none";
+			document.getElementById("saved_button").style.display="none";
+			document.getElementById("saved_route").style.display="block";
+		}
+		function back(){
+			document.getElementById("go_button").style.display="block";
+			document.getElementById("saved_button").style.display="block";
+			document.getElementById("input_form").style.display="none";
+			document.getElementById("saved_route").style.display="none";
+		}

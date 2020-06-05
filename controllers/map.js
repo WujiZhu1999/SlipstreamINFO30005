@@ -46,7 +46,7 @@ const localRoute = async (req, res) =>{
             }
         }
 
-        while(i<6){
+        while(i<1){
             list_route.push({
                 origin:"---",
                 destination:"---",
@@ -126,7 +126,13 @@ const deleteRoute = async (req, res) =>{
             }
             var out = {};
             out["routes"] = list_route;
-            
+            while(out["routes"].length < 1){
+                out["routes"].push({
+                    origin:"---",
+                    destination:"---",
+                    totalTrial:0
+                });
+            }
             out["userName"] = req.session.user;
             return res.render("map/maphome2",out);
 
@@ -175,6 +181,7 @@ const saveRoute = async (req, res) =>{
             route_out["status"] = route["status"];
             route_out["completed"] = route["completed"];
             route_out["totalTrial"] = route["totalTrial"];
+
             if(route_out["status"][route_out["totalTrial"]-1] == "Live"){
                 route_out["status"][route_out["totalTrial"]-1] = "FAILED";
                 var d = new Date();
@@ -182,7 +189,7 @@ const saveRoute = async (req, res) =>{
                 route_out["completed"][route_out["totalTrial"]] = "NOTYET";
                 route_out["status"][route_out["totalTrial"]] = "WAIT";
                 route_out["totalTrial"] = route_out["totalTrial"]+1;
-            }else if(_out["status"][route_out["totalTrial"]-1] != "WAIT"){
+            }else if(route_out["status"][route_out["totalTrial"]-1] != "WAIT"){
                 route_out["completed"][route_out["totalTrial"]] = "NOTYET";
                 route_out["status"][route_out["totalTrial"]] = "WAIT";
                 route_out["totalTrial"] = route_out["totalTrial"]+1;
@@ -191,7 +198,7 @@ const saveRoute = async (req, res) =>{
             "user":req.session.user,
             "origin": req.body._origin,
             "destination": req.body._end},route_out);
-            const routes = await Route.find({"user":req.session.user})
+            const routes = await Route.find({"user":req.session.user});
             var list_route  = [];
             for(routee of routes){
                 if(routee["status"][routee["totalTrial"]-1] =="WAIT"){
@@ -213,7 +220,7 @@ const saveRoute = async (req, res) =>{
                 }
             }
             var out = {};
-            out["route"] = found_route;
+            out["route"] = list_route;
             
             out["userName"] = req.session.user;
             return res.render("map/map",out);
