@@ -74,7 +74,7 @@ const localRoute = async (req, res) =>{
         }
         */
 
-        return res.render("map/maphome",{userName:req.session.user,routes:_route});
+        return res.render("map/maphome2",{userName:req.session.user,routes:_route});
     }
 }
 
@@ -133,7 +133,7 @@ const deleteRoute = async (req, res) =>{
             out["routes"] = _route;
             
             out["userName"] = req.session.user;
-            return res.render("map/maphome",out);
+            return res.render("map/maphome2",out);
 
         }
     }catch(err){
