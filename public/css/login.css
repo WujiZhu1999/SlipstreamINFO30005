@@ -235,8 +235,8 @@ input:focus, input:not(:placeholder-shown){
 	
 	.op{
 		left: 0;
-		height: 50%;
-		width: 0;
+		height: auto;
+		width: auto;
 		transform: translateY(0);
 	}
 	
@@ -250,7 +250,8 @@ input:focus, input:not(:placeholder-shown){
 	}
 	
 	.or{
-		right: 0;
+		top: 50%;
+		height: 50%;
 		transform: translateY(0);
 	}
 	
@@ -286,18 +287,36 @@ input:focus, input:not(:placeholder-shown){
 		z-index: 1;
 	}
 
+	.sign_up form {
+		height: 80%;
+	}
+
 	
 	button{
-		position:absolute;
-		border-radius: 25px;
-		border: 1px solid var(--main-colour);
-		background-color: var(--main-colour);
-		color: var(--white);
-		font-size: 13px;
-		font-weight: bold;
-		padding: 13px 45px;
-		letter-spacing: 1px;
-		text-transform: uppercase;
-		transition: transform 80ms ease-in;
+		top: 80%;
 	}
+
+	.ol{
+		top: 10%;
+	}
+	.ol button {
+		top: 100%;
+	}
+
+	.or {
+		top: 45%
+	}
+
+	.or button {
+		top: 70%;
+	}
+
+	.container {
+		width: 100% !important;
+		height: 100% !important;
+		min-width: 0;
+		border-radius: 0;
+	}
+
+	
 }
