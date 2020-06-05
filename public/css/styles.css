@@ -248,6 +248,12 @@ div.login form input[type="submit"]:hover {
     color: black;
     text-decoration: none;
     -webkit-appearance: none;
+    transition: transform 80ms ease-in;
+    border-radius: 3px;
+}
+
+.button:active{
+	transform: scale(0.93);
 }
 
 .button:hover {
@@ -542,6 +548,20 @@ ul.stat{
         margin-bottom: 10px;
         flex-direction: column;
     }
+
+    .table ul li p{
+        margin-bottom: 20px;
+    }
+
+    .table ul li div{
+        margin-top: -25px !important;
+    }
+
+    .table ul li a{
+        margin-top: -45px !important;
+    }
+
+
 
 
 
