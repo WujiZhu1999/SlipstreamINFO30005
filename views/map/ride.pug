@@ -73,11 +73,11 @@ block content
 			}
 	script.
 		function initialize(){
-			var _lat = parseFloat(document.getElementById("lat").innerHTML);
-			var _lng = parseFloat(document.getElementById("lng").innerHTML);
+			var a_lat = parseFloat(document.getElementById("lat").innerHTML);
+			var a_lng = parseFloat(document.getElementById("lng").innerHTML);
 			var dest = {
-				lat:_lat,
-				lng:_lng
+				lat:a_lat,
+				lng:a_lng
 			};
 			var map = new google.maps.Map(document.getElementById("viewmap"),{
 				center: dest,

@@ -3,14 +3,14 @@ block styles
 	link(rel='stylesheet',href='/css/login.css')
 block content
 	div(class="container" id ="container")
-		div(class="_form sign_up")
+		div(class="form sign_up")
 			form(action="/login/register" method="POST" id = "sign_up_form")
 				h1 Create Account
 				input(type="text" placeholder="UserName" name = "userName" required)
 				input(type="text" placeholder="NickName" name = "name" required)
 				input(type="password" placeholder="Password" name = "password" required)
 				button(onclick="document.getElementById('sign_up_form').submit()") Sign up
-		div(class="_form sign_in")
+		div(class="form sign_in")
 			form(action="/login" method="POST" id="sign_in_form")
 				h1 Sign in
 				input(type="text" placeholder="UserName" name="userName" required)
