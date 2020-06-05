@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Friend = mongoose.model("friends");
-
+const Route = mongoose.model("route");
+const Tips = mongoose.model("tips");
 
 const getHomepage = async (req, res) => {
 
@@ -10,14 +11,57 @@ const getHomepage = async (req, res) => {
             //get user data from MongoDB
             var userData = await getStats(req, res);
             //get leaderboard data from MongoDB
-            var leaderboardData = await getLeaderboard(req, res)
+            var leaderboardData = await getLeaderboard(req, res);
+            //route data
+            var routeData = await getRoute(req, res);
+            //Route amount
+            var totalRouteAmount = 0;
+            var totalRouteAmount_A = 0;
+            
+            //historical route
+            var distance_array = [0,0,0,0];
+            var route_count = [0,0,0,0];
+            var i;
+
+            for(route of routeData){
+                totalRouteAmount += route["status"].filter(x => x=="COMPLETED").length;
+                totalRouteAmount_A += route["status"].length;
+                for(i=0; i<route["status"].length;i++){
+                    if(route["status"][i] == "COMPLETED"){
+                        
+                        if((Math.floor(Math.abs(new Date() - new Date(route["completed"][i]))/(1000*3600*24)))<=7){
+                            distance_array[3] += route["distance"];
+                            route_count[3] += 1;
+                        }else if((Math.floor(Math.abs(new Date() - new Date(route["completed"][i]))/(1000*3600*24)))<=14){
+                            distance_array[2] += route["distance"];
+                            route_count[2] += 1;
+                        }else if((Math.floor(Math.abs(new Date() - new Date(route["completed"][i]))/(1000*3600*24)))<=21){
+                            distance_array[1] += route["distance"];
+                            route_count[1] += 1;
+                        }else if((Math.floor(Math.abs(new Date() - new Date(route["completed"][i]))/(1000*3600*24)))<=28){
+                            distance_array[0] += route["distance"];
+                            route_count[0] += 1;
+                        }
+                        
+                    }
+                }
+            }
+            const _tip = await Tips.find();
+            const _tip_out = await _tip[Math.floor(Math.random()*_tip.length)];
+
             //render dashboard template
-            res.render("main/dashboard", {
+            return res.render("main/dashboard", {
                 title: "Dashboard",
                 //always specify these!
                 active: "Home",
                 userName: req.session.user,
                 leaderboard: leaderboardData,
+                routes : routeData,
+                routeAmount: totalRouteAmount,
+                routeAmount_A: totalRouteAmount_A,
+                distance_A: distance_array,
+                route_A: route_count,
+                tip: _tip_out,
                 user: userData
             })
         } else {
@@ -30,6 +74,21 @@ const getHomepage = async (req, res) => {
         return res.render("error", {
             error: "Server Error: Failed to get dashboard",
             redirect: "/" 
+        });
+    }
+}
+
+async function getRoute(req, res) {
+    try{
+        const data = await Route.find({
+            "user":req.session.user
+        });
+
+        return data;
+    } catch (err) {
+        return res.render("error", {
+            error:"Server Error: Falied to fetch route",
+            redirect: "/"
         });
     }
 }
@@ -55,39 +114,39 @@ async function getLeaderboard(req, res) {
 
     try {
         friends = []
-        var _friends = await Friend.find({
+        var found_friends = await Friend.find({
             "sender": req.session.user,
             "status": "ACCEPTED"
         });
 
-        for (i of _friends){
+        for (i of found_friends){
             friends.push(i)
         }
 
-        _friends = await Friend.find({
+        found_friends = await Friend.find({
             "receiver": req.session.user,
             "status": "ACCEPTED"
         });
 
-        for (i of _friends){
+        for (i of found_friends){
             friends.push(i)
         }
 
 
-        var _list = [];
+        var friend_list = [];
         for(user of friends){
             if (user.sender == req.session.user){
-                _list.push(user.receiver);
+                friend_list.push(user.receiver);
             } else {
-                _list.push(user.sender);
+                friend_list.push(user.sender);
             }
         }
 
-        _list.push(req.session.user)
+        friend_list.push(req.session.user)
 
 
         details = []
-        for (user of _list){
+        for (user of friend_list){
             details.push(await User.findOne({"userName":user}));
         }
         details.sort((a,b) => (b["data"]["totalDistance"] - a["data"]["totalDistance"]));

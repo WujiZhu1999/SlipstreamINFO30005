@@ -1,0 +1,21 @@
+body{
+	margin:0;
+	width:100%;
+	padding: 0;
+}
+#map{
+    height: 100%;
+}
+#pannel{
+	position: absolute;
+	top:20vh;
+	height: 500px;
+	width: 98%;
+	border: red solid;
+	margin-left: 1%;
+}
+#box{
+	border:solid blue;
+	height: 100%;
+	width: 480px;
+}

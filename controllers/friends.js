@@ -5,21 +5,21 @@ const Friend = mongoose.model("friends");
 async function friends(req) {
     try{
         var friends = []
-        var _friends = await Friend.find({
+        var found_friends = await Friend.find({
             "receiver": req.session.user,
             "status": "ACCEPTED"
         });
 
-        for (friend of _friends){
+        for (friend of found_friends){
             friends.push(friend.sender);
         }
 
-        _friends = await Friend.find({
+        found_friends = await Friend.find({
             "sender": req.session.user,
             "status": "ACCEPTED"
         });
 
-        for (friend of _friends){
+        for (friend of found_friends){
             friends.push(friend.receiver);
         }
 
@@ -33,12 +33,12 @@ async function friends(req) {
 async function requests(req){
     try{
         var requestList = [];
-        var _requests = await Friend.find({
+        var found_requests = await Friend.find({
             "receiver": req.session.user,
             "status": "PENDING"
         });
 
-        for (request of _requests){
+        for (request of found_requests){
             requestList.push(request.sender);
         }
         console.log(requestList)
@@ -81,16 +81,16 @@ const sendFriendRequest = async (req, res) => {
                 redirect: "/Friends"
             });
         }
-        const _me = await User.findOne({"userName":req.session.user});
-        if(!_me){
+        const found_me = await User.findOne({"userName":req.session.user});
+        if(!found_me){
             res.status(400);
             return res.render("error", {
                 error: "Server Error: Can't get your personal profile",
                 redirect: "/Friends"
             });
         }
-        const _them = await User.findOne({"userName":req.body.receiver});
-        if(!_them){
+        const found_them = await User.findOne({"userName":req.body.receiver});
+        if(!found_them){
             res.status(400);
             return res.render("error", {
                 error: "No such user, make sure their username is spelled correctly",
@@ -150,20 +150,20 @@ const sendFriendRequest = async (req, res) => {
 const deleteFriendRequest = async (req, res) => {
     try{
         //finds a current friend relationship
-        var _friend = await Friend.findOne({
+        var found_friend = await Friend.findOne({
             "sender":req.session.user,
             "receiver":req.body.friend,
             "status":"ACCEPTED"
         });
 
-        if(!_friend){
-            _friend = await Friend.findOne({
+        if(!found_friend){
+            found_friend = await Friend.findOne({
                 "sender":req.body.friend,
                 "receiver":req.session.user,
                 "status":"ACCEPTED"
             });
 
-            if(!_friend){
+            if(!found_friend){
                 res.status(400)
                 return res.render("error", {
                     error: "You are already not friends",
@@ -173,7 +173,7 @@ const deleteFriendRequest = async (req, res) => {
         }
 
         //deletes relationship
-        await Friend.deleteOne({"sender":_friend.sender, "receiver":_friend.receiver})
+        await Friend.deleteOne({"sender":found_friend.sender, "receiver":found_friend.receiver})
 
         return res.redirect("/Friends")
     }catch(err){
@@ -195,12 +195,12 @@ const rejectFriendRequest = async (req, res) => {
             });
         }
 
-        var _request = await Friend.findOne({
+        var found_request = await Friend.findOne({
             "sender":req.body.sender,
             "receiver":req.session.user,
             "status":"PENDING"
         });
-        if(!_request){
+        if(!found_request){
             res.status(400);
             return res.render("error", {
                 error: "No such request",

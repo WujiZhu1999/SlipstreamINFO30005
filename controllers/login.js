@@ -39,8 +39,8 @@ const postLogIn = async (req, res) => {
         return;
     }
     try{
-        const _new = await User.findOne({"userName":req.body.userName,"password":req.body.password});
-        if(_new){
+        const user_new = await User.findOne({"userName":req.body.userName,"password":req.body.password});
+        if(user_new){
             req.session.user = req.body.userName;
             return res.redirect("/");
         }else{
