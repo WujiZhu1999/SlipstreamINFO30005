@@ -3,7 +3,8 @@ extends ../navbar
 block content
     
         div(class="top" ) 
-            h2 Hi Biker！Welcome to the Dashboard！
+            h2 Hi #{userName}! Welcome to the Dashboard！
+            br
         div(class="leida" style="width:99%;text-align:center")
             h2 Personal Record
             canvas(id="radarChart")
@@ -45,7 +46,7 @@ block content
                                 div(class="rankItem")
                                     div(class="rankNumber") #{i + 1}.
                                     div(class="rankDes")
-                                        span #{leaderboard[i].name}
+                                        a(href= "/users/" + leaderboard[i].userName + "/" style="float:right;") #{leaderboard[i].name}
                                         span #{(leaderboard[i].data.totalDistance/1000).toFixed(3)}KM Cycled
                                         span #{(leaderboard[i].data.carbonSaved/1000).toFixed(3)}KG Carbon Saved
         div(class="infoHolder" id="infoHolder" style="display:none")
