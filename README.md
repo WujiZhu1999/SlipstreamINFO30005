@@ -97,3 +97,8 @@ views/login.pug
 views/user_profile.pug
 
         the settings page, as well as the logout button and friends page are found in a dropdown under the username button
+
+Testing
+run the tests, simply run "npm test"
+for the integration tests you will need to have the environment variable for the database set
+creating a file named .env with the line "MONGO_PASSWORD=P31gZzQhxZh0WhNs" will give you access
