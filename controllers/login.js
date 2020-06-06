@@ -59,8 +59,7 @@ const postLogIn = async (req, res) => {
     }
 }
 
-
-
+//point user to register page 
 const getRegistration = (req, res) => {
     return res.render("register")
 }

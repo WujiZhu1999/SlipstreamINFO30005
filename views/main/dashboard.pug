@@ -1,10 +1,13 @@
 extends ../navbar
 
 block content
-    
+        //dashboard page
+        //title
         div(class="top" )
             h2 Hi #{userName}! Welcome to the Dashboard！
             br
+        
+        //two of the map about user performance 
         div(class="leida" style="width:99%;text-align:center")
             h2 Personal Record
             canvas(id="radarChart")
@@ -12,11 +15,13 @@ block content
         div(class="xiantu" style="width:99%;text-align:center")
             h2 Historical Record for last 4 weeks
             canvas(id="lineChart")
+        
         hr
         div(class="rankItem" style="width:99%;")
 
             p #{tip["body"]}
         hr
+        //the leaderboard 
         div(class="main")
             //-
                 div(class="left")
