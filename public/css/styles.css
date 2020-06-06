@@ -7,10 +7,38 @@
 }
 nav img.logo{
     width: 64px;
-
     height: 65px;
 }
 
+.searchbox{
+    padding-top: 5px;
+}
+.searchbox input[type="text"]{
+    width: 60%;
+    padding: 10px 10px;
+    background-color: transparent;
+    font-size: 16px;
+    line-height: 12px;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: 5px 5px;
+    background-position: 95% center;
+    border: 1px solid grey;
+    border-radius: 10px;
+    backface-visibility: hidden
+}
+
+.searchbox input[type="text"]:focus{
+    outline: 0;
+    border-bottom: 1px solid #575756;
+    border-radius: 10px;
+}
+
+.searchbox input[type="text"]::placeholder{
+    color: color(#575756 a(0.8));
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
 
 h1, h3, h2 {
     color: var(--main-colour);
@@ -23,7 +51,6 @@ nav {
     left: 0;
     width: 100%;
     z-index: 1000;
-    
     box-shadow: 0 10px 20px 0  rgba(0,0,0,0.3);
 }
 
@@ -36,8 +63,9 @@ nav ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: var(--background-colour);
+    background-color: var(--main-colour);
 }
+
 
 nav li {
     padding: 0;
@@ -550,7 +578,6 @@ ul.stat{
         flex-direction: column;
     }
 
-<<<<<<< HEAD
     .table ul li p{
         margin-bottom: 20px;
     }
