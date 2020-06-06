@@ -550,17 +550,16 @@ ul.stat{
         flex-direction: column;
     }
 
-<<<<<<< HEAD
     .table ul li p{
         margin-bottom: 20px;
     }
 
-    .table ul li div{
+    .time{
         margin-top: -25px !important;
     }
 
-    .table ul li a{
-        margin-top: -45px !important;
+    .auth{
+        margin-top: -40px !important;
     }
 
 
