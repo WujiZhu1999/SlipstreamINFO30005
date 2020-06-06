@@ -2,7 +2,9 @@ extends default
 block styles
 	link(rel='stylesheet',href='/css/login.css')
 block content
+	//this is log in page
 	div(class="container" id ="container")
+		//form to sign up - if user have account alr
 		div(class="form sign_up")
 			form(action="/login/register" method="POST" id = "sign_up_form")
 				h1 Create Account
@@ -10,12 +12,14 @@ block content
 				input(type="text" placeholder="NickName" name = "name" required)
 				input(type="password" placeholder="Password" name = "password" required)
 				button(onclick="document.getElementById('sign_up_form').submit()") Sign up
+		//sign in for - for new users
 		div(class="form sign_in")
 			form(action="/login" method="POST" id="sign_in_form")
 				h1 Sign in
 				input(type="text" placeholder="UserName" name="userName" required)
 				input(type="password" placeholder="Password" name="password" required)
 				button(onclick="document.getElementById('sign_in_form').submit()") Sign in
+		//animaltion that matching each form
 		div(class="switch")
 			div(class="switching")
 				div(class="op ol")

@@ -46,7 +46,7 @@ const localRoute = async (req, res) =>{
             }
         }
 
-        while(i<6){
+        while(i<1){
             list_route.push({
                 origin:"---",
                 destination:"---",
@@ -126,7 +126,13 @@ const deleteRoute = async (req, res) =>{
             }
             var out = {};
             out["routes"] = list_route;
-            
+            while(out["routes"].length < 1){
+                out["routes"].push({
+                    origin:"---",
+                    destination:"---",
+                    totalTrial:0
+                });
+            }
             out["userName"] = req.session.user;
             return res.render("map/maphome2",out);
 
@@ -139,17 +145,17 @@ const deleteRoute = async (req, res) =>{
 //save route to wait status for a user to ride the route later
 const saveRoute = async (req, res) =>{
   try{  
-        if(!req.body._end ||!req.body._origin){
+        if(!req.body.a_end ||!req.body.a_origin){
             return res.send("Missing parameter.");
         }
         var route_out = {};
         //cross domain calling
         const { data } = await axios({
-        url: `https://maps.googleapis.com/maps/api/directions/json?origin=${req.body._origin}&destination=${req.body._end}&mode=bicycling&key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&region=AU`
+        url: `https://maps.googleapis.com/maps/api/directions/json?origin=${req.body.a_origin}&destination=${req.body.a_end}&mode=bicycling&key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&region=AU`
         });
         if(data["status"]=="OK"){
-            route_out["origin"] = req.body._origin;
-            route_out["destination"] = req.body._end;
+            route_out["origin"] = req.body.a_origin;
+            route_out["destination"] = req.body.a_end;
             route_out["user"] = req.session.user;
             route_out["distance"] = data["routes"][0]["legs"][0]["distance"]["value"];
             route_out["duration"] = data["routes"][0]["legs"][0]["duration"]["value"];
@@ -163,8 +169,8 @@ const saveRoute = async (req, res) =>{
         }
         const route = await Route.findOne({
             "user":req.session.user,
-            "origin": req.body._origin,
-            "destination": req.body._end
+            "origin": req.body.a_origin,
+            "destination": req.body.a_end
         })
         //live -> failed + new wait record
         //wait -> refresh route info
@@ -175,6 +181,7 @@ const saveRoute = async (req, res) =>{
             route_out["status"] = route["status"];
             route_out["completed"] = route["completed"];
             route_out["totalTrial"] = route["totalTrial"];
+
             if(route_out["status"][route_out["totalTrial"]-1] == "Live"){
                 route_out["status"][route_out["totalTrial"]-1] = "FAILED";
                 var d = new Date();
@@ -182,16 +189,16 @@ const saveRoute = async (req, res) =>{
                 route_out["completed"][route_out["totalTrial"]] = "NOTYET";
                 route_out["status"][route_out["totalTrial"]] = "WAIT";
                 route_out["totalTrial"] = route_out["totalTrial"]+1;
-            }else if(_out["status"][route_out["totalTrial"]-1] != "WAIT"){
+            }else if(route_out["status"][route_out["totalTrial"]-1] != "WAIT"){
                 route_out["completed"][route_out["totalTrial"]] = "NOTYET";
                 route_out["status"][route_out["totalTrial"]] = "WAIT";
                 route_out["totalTrial"] = route_out["totalTrial"]+1;
             }
             const ret = await Route.findOneAndUpdate({
             "user":req.session.user,
-            "origin": req.body._origin,
-            "destination": req.body._end},route_out);
-            const routes = await Route.find({"user":req.session.user})
+            "origin": req.body.a_origin,
+            "destination": req.body.a_end},route_out);
+            const routes = await Route.find({"user":req.session.user});
             var list_route  = [];
             for(routee of routes){
                 if(routee["status"][routee["totalTrial"]-1] =="WAIT"){
@@ -213,7 +220,7 @@ const saveRoute = async (req, res) =>{
                 }
             }
             var out = {};
-            out["route"] = found_route;
+            out["route"] = list_route;
             
             out["userName"] = req.session.user;
             return res.render("map/map",out);
@@ -227,22 +234,22 @@ const saveRoute = async (req, res) =>{
 //start route (user really riding on the route) route status to live
 const startRoute = async (req, res) =>{
     try{
-        if(!req.body._origin || !req.body._end){
+        if(!req.body.a_origin || !req.body.a_end){
             return res.send("Missing some of origin/destination.");
         }
-        const found_route = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
+        const found_route = await Route.findOne({"user":req.session.user,"origin":req.body.a_origin,"destination":req.body.a_end});
         if(!found_route){
 
             //axios cross domain
             //here despite some info extract from the api return. I also put the whole response body to response which easier our later extension on functionalities.
             const { data } = await axios({
-            url: `https://maps.googleapis.com/maps/api/directions/json?origin=${req.body._origin}&destination=${req.body._end}&mode=bicycling&key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&region=AU`
+            url: `https://maps.googleapis.com/maps/api/directions/json?origin=${req.body.a_origin}&destination=${req.body.a_end}&mode=bicycling&key=AIzaSyB3bEc0lmQ6WNX_Cl98IRfu1E5DRLiG2pE&region=AU`
             });
             if(data["status"]=="OK"){
                 var route_new = {
                     "user": req.session.user,
-                    "origin": req.body._origin,
-                    "destination": req.body._end,
+                    "origin": req.body.a_origin,
+                    "destination": req.body.a_end,
                     "distance": data["routes"][0]["legs"][0]["distance"]["value"],
                     "duration": data["routes"][0]["legs"][0]["duration"]["value"],
                     "turns": data["routes"][0]["legs"][0]["steps"].length - 1,
@@ -267,8 +274,8 @@ const startRoute = async (req, res) =>{
             //last haven't finish -> fail this and a new one
             if(found_route["status"][found_route["totalTrial"]-1] == "WAIT"){
                 found_route["status"][found_route["totalTrial"]-1] = "Live";
-                const route_update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end},found_route);
-                const route_updatee = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
+                const route_update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body.a_origin,"destination":req.body.a_end},found_route);
+                const route_updatee = await Route.findOne({"user":req.session.user,"origin":req.body.a_origin,"destination":req.body.a_end});
                 return res.render("map/ride",{
                     route:route_updatee,
                     userName: req.session.user
@@ -281,8 +288,8 @@ const startRoute = async (req, res) =>{
             found_route["completed"][found_route["totalTrial"]] = "NOTYET";
             found_route["status"][found_route["totalTrial"]] = "Live";
             found_route["totalTrial"] = found_route["totalTrial"] + 1;
-            const route_update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end},found_route);
-            const route_updatee = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
+            const route_update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body.a_origin,"destination":req.body.a_end},found_route);
+            const route_updatee = await Route.findOne({"user":req.session.user,"origin":req.body.a_origin,"destination":req.body.a_end});
             return res.render("map/ride",{
                 route:route_updatee,
                 userName: req.session.user
@@ -316,7 +323,7 @@ const haltRoute = async (req, res) =>{
             }
 
             const route_update = await Route.findOneAndUpdate({"user":req.session.user,"origin":req.body.origin,"destination":req.body.destination},found_route);
-            route_updatee = await Route.findOne({"user":req.session.user,"origin":req.body._origin,"destination":req.body._end});
+            route_updatee = await Route.findOne({"user":req.session.user,"origin":req.body.a_origin,"destination":req.body.a_end});
             return res.render("map/map",{route:route_updatee,userName: req.session.user});
         }
     }catch(err){
