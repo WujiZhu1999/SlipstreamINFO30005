@@ -1,79 +1,78 @@
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
-body{
-	margin:0;
-	width:100%;
+body {
+	margin: 0;
+	width: 100%;
 	padding: 0;
 
 	padding-top: 64px;
 	background-color: rgb(242, 242, 242);
 }
-#dududu{
+#dududu {
 	position: absolute;
 	bottom: 3%;
 	width: 100%;
 	text-align: center;
 	align-items: center;
 }
-#down{
+#down {
 	position: absolute;
 	bottom: 20%;
 	width: 100%;
 	text-align: center;
 	align-items: center;
-	color:white;
+	color: white;
 }
-#postwall{
-	width:100%;
-	height:100vh;
+#postwall {
+	width: 100%;
+	height: 100vh;
 	border-color: red;
-
 }
-#postwall a{
+#postwall a {
 	opacity: 0;
 	transition: 3s;
 }
-#postwall:hover a{
+#postwall:hover a {
 	opacity: 1;
 }
 .mySlides {
-	width:100%;
+	width: 100%;
 	height: 100%;
 	display: none;
 }
 .timage {
-	width:100%;
+	width: 100%;
 	height: 100%;
 }
 .text {
-  color: white;
-  font-size: 150px;
-  position: absolute;
-  bottom: 40%;
-  width: 100%;
-  text-align: center;
-  align-items: center;
+	color: white;
+	font-size: 150px;
+	position: absolute;
+	bottom: 40%;
+	width: 100%;
+	text-align: center;
+	align-items: center;
 }
-.text > p{
-	padding-top:1%;
+.text > p {
+	padding-top: 1%;
 	font-size: 20px;
 }
 .dot {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 1s ease;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 1s ease;
 }
 .active {
-  background-color: #717171;
+	background-color: #717171;
 }
 
-#start{
-	width:38%;
+#start {
+	width: 38%;
 	height: 600px;
 	float: left;
 	margin-left: 5%;
@@ -81,11 +80,11 @@ body{
 	min-width: 450px;
 	margin-top: 5%;
 	background-color: white;
-	border:solid var(--secondary-colour);
+	border: solid var(--secondary-colour);
 }
-#saved{
-	border:solid var(--secondary-colour);
-	width:38%;
+#saved {
+	border: solid var(--secondary-colour);
+	width: 38%;
 	height: 600px;
 	float: left;
 	margin-left: 5%;
@@ -95,16 +94,17 @@ body{
 	background-color: white;
 	overflow: scroll;
 }
-#start_img, #plan_img {
-	width:100%;
+#start_img,
+#plan_img {
+	width: 100%;
 }
-#origin, #destination {
-
+#origin,
+#destination {
 	padding-top: 40px;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #000000;
-    width:38%;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #000000;
+	width: 38%;
 
 	margin-left: 5%;
 	margin-right: 5%;
@@ -114,7 +114,8 @@ body{
 #go > form {
 	text-align: center;
 }
-#_go,.delete {
+#_go,
+.delete {
 	text-align: center;
 	font-size: 30px;
 	border: solid;
@@ -123,23 +124,24 @@ body{
 	padding-right: 15px;
 	padding-top: 5px;
 	border-color: var(--main-colour);
-	margin-top:15px;
+	margin-top: 15px;
 	transition: border-radius 0.75s, background-color 0.75s, color 0.75s;
 }
-#_go:hover, .delete:hover{
+#_go:hover,
+.delete:hover {
 	border-radius: 25px;
 	background-color: var(--main-colour);
-	color:white;
+	color: white;
 }
-.roading{
-	width:20%;
+.roading {
+	width: 20%;
 	float: left;
 }
-.roads > ul{
+.roads > ul {
 	list-style-type: none;
 	width: 100%;
 
-	overflow:scroll;
+	overflow: scroll;
 }
 
 .roadli {
@@ -149,33 +151,33 @@ body{
 }
 
 .roads > li:hover {
-  background: #eee;
-  cursor: pointer;
+	background: #eee;
+	cursor: pointer;
 }
 
 .roads > li > p {
-  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+	font: 200 12px/1.5 Georgia, Times New Roman, serif;
 }
-#containroute{
-	width:100%;
+#containroute {
+	width: 100%;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+	width: 10px;
 }
 
 /* Track */
-::-webkit-scrollbar-track { 
-  border-radius: 10px;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: grey; 
-  border-radius: 10px;
+::-webkit-scrollbar-track {
+	border-radius: 10px;
 }
 
-#mapcontainer{
-	width:100%;
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: grey;
+	border-radius: 10px;
+}
+
+#mapcontainer {
+	width: 100%;
 	height: 95vh;
 }
 
@@ -187,17 +189,18 @@ body{
 	background-color: #fff;
 	padding: 5px;
 	text-align: center;
-	font-family: 'Roboto','sans-serif';
+	font-family: 'Roboto', 'sans-serif';
 	line-height: 30px;
 	padding-left: 10px;
 	width: 16%;
 
 	min-width: 230px;
 	height: 320px;
-	box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
+	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
-#start, #end{
+#start,
+#end {
 	font-size: 20px;
 }
 #routeinfo {
@@ -208,204 +211,207 @@ body{
 	background-color: #fff;
 	padding: 5px;
 	text-align: center;
-	font-family: 'Roboto','sans-serif';
+	font-family: 'Roboto', 'sans-serif';
 	line-height: 30px;
 	padding-left: 10px;
 	width: 16%;
 	min-width: 230px;
-	
-	box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
+
+	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
 }
-#savedRoute{
-	width:100%;
+#savedRoute {
+	width: 100%;
 	min-width: 480px;
 
-	background-image: url("../OX.png");
+	background-image: url('../OX.png');
 	background-size: 100% auto;
 	background-repeat: no-repeat;
 	background-color: black;
 	min-height: 320px;
 }
-#savedRoute > ol{
+#savedRoute > ol {
 	counter-reset: index;
-	color: rgb(92,92,92);
+	color: rgb(92, 92, 92);
 	min-width: 290px;
-	width:40%;
+	width: 40%;
 	margin-left: 30%;
 }
-#savedRoute li{
+#savedRoute li {
 	text-align: center;
 	padding-bottom: 10px;
 	padding-top: 10px;
 	counter-increment: index;
-  	align-items: center;
- 	padding: 12px 0;
+	align-items: center;
+	padding: 12px 0;
 }
 
 #savedRoute li::before {
-  content: counters(index, ".", decimal-leading-zero);
-  font-size: 1.5rem;
-  font-weight: bold;
-  min-width: 50px;
-  padding-right: 12px;
-  font-variant-numeric: tabular-nums;
-  background-image: linear-gradient(to bottom, rgb(102, 255, 204), rgb(255, 165, 0));
-  background-attachment: fixed;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: center;
-  display: flex;
+	content: counters(index, '.', decimal-leading-zero);
+	font-size: 1.5rem;
+	font-weight: bold;
+	min-width: 50px;
+	padding-right: 12px;
+	font-variant-numeric: tabular-nums;
+	background-image: linear-gradient(
+		to bottom,
+		rgb(102, 255, 204),
+		rgb(255, 165, 0)
+	);
+	background-attachment: fixed;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+	display: flex;
 }
 
-#savedRoute button{
+#savedRoute button {
 	width: 20px;
 	padding: 0;
 	border: none;
-	color:white;
+	color: white;
 	font-size: 20px;
 	font-weight: 5px;
 	background-color: black;
-	color:rgb(92,92,92);
+	color: rgb(92, 92, 92);
 }
-#savedRoute button:hover{
+#savedRoute button:hover {
 	background: white;
-	color:rgb(92,92,92);
+	color: rgb(92, 92, 92);
 }
-#savedRoute li + li{
+#savedRoute li + li {
 	counter-increment: index;
-  	align-items: center;
-  	padding: 12px 0;
-  	box-sizing: border-box;
-	border-top: 1px solid rgb(92,92,92);
+	align-items: center;
+	padding: 12px 0;
+	box-sizing: border-box;
+	border-top: 1px solid rgb(92, 92, 92);
 }
-input{
+input {
 	outline: none;
 }
-#button_set{
+#button_set {
 	position: absolute;
-	top:156px;
-	left:64px;
+	top: 156px;
+	left: 64px;
 	width: 256px;
 	height: 190px;
 	background-color: white;
 	opacity: 0.95;
 	align-items: center;
 	text-align: center;
-	
-	box-shadow: 0 8px 20px 0  rgba(0,0,0,0.2);
+
+	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
-
-#streetView{
+#streetView {
 	margin-left: 10%;
 	margin-right: 10%;
-	width:80%;
+	width: 80%;
 	height: 90vh;
 	min-width: 560px;
 	align-items: center;
 	align-self: center;
-
 }
-#viewmap, #pano{
+#viewmap,
+#pano {
 	height: 50%;
-	width:100%;
-	float:left;
-	border:solid;
+	width: 100%;
+	float: left;
+	border: solid;
 }
-#back_top{
-	position:absolute;
-	top:300%;
-	left:40%;
+#back_top {
+	position: absolute;
+	top: 300%;
+	left: 40%;
 }
-.backtotop{
-	width:100%;
+.backtotop {
+	width: 100%;
 	height: 64px;
-	background-image: linear-gradient(to bottom right, var(--main-colour), var(--secondary-colour));
-	border:solid;
+	background-image: linear-gradient(
+		to bottom right,
+		var(--main-colour),
+		var(--secondary-colour)
+	);
+	border: solid;
 	border-color: var(--main-colour);
 	text-align: center;
 	font-size: 54px;
-	color:white;
+	color: white;
 }
 
-#counting{
-	background-image: url("../D (2).jpg");
+#counting {
+	background-image: url('../D (2).jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
-	width:100%;
+	width: 100%;
 	height: 100vh;
-	color:white;
+	color: white;
 	font-weight: bold;
-
 }
-#counting h1{
+#counting h1 {
 	padding-top: 12px;
 	padding-left: 192px;
-	font-size:40px;
+	font-size: 40px;
 }
-#counting p, #counting label{
+#counting p,
+#counting label {
 	padding-left: 192px;
-	font-size:20px;
+	font-size: 20px;
 }
 #progress {
-	  width: 60%;
-	  margin-left: 192px;
-	  margin-top: 2%;
-	  background-color: var(--background-colour);
-	  border-radius: 20px;
-	  opacity: 0.9;
+	width: 60%;
+	margin-left: 192px;
+	margin-top: 2%;
+	background-color: var(--background-colour);
+	border-radius: 20px;
+	opacity: 0.9;
 }
 
-#bar{
+#bar {
 	width: 1%;
-  	height: 35px;
-  	background-color: white;
-  	border-radius: 25px;
+	height: 35px;
+	background-color: white;
+	border-radius: 25px;
 }
-#another_ride{
+#another_ride {
 	margin-top: 25%;
 }
-#another_ride > input{
+#another_ride > input {
 	margin-left: 192px;
 	height: 60px;
 	width: 15%;
 	font-size: 30px;
-	padding:0;
+	padding: 0;
 	font-weight: bold;
 	border: none;
 	color: white;
 	background-color: transparent;
 	transition: color 2s, background-color 2s;
 }
-#another_ride > input:hover{
-
+#another_ride > input:hover {
 	color: var(--background-colour);
 	background-color: white;
 }
-button{
-	outline:none;
+button {
+	outline: none;
 }
 
-#_origin, #_end{
-	border:none;
+#_origin,
+#_end {
+	border: none;
 	border-bottom: 2px solid var(--background-colour);
-	width:80%;
+	width: 80%;
 	margin-top: 15px;
 	height: 30px;
-
 }
-
-
-
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
-.delete{
+.delete {
 	float: left;
 	width: 10%;
 	padding: 0;
@@ -413,12 +419,13 @@ input:-webkit-autofill:active  {
 }
 
 @media screen and (max-width: 600px) {
-	#mapcontainer{
+	#mapcontainer {
 		height: 66vh;
 		bottom: 0;
 	}
 
-	#floating-panel, #button_set {
+	#floating-panel,
+	#button_set {
 		position: static;
 		width: 100vw;
 		height: 23vh;
@@ -448,7 +455,6 @@ input:-webkit-autofill:active  {
 	}
 
 	#sub {
-		
 		width: 40%;
 		margin: 4px;
 		position: absolute;
@@ -468,7 +474,7 @@ input:-webkit-autofill:active  {
 		display: none;
 	}
 
-	#button_set{
+	#button_set {
 		height: 15vh;
 		bottom: 0px;
 	}
@@ -485,11 +491,7 @@ input:-webkit-autofill:active  {
 		top: 87vh;
 	}
 
-
-	.rideMap{
+	.rideMap {
 		height: 74vh !important;
 	}
-
-
-
 }

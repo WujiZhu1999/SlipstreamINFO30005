@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <meta name="screen-orientation" content="portrait" />
-    <meta name="apple-mobile-web-app-capable" content="no" />
-    <meta name="full-screen" content="yes" />
-    <meta name="x5-fullscreen" content="true" />
-    <title></title>
-    <style>
-      html {
-        max-width: 768px;
-        margin: 0 auto;
-      }
-    </style>
-    <script>
-      !(function(e, t) {
-        function n() {
-          t.body
-            ? (t.body.style.fontSize = 12 * o + 'px')
-            : t.addEventListener('DOMContentLoaded', n)
-        }
-        function d() {
-          var maxFontSize = 76.8
-          var e = i.clientWidth / 10
-          i.style.fontSize = (e > maxFontSize ? maxFontSize : e) + 'px'
-        }
-        var i = t.documentElement,
-          o = e.devicePixelRatio || 1
-        if (
-          (n(),
-          d(),
-          e.addEventListener('resize', d),
-          e.addEventListener('pageshow', function(e) {
-            e.persisted && d()
-          }),
-          o >= 2)
-        ) {
-          var a = t.createElement('body'),
-            s = t.createElement('div')
-          ;(s.style.border = '.5px solid transparent'),
-            a.appendChild(s),
-            i.appendChild(a),
-            1 === s.offsetHeight && i.classList.add('hairlines'),
-            i.removeChild(a)
-        }
-      })(window, document)
-    </script>
-  </head>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+		<meta name="screen-orientation" content="portrait" />
+		<meta name="apple-mobile-web-app-capable" content="no" />
+		<meta name="full-screen" content="yes" />
+		<meta name="x5-fullscreen" content="true" />
+		<title></title>
+		<style>
+			html {
+				max-width: 768px;
+				margin: 0 auto;
+			}
+		</style>
+		<script>
+			!(function (e, t) {
+				function n() {
+					t.body
+						? (t.body.style.fontSize = 12 * o + 'px')
+						: t.addEventListener('DOMContentLoaded', n);
+				}
+				function d() {
+					var maxFontSize = 76.8;
+					var e = i.clientWidth / 10;
+					i.style.fontSize = (e > maxFontSize ? maxFontSize : e) + 'px';
+				}
+				var i = t.documentElement,
+					o = e.devicePixelRatio || 1;
+				if (
+					(n(),
+					d(),
+					e.addEventListener('resize', d),
+					e.addEventListener('pageshow', function (e) {
+						e.persisted && d();
+					}),
+					o >= 2)
+				) {
+					var a = t.createElement('body'),
+						s = t.createElement('div');
+					(s.style.border = '.5px solid transparent'),
+						a.appendChild(s),
+						i.appendChild(a),
+						1 === s.offsetHeight && i.classList.add('hairlines'),
+						i.removeChild(a);
+				}
+			})(window, document);
+		</script>
+	</head>
 
-  <body ontouchstart>
-    <div id="app"></div>
-    <div id="fb-root"></div>
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/zh_CN/sdk.js#xfbml=1&version=v6.0"
-    ></script>
-  </body>
+	<body ontouchstart>
+		<div id="app"></div>
+		<div id="fb-root"></div>
+		<script
+			async
+			defer
+			crossorigin="anonymous"
+			src="https://connect.facebook.net/zh_CN/sdk.js#xfbml=1&version=v6.0"
+		></script>
+	</body>
 </html>

@@ -1,6 +1,6 @@
-export const phone = option => ({
-  type: "string",
-  pattern: /^1[0-9]{10}$/
+export const phone = (option) => ({
+	type: 'string',
+	pattern: /^1[0-9]{10}$/,
 });
 /**
  * 1.不能纯数字

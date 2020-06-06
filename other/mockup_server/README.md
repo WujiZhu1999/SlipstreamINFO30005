@@ -24,6 +24,7 @@ $ heroku create
 $ git push heroku master
 $ heroku open
 ```
+
 or
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
@@ -37,7 +38,7 @@ For more information about using Node.js on Heroku, see these Dev Center article
 - [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
 - [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
 - [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
-To connect using the mongo shell:
-mongo ds235197.mlab.com:35197/heroku_8w9bx2n2 -u <dbuser> -p <dbpassword>
-To connect using a driver via the standard MongoDB URI (what's this?):
-mongodb://<dbuser>:<dbpassword>@ds235197.mlab.com:35197/heroku_8w9bx2n2
+  To connect using the mongo shell:
+  mongo ds235197.mlab.com:35197/heroku_8w9bx2n2 -u <dbuser> -p <dbpassword>
+  To connect using a driver via the standard MongoDB URI (what's this?):
+  mongodb://<dbuser>:<dbpassword>@ds235197.mlab.com:35197/heroku_8w9bx2n2

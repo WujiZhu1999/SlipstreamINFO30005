@@ -1,84 +1,100 @@
 :root {
-    --main-colour: #377750;
-    --secondary-colour: rgb(69, 199, 112);
-    --highlite-colour: #F7FFF7;
-    --background-colour: #444444;
-    --white: #F1F1F1;
+	--main-colour: #377750;
+	--secondary-colour: rgb(69, 199, 112);
+	--highlite-colour: #f7fff7;
+	--background-colour: #444444;
+	--white: #f1f1f1;
 }
 @keyframes shang {
-  0% { transform: translate3d(0, 100%, 0); }
-  20% { transform: translate3d(0, 76%, 0); }
-  40% { transform: translate3d(0, 60%, 0); }
-  60% { transform: translate3d(0, 40%, 0); }
-  80% { transform: translate3d(0, 20%, 0); }
-  100% { transform: translate3d(0, 0, 0); }
+	0% {
+		transform: translate3d(0, 100%, 0);
+	}
+	20% {
+		transform: translate3d(0, 76%, 0);
+	}
+	40% {
+		transform: translate3d(0, 60%, 0);
+	}
+	60% {
+		transform: translate3d(0, 40%, 0);
+	}
+	80% {
+		transform: translate3d(0, 20%, 0);
+	}
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
 }
 @keyframes xia {
-  0% { transform: translate3d(0, -100%, 0); }
-  100% { transform: translate3d(0, 0, 0); }
+	0% {
+		transform: translate3d(0, -100%, 0);
+	}
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
 }
 .all {
-  height: 90vmin;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 90vmin;
-  background: transparent;
+	height: 90vmin;
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 90vmin;
+	background: transparent;
 }
 .all > div {
-  height: 50%;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
+	height: 50%;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
 }
 .all > div div {
-  color:var(--white);
-  font-size: 4vmin;
-  padding: 2vmin 0;
-  position: absolute;
+	color: var(--white);
+	font-size: 4vmin;
+	padding: 2vmin 0;
+	position: absolute;
 }
 .all > div div span {
-  display: block;
+	display: block;
 }
 .all > div.up {
-  border-bottom: 1vmin solid var(--secondary-colour);
-  top: 0;
+	border-bottom: 1vmin solid var(--secondary-colour);
+	top: 0;
 }
 .all > div.up div {
-  animation: shang 2s;
-  animation-delay: 0.5s;
-  animation-fill-mode: forwards;
-  bottom: 0;
-  transform: translate(0, 100%);
+	animation: shang 2s;
+	animation-delay: 0.5s;
+	animation-fill-mode: forwards;
+	bottom: 0;
+	transform: translate(0, 100%);
 }
-.all > div.down{
-  bottom: 0;
+.all > div.down {
+	bottom: 0;
 }
 .all > div.down div {
-  animation: xia 0.5s;
-  animation-delay: 2.75s;
-  animation-fill-mode: forwards;
-  top: 0;
-  transform: translate(0, -100%);
-  font-size: 14vmin;
+	animation: xia 0.5s;
+	animation-delay: 2.75s;
+	animation-fill-mode: forwards;
+	top: 0;
+	transform: translate(0, -100%);
+	font-size: 14vmin;
 }
-body{
-    background-color: var(--background-colour);
-    font-family: Arial, Helvetica, sans-serif;
+body {
+	background-color: var(--background-colour);
+	font-family: Arial, Helvetica, sans-serif;
 }
-#go{
-    text-align: center;
-    font-size:4vmin;
-    padding-bottom: 2px;
-    transition-duration: 2s;
+#go {
+	text-align: center;
+	font-size: 4vmin;
+	padding-bottom: 2px;
+	transition-duration: 2s;
 }
-#go:hover{
-    background-color: var(--white);
-    color:var(--background-colour);
-    border-radius: 20px;
+#go:hover {
+	background-color: var(--white);
+	color: var(--background-colour);
+	border-radius: 20px;
 }
-a{
-    text-decoration: none;
-    color:var(--white);
+a {
+	text-decoration: none;
+	color: var(--white);
 }

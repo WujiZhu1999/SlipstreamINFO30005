@@ -1,12 +1,13 @@
 const fakeAPI = [
-    {"to":"perth",
-    "toID":2,
-    "fromID":3,
-    "from":"melbourne",
-    "route":"go here then go there then go to destination",
-    "duration":10,
-    "distance":10
-    },
+	{
+		to: 'perth',
+		toID: 2,
+		fromID: 3,
+		from: 'melbourne',
+		route: 'go here then go there then go to destination',
+		duration: 10,
+		distance: 10,
+	},
 ];
 
 module.exports = fakeAPI;
@@ -35,4 +36,4 @@ module.exports = fakeAPI;
 //	"2": ...
 //}
 
-//1 represents the first part from A to C... 
+//1 represents the first part from A to C...

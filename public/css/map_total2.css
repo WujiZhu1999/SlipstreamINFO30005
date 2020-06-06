@@ -1,72 +1,78 @@
-body{
-	margin:0;
-	width:100%;
+body {
+	margin: 0;
+	width: 100%;
 	padding: 0;
 }
-#map{
-    height: 100%;
+#map {
+	height: 100%;
 }
-#pannel{
+#pannel {
 	position: absolute;
-	top:20vh;
+	top: 20vh;
 	height: 60vh;
 	width: 98%;
 	margin-left: 1%;
 }
-#box{
+#box {
 	height: 100%;
 	width: 30%;
-	margin:auto;
+	margin: auto;
 	position: relative;
 	min-width: 320px;
 }
-#go_button, #saved_button{
+#go_button,
+#saved_button {
 	width: 100%;
 	height: 50%;
 	text-align: center;
 	background-color: var(--white);
 	overflow: hidden;
 }
-#saved_button{
+#saved_button {
 	background-color: var(--main-colour);
-	color: var(--white);	
+	color: var(--white);
 }
-#ic1, #ic2{
+#ic1,
+#ic2 {
 	transition-duration: 0.75s;
 	font-size: 840%;
 	margin-top: 5%;
 }
-#icp1, #icp2{
+#icp1,
+#icp2 {
 	transition-duration: 0.75s;
 	font-size: 240%;
 }
 
-#go_button:hover > #ic1, #saved_button:hover > #ic2{
+#go_button:hover > #ic1,
+#saved_button:hover > #ic2 {
 	margin-top: 8%;
 	font-size: 960%;
 }
-#go_button:hover > #icp1, #saved_button:hover > #icp2{
+#go_button:hover > #icp1,
+#saved_button:hover > #icp2 {
 	font-size: 0px;
 	color: var(--white);
 }
-#saved_button:hover > #icp2{
+#saved_button:hover > #icp2 {
 	color: var(--main-colour);
 }
-#input_form,#saved_route{
+#input_form,
+#saved_route {
 	background-color: var(--white);
-	height:100%;
+	height: 100%;
 	width: 100%;
 	display: none;
 }
-.X{
+.X {
 	text-align: right;
 	padding-right: 6px;
-	font-size:40px;
+	font-size: 40px;
 }
-input{
+input {
 	background-color: var(--white);
 	border: none;
-	margin-left:10%;
+	margin-left: 10%;
 	width: 80%;
 	border-bottom: var(--background-colour) solid 3px;
 	outline: none;
@@ -76,20 +82,21 @@ input{
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
 }
 
-input:focus, input:not(:placeholder-shown){
+input:focus,
+input:not(:placeholder-shown) {
 	border-bottom: var(--secondary-colour) solid 3px;
 }
-#go_go{
-	border:none;
+#go_go {
+	border: none;
 }
 
-#go_go{
+#go_go {
 	border-radius: 25px;
 	border: 1px solid var(--main-colour);
 	background-color: var(--main-colour);
@@ -102,55 +109,56 @@ input:focus, input:not(:placeholder-shown){
 	transition: transform 80ms ease-in;
 }
 
-#go_go:active{
+#go_go:active {
 	transform: scale(0.93);
 }
 
-#go_go:focus{
+#go_go:focus {
 	outline: none;
 }
-img{
+img {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
 	height: auto;
 	z-index: 1;
 }
-#saved_list{
-	height:90%;
-	overflow:scroll;
+#saved_list {
+	height: 90%;
+	overflow: scroll;
 	overflow-x: hidden;
 	text-align: center;
 }
-.delete_button{
+.delete_button {
 	background-color: var(--white);
-	color:var(--background-colour);
+	color: var(--background-colour);
 	font-size: 24px;
-	padding-left:3px;
-	padding-right:3px;
+	padding-left: 3px;
+	padding-right: 3px;
 	border: none;
 }
-.roadli:hover, .delete_button:hover{
+.roadli:hover,
+.delete_button:hover {
 	background-color: white;
 }
-.roadli{
+.roadli {
 	width: 80%;
 	float: left;
-	height:80px;
+	height: 80px;
 }
-.delete_button_container{
+.delete_button_container {
 	height: 80px;
 	width: 19%;
-	float:left;
-	padding-top:25px;
+	float: left;
+	padding-top: 25px;
 }
-#logo{
+#logo {
 	position: relative;
 	width: 100%;
 }
 
-@media (max-width: 600px){
-	#aaabbb{
+@media (max-width: 600px) {
+	#aaabbb {
 		display: none;
 	}
 }
