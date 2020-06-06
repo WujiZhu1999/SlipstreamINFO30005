@@ -375,7 +375,6 @@ div.login form input[type="submit"]:hover {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    overflow-y: auto;
     max-height: 400px;
 }
 .rankItem {
